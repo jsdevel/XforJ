@@ -1,5 +1,5 @@
 /*
- * Copyright 2012 Joseph W.S. Spencer.
+ * Copyright 2012 Joseph Spencer
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,7 +17,7 @@ package jsl;
 
 /**
  *
- * @author Joe Spencer
+ * @author Joseph Spencer
  */
 public class LOGGER {
    //TODO make this configurable

@@ -1,5 +1,5 @@
 /*
- * Copyright 2012 Joseph Spencer
+ * Copyright 2012 Joseph W.S. Spencer.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,14 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package jsl.strategies;
 
-import jsl.*;
+package jsl.strategies;
 
 /**
  *
- * @author Joseph Spencer
+ * @author Joseph W.S. Spencer
  */
-public interface Strategy {
-   void execute(CharWrapper characters, StrategyContext context) throws Exception;
+public class NewClass {
+
 }
