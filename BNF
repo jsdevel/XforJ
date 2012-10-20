@@ -67,11 +67,15 @@ GlobalStatement:
    TemplateDeclaration 
 
 VariableDeclaration:
-   '{variable ' + Name + Value@"Optional" + '}'
+   '{variable ' + Name + ValueAssignmet@"Optional" + '}'
+
+ValueAssignment:
+   ' ' + Value
 
 Value:
    Name
    /[0-9]*/
+   '@' + Name
 
 TemplateDeclaration:
    '{template ' + Name + '}' + ParamDeclarations + TemplateBody + '{/template}'
@@ -79,8 +83,16 @@ TemplateDeclaration:
 ParamDeclarations:
    ParamDeclaration@"Optional"
    ParamDeclarations
+   ParamDeclaration
+
+ParamDeclaration:
+   '{param ' + Name + ValueAssignment@"Optional" + '}'
    
 TemplateBody:
+   TemplateBodyStatements
+   TemplateBodyStatements + TemplateBody
+
+TemplateBodyStatements:
    VariableDeclaration
    InputTokens
    PrintStatement
@@ -88,6 +100,7 @@ TemplateBody:
    ChooseStatement
    WithStatement
    ForEachStatement
+   ApplyStatement
    TemplateBody
 
 InputTokens:
@@ -118,3 +131,12 @@ WithStatement:
 ForEachStatement:
    '{foreach ' + Namespace + '}' + TemplateBody + '{/foreach}'
 
+ApplyStatement:
+   '{apply ' + Namespace + '}' + ApplyParams@"Optional" + '{/apply}'
+
+ApplyParams:
+   ApplyParam
+   ApplyParam + ApplyParams
+
+ApplyParam:
+   '{param ' + Name + Value + '}'
