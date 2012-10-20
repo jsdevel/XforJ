@@ -54,7 +54,7 @@ ImportStatements:
    ImportStatement
    ImportStatements
 
-ImportStatment:
+ImportStatement:
    '{import ' + Namespace + '}'
 
 GlobalStatements:
