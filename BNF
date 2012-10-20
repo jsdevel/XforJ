@@ -41,7 +41,7 @@ Program:
 
 
 JSLNamespace:
-   '{JSLT ' + Namespace + '}'
+   '{JSL ' + Namespace + '}'
 
 Namespace:
    Name
