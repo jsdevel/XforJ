@@ -1,0 +1,74 @@
+#
+# Copyright 2012 Joseph Spencer
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+# =========================================================
+#
+# This is a non standard BNF that describes the JSL grammar.  
+#
+# Character sequences not wrapped in ' are Non-Terminals.
+#
+# Non-Terminals may contain Terminals, Productions, and Non-Terminals.  
+# Recursion is allowed.
+#
+# Non-Terminals ending in : are Productions in the grammar.
+#
+# Character sequences wrapped in ' are Terminals.
+#
+# The + symbol is used to concat Terminals and Non-Terminals.
+#
+# The character sequence @"value" is used to provide an attribute to Symbols
+# in the grammar.
+#
+# Regular expressions of the form /regex/ denote an acceptable sequence of 
+# Terminals.  The regex flavor of choice is Perl.
+
+Program:
+   JSLNamespace
+   ImportStatements @"optional"
+   GlobalStatements
+
+
+JSLNamespace:
+   '{JSLT ' + Namespace + '}'
+
+Namespace:
+   Name
+   Namespace + '.' + Name
+
+Name:
+   /[a-zA-Z$_][a-zA-Z$_0-9]*/
+
+ImportStatements:
+   ImportStatement
+   ImportStatements
+
+ImportStatment:
+   '{import ' + Namespace + '}'
+
+GlobalStatements:
+   GlobalStatement
+   GlobalStatements
+
+
+GlobalStatement:
+   VariableStatement
+   TemplateStatement 
+
+VariableStatement:
+   '{var ' + Name + Value + '}'
+
+TemplateStatement:
+   '{template ' + Name + '}'
+
