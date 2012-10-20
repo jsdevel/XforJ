@@ -1,0 +1,20 @@
+{JSL rms.people.cousins}
+
+{template showPeople}
+   {choose}
+      {when people}
+         <h2>{title}</h2>
+         <div>
+            {with people}
+               <div>
+                  <span>Name: {name}</span>
+                  <span>Age:  {age}</span>
+               </div>
+            {/with}
+         </div>
+      {/when}
+      {otherwise}
+         <span>Sorry</span>
+      {/otherwise}
+   {/choose}
+{/template}
