@@ -28,7 +28,7 @@
 #
 # The + symbol is used to concat Terminals and Non-Terminals.
 #
-# The character sequence @"value" is used to provide an attribute to Symbols
+# The character sequence @"Value" is used to provide an attribute to Symbols
 # in the grammar.
 #
 # Regular expressions of the form /regex/ denote an acceptable sequence of 
@@ -36,7 +36,7 @@
 
 Program:
    JSLNamespace
-   ImportStatements @"optional"
+   ImportStatements@"Optional"
    GlobalStatements
 
 
@@ -63,12 +63,58 @@ GlobalStatements:
 
 
 GlobalStatement:
-   VariableStatement
-   TemplateStatement 
+   VariableDeclaration
+   TemplateDeclaration 
 
-VariableStatement:
-   '{var ' + Name + Value + '}'
+VariableDeclaration:
+   '{variable ' + Name + Value@"Optional" + '}'
 
-TemplateStatement:
-   '{template ' + Name + '}'
+Value:
+   Name
+   /[0-9]*/
+
+TemplateDeclaration:
+   '{template ' + Name + '}' + ParamDeclarations + TemplateBody + '{/template}'
+
+ParamDeclarations:
+   ParamDeclaration@"Optional"
+   ParamDeclarations
+   
+TemplateBody:
+   VariableDeclaration
+   InputTokens
+   PrintStatement
+   IfStatement
+   ChooseStatement
+   WithStatement
+   ForEachStatement
+   TemplateBody
+
+InputTokens:
+   /[^{]*/
+
+PrintStatement:
+   '{' + Name + '}'
+
+IfStatement:
+   '{if ' + Namespace + '}' + TemplateBody + '{/if}'
+
+ChooseStatement:
+   '{choose}' + ChooseBody + '{/choose}'
+
+ChooseBody:
+   WhenStatement + ChooseBody
+   ChooseBody + OtherwiseStatement
+
+WhenStatement:
+   '{when ' + Namespace + '}' + TemplateBody + '{/when}'
+
+OtherwiseStatement:
+   '{otherwise}' + TemplateBody + '{/otherwise}'
+
+WithStatement:
+   '{with ' + Namespace + '}' + TemplateBody + '{/with}'
+
+ForEachStatement:
+   '{foreach ' + Namespace + '}' + TemplateBody + '{/foreach}'
 
