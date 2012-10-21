@@ -44,7 +44,7 @@ public class TemplateBodyStatements implements Strategy, Characters {
             if(name.find()){
                String nm = name.group(1);
                characters.shift(nm.length());
-               output.prepend("\"+data."+nm+"+\"");
+               output.prepend("bld.append(data."+nm+");");
                characters.shift(1);//close block
                context.removeStrategy();
                return;
@@ -61,8 +61,9 @@ public class TemplateBodyStatements implements Strategy, Characters {
                newTokens = oldTokens.replaceAll("\\n|\\r", "\\\\\n");
 
             }
+            newTokens = newTokens.replaceAll("\"", "\\\\\"").replaceAll("'", "\\\\'");
             characters.shift(oldTokens.length());
-            output.prepend(newTokens);
+            output.prepend("bld.append('"+newTokens+"');");
             return;
          }
       }

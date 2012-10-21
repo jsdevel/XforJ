@@ -46,7 +46,7 @@ public class StrategyContext {
       filePath=absoluteFilePath;
       output.
          prepend("(function(){").
-         append("})();");
+         append("function StringBuffer(){var v=[],i=0;this.append=function(s){v[i++]=s||'';};this.toString=function(){return v.join('');};}})();");
    }
 
    public StrategyContext addNS(String NS) throws Exception{

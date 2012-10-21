@@ -57,4 +57,11 @@ function processTemplate(data){
    }
    return _output.toString();
 }
-(function(){var currentNS;if(!window.JSL)JSL={};if(!JSL.rms)JSL.rms={};if(!JSL.rms.people)JSL.rms.people={};if(!JSL.rms.people.cousins)currentNS=JSL.rms.people.cousins={};rms.people.cousins.showPeople=showPeople;function showPeople(_data, _params){var data=_data||{},params=_params||{};return "Hello there! "+data.boo+""}})();
+(function(){var currentNS;try{JSL}catch(e){JSL={}}if(!JSL.rms)JSL.rms={};if(!JSL.rms.people)JSL.rms.people={};if(!JSL.rms.people.cousins)currentNS=JSL.rms.people.cousins={};JSL.rms.people.cousins.showPeople=showPeople;function showPeople(_data, _params){var data=_data||{},params=_params||{},bld=new StringBuffer();bld.append('Hello there!       ');bld.append(data.boo);bld.append('   <h2>');bld.append(data.dan);bld.append('</h2>');return bld.toString()}JSL.rms.people.cousins.showProperties=showProperties;function showProperties(_data, _params){var data=_data||{},params=_params||{},bld=new StringBuffer();bld.append('Hello there!       ');bld.append(data.boo);
+      bld.append('   <h2 some=\"asdf\">');bld.append(data.dan);bld.append('</h2>');return bld.toString()}
+   function StringBuffer(){
+      var v=[],i=0;
+      this.append=function(s){v[i++]=s||'';};
+      this.toString=function(){return v.join('');};
+   }
+})();

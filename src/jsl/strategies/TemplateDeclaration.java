@@ -41,7 +41,7 @@ public class TemplateDeclaration implements Strategy, Characters {
       if(expectingTemplateBody){
          expectingTemplateBody=false;
          Output templateBodyOutput = new Output();
-         output.prepend("return \"").prepend(templateBodyOutput).prepend("\"}");
+         output.prepend(templateBodyOutput).prepend("return bld.toString()}");
          context.addStrategy(new TemplateBody(templateBodyOutput));
          return;
       }
@@ -62,7 +62,7 @@ public class TemplateDeclaration implements Strategy, Characters {
 
                      characters.shift(nm.length());
                      output.
-                        prepend(context.getNS()+"."+nm+"="+nm+";function "+nm+"(_data, _params){var data=_data||{},params=_params||{};").
+                        prepend(context.getNS()+"."+nm+"="+nm+";function "+nm+"(_data, _params){var data=_data||{},params=_params||{},bld=new StringBuffer();").
                         prepend(paramDeclarationsOutput);
 
                      if(characters.charAt(0) == close){

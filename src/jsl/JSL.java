@@ -16,7 +16,7 @@
 package jsl;
 
 import java.io.File;
-import jsl.*;
+import java.util.Date;
 import jsl.strategies.*;
 
 /**
@@ -31,7 +31,9 @@ public class JSL implements Characters {
     * @param args the command line arguments
     */
    public static void main(String[] args) {
+      long before = new Date().getTime();
       LOGGER.out(compileFile(args[0]).toString());
+      LOGGER.out("Time taken: "+Long.toString(new Date().getTime() - before));
    }
 
    public static Output compileFile(String path) {
