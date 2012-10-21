@@ -55,7 +55,7 @@ ImportStatements:
    ImportStatements
 
 ImportStatement:
-   '{import ' + Namespace + '}'
+   '{import ' + @"NonProtocolFilePath" + '}'
 
 GlobalStatements:
    GlobalStatement

@@ -28,38 +28,28 @@ public class Program implements Strategy, Characters {
       this.output=output;
    }
 
+   private boolean hasJSLNamespace;
+   private boolean hasTemplates;
+
    @Override
    public void execute(CharWrapper characters, StrategyContext context) throws Exception {
       String exception = "The opening of JSL templtes must be a JSL declaration.";
-      String chunk;
 
-      if(characters.charAt(0) == open){
-         characters.shift(1);
-         Matcher jsl = characters.match(JSL);
-
-         if(jsl.find()){
-            String js = jsl.group(1);
-            characters.shift(3);
-            Matcher space = characters.match(SPACE);
-
-            if(space.find()){
-               String sp = space.group(1);
-               characters.shift(sp.length());
-               Matcher namespace = characters.match(NAMESPACE);
-
-               if(namespace.find()){
-                  chunk = namespace.group(1);
-                  characters.shift(chunk.length());
-                  context.addNS(chunk);
-
-                  if(characters.charAt(0) == close){
-                     characters.shift(1);
-                     context.addStrategy(new GlobalStatement(output));
-                     return;
-                  }
+      if(characters.charAt(0) == open && !hasJSLNamespace){
+         hasJSLNamespace=true;
+         context.addStrategy(new JSLNamespace(output));
+         return;
+      } else if(hasJSLNamespace){
+         characters.removeSpace();
+         if(characters.charAt(0) == open){
+            if(!hasTemplates){
+               if(characters.charAt(1) == i){
+                  context.addStrategy(new ImportStatements(output));
+                  return;
                }
             }
-
+            context.addStrategy(new GlobalStatement(output));
+            return;
          }
       }
       throw new Exception(exception);

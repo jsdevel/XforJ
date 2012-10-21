@@ -24,23 +24,29 @@ import jsl.strategies.*;
  * @author Joseph Spencer
  */
 public class JSL implements Characters {
+   //Exit codes
+   public static final int UNABLE_TO_PARSE_FILE=1;
 
    /**
     * @param args the command line arguments
     */
    public static void main(String[] args) {
-      File testFile = new File(args[0]);
-      CharWrapper characters = new CharWrapper(MainUtil.getChars(testFile));
-      StrategyContext context = new StrategyContext();
+      LOGGER.out(compileFile(args[0]).toString());
+   }
+
+   public static Output compileFile(String path) {
+      File testFile = new File(path);
+      StrategyContext context = new StrategyContext(testFile.getAbsolutePath());
 
       try {
+         CharWrapper characters = new CharWrapper(MainUtil.getChars(testFile));
          while(characters.length() > 0){
             context.executeCurrent(characters);
          }
-         LOGGER.out(context.output.toString());
       } catch(Exception exc){
          LOGGER.out("Unable to parse \""+testFile.getAbsolutePath()+"\" for the following reason:\n"+exc.getMessage());
+         System.exit(UNABLE_TO_PARSE_FILE);
       }
-
+      return context.output;
    }
 }

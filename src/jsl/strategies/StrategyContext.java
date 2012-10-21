@@ -33,10 +33,12 @@ public class StrategyContext {
 
    private String NS;
    private String FullNS;
+   public final String filePath;
 
-   public StrategyContext() {
+   public StrategyContext(String absoluteFilePath) {
       currentStrategy= new Program(output);
       strategyStack.add(currentStrategy);
+      filePath=absoluteFilePath;
    }
 
    public StrategyContext addNS(String NS) throws Exception{

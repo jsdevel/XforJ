@@ -40,23 +40,22 @@ public class MainUtil {
       return argumentStringBuilder.toString();
    }
 
-   public static char[] getChars(File file){
+   public static char[] getChars(File file)
+      throws IOException
+   {
       String str;
-      try {
-         FileReader reader = new FileReader(file);
-         BufferedReader buffer = new BufferedReader(reader);
-         String line;
-         StringBuilder result = new StringBuilder();
-         while( ( line = buffer.readLine() ) != null ) {
-            result.append(line).append("\n");
-         }
-         str = result.toString();
-         buffer.close();
-         reader.close();
 
-      } catch ( Exception e){
-         str = "";
+      FileReader reader = new FileReader(file);
+      BufferedReader buffer = new BufferedReader(reader);
+      String line;
+      StringBuilder result = new StringBuilder();
+      while( ( line = buffer.readLine() ) != null ) {
+         result.append(line).append("\n");
       }
+      str = result.toString();
+      buffer.close();
+      reader.close();
+
       return str.toCharArray();
    }
    public static void putString(File file, String contents ) throws Exception {

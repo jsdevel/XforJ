@@ -88,6 +88,6 @@ public class GlobalStatement implements Strategy, Characters {
             }
          }
       }
-      throw new Exception("Something happened while evaluateing GlobalStatement.");
+      throw new Exception("Something happened while evaluating GlobalStatement.");
    }
 }
