@@ -82,8 +82,7 @@ TemplateDeclaration:
 
 ParamDeclarations:
    ParamDeclaration@"Optional"
-   ParamDeclarations
-   ParamDeclaration
+   ParamDeclarations + ParamDeclaration
 
 ParamDeclaration:
    '{param ' + Name + ValueAssignment@"Optional" + '}'
