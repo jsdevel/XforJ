@@ -1,5 +1,5 @@
 /*
- * Copyright 2012 Joseph Spencer
+ * Copyright 2012 Joseph Spencer.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,42 +13,31 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package jsl.strategies;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import java.util.regex.*;
 import jsl.*;
 
 /**
  *
  * @author Joseph Spencer
  */
-public class Template implements Strategy, Characters {
-   private boolean hasStatement;
-   private Pattern statementPattern;
-   private Output output;
-   Template(Output output){
-      this.output=output;
+public class TemplateBodyStatements implements Strategy, Characters {
+   Output output;
+   public TemplateBodyStatements(Output output) {
+      this.output = output;
    }
+   
+
 
    @Override
    public void execute(CharWrapper characters, StrategyContext context) throws Exception {
-      characters.removeSpace();
-
       if(characters.charAt(0) == open){
          //closing
          if(characters.charAt(1) == forward){
-            //template
-            if(characters.charAt(2) == t){
                context.removeStrategy();
                return;
-            //others
-            } else {
-
-
-            }
-         } else if(characters.match(RESERVED_SEQUENCE).find()){
-
          } else {//assuming access to data here;
             characters.shift(1);
             Matcher name = characters.match(NAME);
@@ -61,13 +50,21 @@ public class Template implements Strategy, Characters {
                return;
             }
          }
-      }
-      Matcher data = characters.match(DATA);
-      if(data.find()){
-         String match = data.group(1);
-         output.prepend(match);
-         characters.shift(match.length());
-         return;
+      } else {
+         Matcher inputTokens = characters.match(INPUT_TOKENS);
+         if(inputTokens.find()){
+            String oldTokens = inputTokens.group(1);
+            String newTokens;
+            if(context.stripNewLines){
+               newTokens = oldTokens.replaceAll("\\n|\\r", "");
+            } else {
+               newTokens = oldTokens.replaceAll("\\n|\\r", "\\\\\n");
+
+            }
+            characters.shift(oldTokens.length());
+            output.prepend(newTokens);
+            return;
+         }
       }
       throw new Exception("Invalid Template");
    }

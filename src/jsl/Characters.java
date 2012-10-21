@@ -38,9 +38,10 @@ public interface Characters {
    Pattern ABSOLUTE_PATH = Pattern.compile("^(/(?:[^/\\}]++/)*+).*+");
 
 
+   Pattern INPUT_TOKENS = Pattern.compile("^([^\\{]++).*+");
+
    Pattern VARIABLE = Pattern.compile("^(var)(?=\\s).*+");
    Pattern NAMESPACE = Pattern.compile("^((?:[a-zA-Z$_][a-zA-Z0-9$_]*+\\.)*+[a-zA-Z$_][a-zA-Z0-9$_]*+).*+");
-   Pattern DATA = Pattern.compile("^((?!\\{)[^\\{]++).*+");
    Pattern RESERVED_SEQUENCE = Pattern.compile("^((?:callTemplate|forEach|variable|param|choose|if|import|otherwise|sort|template|when|withParam)\\s++[$_a-zA-Z]).*+");
 
    char open = 123;

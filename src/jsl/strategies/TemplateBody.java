@@ -16,42 +16,25 @@
 package jsl.strategies;
 
 import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import jsl.*;
 
 /**
  *
  * @author Joseph Spencer
  */
-public class Program implements Strategy, Characters {
+public class TemplateBody implements Strategy, Characters {
    private Output output;
-   public Program(Output output){
+   TemplateBody(Output output){
       this.output=output;
    }
 
-   private boolean hasJSLNamespace;
-   private boolean hasTemplates;
-
    @Override
    public void execute(CharWrapper characters, StrategyContext context) throws Exception {
-      String exception = "The opening of JSL templtes must be a JSL declaration.";
-
-      if(characters.charAt(0) == open && !hasJSLNamespace){
-         hasJSLNamespace=true;
-         context.addStrategy(new JSLNamespace(output));
-         return;
-      } else if(hasJSLNamespace){
-         characters.removeSpace();
-         if(characters.charAt(0) == open){
-            if(!hasTemplates){
-               if(characters.charAt(1) == i){
-                  context.addStrategy(new ImportStatements(output));
-                  return;
-               }
-            }
-            context.addStrategy(new GlobalStatements(output));
-            return;
-         }
+      if(characters.charAt(0) == open && characters.charAt(1) == forward && characters.charAt(2) == t){
+         context.removeStrategy();
+      } else {
+         context.addStrategy(new TemplateBodyStatements(output));
       }
-      throw new Exception(exception);
    }
 }

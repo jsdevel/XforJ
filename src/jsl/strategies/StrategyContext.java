@@ -27,22 +27,30 @@ public class StrategyContext {
    private Strategy currentStrategy;
    private ArrayList<Strategy> strategyStack = new ArrayList<>();
 
-   public final Output output = new Output().prepend("(function(){").append("})();");
+   public final VariableOutput variableOutput = new VariableOutput();
+   public final Output output = new Output();
 
-   private boolean JSTLNameSpaceDeclared;
+   public final boolean stripNewLines;
+
+   private boolean JSLNameSpaceDeclared;
 
    private String NS;
    private String FullNS;
+
    public final String filePath;
 
    public StrategyContext(String absoluteFilePath) {
+      stripNewLines=true;
       currentStrategy= new Program(output);
       strategyStack.add(currentStrategy);
       filePath=absoluteFilePath;
+      output.
+         prepend("(function(){").
+         append("})();");
    }
 
    public StrategyContext addNS(String NS) throws Exception{
-      if(!JSTLNameSpaceDeclared){
+      if(!JSLNameSpaceDeclared){
          String[] split = NS.split("\\.");
          String newNS = "JSL";
          String builtNS = "";
@@ -59,6 +67,9 @@ public class StrategyContext {
                tempNS+"={};"
             );
          }
+         //JSLNameSpaces are required, so variableOoutput will always be 
+         //available once a NS has been added.
+         output.prepend(variableOutput);
       } else {
          throw new Exception("Namespace already declared for this template");
       }
@@ -81,16 +92,6 @@ public class StrategyContext {
    }
    public StrategyContext executeCurrent(CharWrapper wrap) throws Exception{
       currentStrategy.execute(wrap, this);
-      return this;
-   }
-
-   //OUTPUT
-   public StrategyContext addOutput(Output out){
-
-      return this;
-   }
-   public StrategyContext removeOutput(Output out){
-
       return this;
    }
 }
