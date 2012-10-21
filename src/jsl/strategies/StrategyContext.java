@@ -31,6 +31,7 @@ public class StrategyContext {
    public final Output output = new Output();
 
    public final boolean stripNewLines;
+   public final boolean minifyHTML;
 
    private boolean JSLNameSpaceDeclared;
 
@@ -40,7 +41,9 @@ public class StrategyContext {
    public final String filePath;
 
    public StrategyContext(String absoluteFilePath) {
+      //at some point these need to be configurable.
       stripNewLines=true;
+      minifyHTML=true;
       currentStrategy= new Program(output);
       strategyStack.add(currentStrategy);
       filePath=absoluteFilePath;

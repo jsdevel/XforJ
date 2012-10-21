@@ -61,6 +61,9 @@ public class TemplateBodyStatements implements Strategy, Characters {
                newTokens = oldTokens.replaceAll("\\n|\\r", "\\\\\n");
 
             }
+            if(context.minifyHTML){
+               newTokens = newTokens.replaceAll("(>|<)\\s++|\\s++(>|<)", "$1$2");
+            }
             newTokens = newTokens.replaceAll("\"", "\\\\\"").replaceAll("'", "\\\\'");
             characters.shift(oldTokens.length());
             output.prepend("bld.append('"+newTokens+"');");
