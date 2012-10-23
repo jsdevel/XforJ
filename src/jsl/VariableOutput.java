@@ -16,10 +16,58 @@
 
 package jsl;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  *
  * @author Joseph Spencer
  */
 public class VariableOutput extends Output {
+   private VariableOutput parentScope;
+   private Map<String, Output> variables = new HashMap<String, Output>();
+   private ArrayList<String> keys = new ArrayList<>();
+
+   public VariableOutput() {}
+
+   public VariableOutput(VariableOutput parentScope) {
+      this.parentScope = parentScope;
+   }
+
+   public VariableOutput add(String name, Output value) throws Exception {
+      if(variables.containsKey(name)){
+         throw new Exception("The following variable has been declared twice: "+name);
+      }
+      if(value == null){
+         throw new Exception("Null value was discovered for the following variable: \""+name+"\"");
+      }
+      variables.put(name, value);
+      keys.add(name);
+      return this;
+   }
+
+   public boolean hasVariableBeenDeclared(String name){
+      if(null == parentScope){
+         if(variables.containsKey(name)){
+            return true;
+         } else {
+            return false;
+         }
+      }
+      return parentScope.hasVariableBeenDeclared(name);
+   }
+
+   public String toString(){
+      if(keys.size() > 0){
+         String first = keys.remove(0);
+         prepend("var "+first+"="+variables.get(first).toString());
+         for(String key : keys){
+            prepend(","+key+"="+variables.get(key).toString());
+         }
+         prepend(";");
+      }
+      return super.toString();
+   }
 
 }
