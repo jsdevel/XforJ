@@ -60,19 +60,36 @@ GlobalStatements:
 
 
 GlobalStatement:
-   VariableDeclaration
+   GlobalVariableDeclaration
    TemplateDeclaration 
 
-VariableDeclaration:
-   '{variable ' + Name + ValueAssignmet@"Optional" + '}'
+GlobalVariableDeclaration:
+   '{variable ' + Name + GlobalVariableAssignment@"Optional" + '}'
 
-ValueAssignment:
-   ' ' + Value
+GlobalVariableAssignment:
+   ' ' + GlobalExpression
 
-Value:
-   Name
+GlobalExpression:
+   GlobalVariableValue
+   GlobalExpression + Operator + GlobalVariableValue
+
+GlobalVariableValue:
    /[0-9]*/
-   '@' + Name
+   '@' + Namespace
+   /^((['"])((?:(?!\2)(?!\r?\n)(?:\\|\\\r?\n|\\\2|[^\r\n]))*+)\2).*+/@"String"
+   undefined
+   null
+
+Operator:
+   '=='
+   '!='
+   '||'
+   '&&'
+   '+'
+   '-'
+   '%'
+   '*'
+   '/'
 
 TemplateDeclaration:
    '{template ' + Name + '}' + ParamDeclarations + TemplateBody + '{/template}'
@@ -82,14 +99,28 @@ ParamDeclarations:
    ParamDeclarations + ParamDeclaration
 
 ParamDeclaration:
-   '{param ' + Name + ValueAssignment@"Optional" + '}'
-   
+   '{param ' + Name + ParamAssignment@"Optional" + '}'
+
+ParamAssignment:
+   ' ' + ParamExpression
+
+ParamExpression:
+   ParamValue
+   ParamExpression + Operator + ParamValue 
+
+ParamValue:
+   GlobalVariableValue
+   ContextSelector
+
+ContextSelector:
+   Namespace
+
 TemplateBody:
    TemplateBodyStatements
    TemplateBodyStatements + TemplateBody
 
 TemplateBodyStatements:
-   VariableDeclaration
+   VariableDeclarations
    InputTokens
    PrintStatement
    IfStatement
@@ -98,6 +129,24 @@ TemplateBodyStatements:
    ForEachStatement
    ApplyStatement
    TemplateBody
+
+VariableDeclarations:
+   VariableDeclaration
+   VaribleDeclarations + VariableDeclaration
+
+VariableDeclaration:
+   '{variable ' + Name + VariableAssignment@"Optional" + '}'
+
+VariableAssignment:
+   ' ' + VariableExpression
+
+VariableExpression:
+   VariableValue
+   VariableExpression + Operator + VariableValue
+
+VariableValue:
+   GlobalVariableValue
+   ContextSelector
 
 InputTokens:
    /[^{]*/
