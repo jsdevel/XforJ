@@ -15,6 +15,7 @@
  */
 package jsl.strategies;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -48,6 +49,7 @@ public class ProductionContext {
       filePath=absoluteFilePath;
    }
 
+   //NAMESPACE
    public void setNS(String ns) throws Exception {
       if(declaredNamespaces.containsKey(ns)){
          throw new Exception("Namespace \""+ns+"\" has already been declared.");
@@ -56,6 +58,20 @@ public class ProductionContext {
       declaredNamespaces.put(ns, true);
    }
    public String getNS(){return programNamespace;}
+
+   //IMPORTS
+   private static Map<String, Boolean> importedFiles = new HashMap<String, Boolean>();
+   public Output importFile(String path) throws Exception {
+
+      File targetFile = new File(path);
+      String absolutePath = targetFile.getCanonicalPath();
+
+      if(importedFiles.containsKey(absolutePath)){
+         return new Output();
+      }
+      importedFiles.put(absolutePath, true);
+      return JSL.compileFile(path);
+   }
 
    //PRODUCTIONS
    public ProductionContext addProduction(Production add){

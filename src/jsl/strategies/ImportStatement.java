@@ -57,7 +57,7 @@ public class ImportStatement extends Production implements Characters {
                         throw new Exception("Invalid Absolute Path given in: "+pth);
                      }
                   }
-                  output.prepend(jsl.JSL.compileFile(newPath));
+                  output.prepend(context.importFile(newPath));
                   return;
                }
             }

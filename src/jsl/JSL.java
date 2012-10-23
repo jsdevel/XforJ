@@ -38,17 +38,19 @@ public class JSL implements Characters {
 
    public static Output compileFile(String path) {
       File testFile = new File(path);
-      ProductionContext context = new ProductionContext(testFile.getAbsolutePath());
 
       try {
+         String absoluteFilePath = testFile.getCanonicalPath();
+         ProductionContext context = new ProductionContext(absoluteFilePath);
          CharWrapper characters = new CharWrapper(MainUtil.getChars(testFile));
          while(characters.length() > 0){
             context.executeCurrent(characters);
          }
+         return context.output;
       } catch(Exception exc){
          LOGGER.out("Unable to parse \""+testFile.getAbsolutePath()+"\" for the following reason:\n"+exc.getMessage());
          System.exit(UNABLE_TO_PARSE_FILE);
       }
-      return context.output;
+      return null;
    }
 }
