@@ -37,10 +37,12 @@ public interface Characters {
    Pattern IMPORT_PATH = Pattern.compile("^((?:/?(?:\\.\\./)?(?:[^/\\}]++/)*+)?[^/\\}]++).*+");
    Pattern ABSOLUTE_PATH = Pattern.compile("^(/(?:[^/\\}]++/)*+).*+");
 
+   Pattern STRING = Pattern.compile("^((['\"])((?:(?!\\2)(?!\\r?\\n)(?:\\\\\\\\|\\\\\\r?\\n|\\\\\\2|[^\\r\\n]))*+)\\2).*+");
+
 
    Pattern INPUT_TOKENS = Pattern.compile("^([^\\{]++).*+");
 
-   Pattern VARIABLE = Pattern.compile("^(var)(?=\\s).*+");
+   Pattern VARIABLE = Pattern.compile("^(variable)(?=\\s).*+");
    Pattern RESERVED_SEQUENCE = Pattern.compile("^((?:callTemplate|forEach|variable|param|choose|if|import|otherwise|sort|template|when|withParam)\\s++[$_a-zA-Z]).*+");
 
    char open = 123;
