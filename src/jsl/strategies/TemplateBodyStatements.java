@@ -23,20 +23,21 @@ import jsl.*;
  *
  * @author Joseph Spencer
  */
-public class TemplateBodyStatements implements Strategy, Characters {
+public class TemplateBodyStatements extends Production implements Characters {
    Output output;
    public TemplateBodyStatements(Output output) {
+      super(output);
       this.output = output;
    }
    
 
 
    @Override
-   public void execute(CharWrapper characters, StrategyContext context) throws Exception {
+   public void execute(CharWrapper characters, ProductionContext context) throws Exception {
       if(characters.charAt(0) == open){
          //closing
          if(characters.charAt(1) == forward){
-               context.removeStrategy();
+               context.removeProduction();
                return;
          } else {//assuming access to data here;
             characters.shift(1);
@@ -46,7 +47,7 @@ public class TemplateBodyStatements implements Strategy, Characters {
                characters.shift(nm.length());
                output.prepend("bld.append(data."+nm+");");
                characters.shift(1);//close block
-               context.removeStrategy();
+               context.removeProduction();
                return;
             }
          }

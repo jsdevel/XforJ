@@ -23,18 +23,19 @@ import jsl.*;
  *
  * @author Joseph Spencer
  */
-public class TemplateBody implements Strategy, Characters {
+public class TemplateBody extends Production implements Characters {
    private Output output;
    TemplateBody(Output output){
+      super(output);
       this.output=output;
    }
 
    @Override
-   public void execute(CharWrapper characters, StrategyContext context) throws Exception {
+   public void execute(CharWrapper characters, ProductionContext context) throws Exception {
       if(characters.charAt(0) == open && characters.charAt(1) == forward && characters.charAt(2) == t){
-         context.removeStrategy();
+         context.removeProduction();
       } else {
-         context.addStrategy(new TemplateBodyStatements(output));
+         context.addProduction(new TemplateBodyStatements(output));
       }
    }
 }

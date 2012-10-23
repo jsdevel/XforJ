@@ -24,10 +24,11 @@ import jsl.*;
  *
  * @author Joseph Spencer
  */
-public class TemplateDeclaration implements Strategy, Characters {
+public class TemplateDeclaration extends Production implements Characters {
    Output output;
 
    public TemplateDeclaration(Output output) {
+      super(output);
       this.output = output;
    }
 
@@ -35,14 +36,14 @@ public class TemplateDeclaration implements Strategy, Characters {
    private boolean expectingTemplateBody;
 
    @Override
-   public void execute(CharWrapper characters, StrategyContext context) throws Exception {
+   public void execute(CharWrapper characters, ProductionContext context) throws Exception {
       characters.removeSpace();
 
       if(expectingTemplateBody){
          expectingTemplateBody=false;
          Output templateBodyOutput = new Output();
          output.prepend(templateBodyOutput).prepend("return bld.toString()}");
-         context.addStrategy(new TemplateBody(templateBodyOutput));
+         context.addProduction(new TemplateBody(templateBodyOutput));
          return;
       }
       if(characters.charAt(0) == open){
@@ -67,7 +68,7 @@ public class TemplateDeclaration implements Strategy, Characters {
 
                      if(characters.charAt(0) == close){
                         characters.shift(1);
-                        context.addStrategy(new ParamDeclarations(paramDeclarationsOutput));                           
+                        context.addProduction(new ParamDeclarations(paramDeclarationsOutput));                           
                         expectingTemplateBody=true;
                         return;
                      }
@@ -81,7 +82,7 @@ public class TemplateDeclaration implements Strategy, Characters {
                   characters.shift(template.group(1).length());
                   if(characters.charAt(0) == close){
                      characters.shift(1);
-                     context.removeStrategy();
+                     context.removeProduction();
                      return;
                   }
                }

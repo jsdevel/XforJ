@@ -26,7 +26,7 @@ public interface Characters {
    Pattern OPEN_BLOCK = Pattern.compile("^(\\{).*+");
    Pattern CLOSE_BLOCK = Pattern.compile("^(\\}).*+");
 
-   Pattern JSL = Pattern.compile("^(JSL)(?=\\s).*+");
+   Pattern NAMESPACE = Pattern.compile("^(namespace)(?=\\s).*+");
    Pattern CHOOSE = Pattern.compile("^(choose)(?=\\}).*+");
    Pattern IF = Pattern.compile("^(if)(?=\\s|\\}).*+");
    Pattern IMPORT = Pattern.compile("^(import)(?=\\s).*+");
@@ -41,7 +41,6 @@ public interface Characters {
    Pattern INPUT_TOKENS = Pattern.compile("^([^\\{]++).*+");
 
    Pattern VARIABLE = Pattern.compile("^(var)(?=\\s).*+");
-   Pattern NAMESPACE = Pattern.compile("^((?:[a-zA-Z$_][a-zA-Z0-9$_]*+\\.)*+[a-zA-Z$_][a-zA-Z0-9$_]*+).*+");
    Pattern RESERVED_SEQUENCE = Pattern.compile("^((?:callTemplate|forEach|variable|param|choose|if|import|otherwise|sort|template|when|withParam)\\s++[$_a-zA-Z]).*+");
 
    char open = 123;

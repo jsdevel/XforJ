@@ -22,33 +22,37 @@ import jsl.*;
  *
  * @author Joseph Spencer
  */
-public class Program implements Strategy, Characters {
+public class Program extends Production implements Characters {
    private Output output;
    public Program(Output output){
+      super(output);
       this.output=output;
+      output.
+         prepend("(function(){").
+         append("function StringBuffer(){var v=[],i=0;this.append=function(s){v[i++]=s||'';};this.toString=function(){return v.join('');};}})();");
    }
 
    private boolean hasJSLNamespace;
    private boolean hasTemplates;
 
    @Override
-   public void execute(CharWrapper characters, StrategyContext context) throws Exception {
+   public void execute(CharWrapper characters, ProductionContext context) throws Exception {
       String exception = "The opening of JSL templtes must be a JSL declaration.";
 
       if(characters.charAt(0) == open && !hasJSLNamespace){
          hasJSLNamespace=true;
-         context.addStrategy(new JSLNamespace(output));
+         context.addProduction(new ProgramNamespace(output));
          return;
       } else if(hasJSLNamespace){
          characters.removeSpace();
          if(characters.charAt(0) == open){
             if(!hasTemplates){
                if(characters.charAt(1) == i){
-                  context.addStrategy(new ImportStatements(output));
+                  context.addProduction(new ImportStatements(output));
                   return;
                }
             }
-            context.addStrategy(new GlobalStatements(output));
+            context.addProduction(new GlobalStatements(output));
             return;
          }
       }

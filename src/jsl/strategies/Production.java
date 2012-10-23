@@ -1,5 +1,5 @@
 /*
- * Copyright 2012 Joseph Spencer.
+ * Copyright 2012 Joseph Spencer
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package jsl.strategies;
 
 import jsl.*;
@@ -22,22 +21,11 @@ import jsl.*;
  *
  * @author Joseph Spencer
  */
-public class ParamDeclarations extends Production implements Characters {
-   VariableOutput output;
-
-   public ParamDeclarations(VariableOutput output) {
-      super(output);
+public abstract class Production {
+   Output output;
+   public Production(Output output) {
       this.output = output;
    }
 
-   @Override
-   public void execute(CharWrapper characters, ProductionContext context) throws Exception {
-      characters.removeSpace();
-      if(characters.charAt(0) == open && characters.charAt(1) == p){
-
-      } else {
-         context.removeProduction();
-      }
-   }
-
+   abstract void execute(CharWrapper characters, ProductionContext context) throws Exception;
 }

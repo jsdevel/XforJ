@@ -1,5 +1,5 @@
 /*
- * Copyright 2012 Joseph Spencer
+ * Copyright 2012 Joseph Spencer.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,14 +13,29 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package jsl.strategies;
 
+import java.util.regex.Matcher;
 import jsl.*;
 
 /**
  *
  * @author Joseph Spencer
  */
-public interface Strategy {
-   void execute(CharWrapper characters, StrategyContext context) throws Exception;
+public class NameSpace extends Production implements Characters {
+   Output output;
+   public NameSpace(Output output) {
+      super(output);
+      this.output = output;
+   }
+
+   @Override
+   public void execute(CharWrapper characters, ProductionContext context) throws Exception {
+      Matcher name = characters.match(NAME);
+      if(name.find()){
+
+      }
+   }
+
 }

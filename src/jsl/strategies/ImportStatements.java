@@ -22,18 +22,19 @@ import jsl.*;
  *
  * @author Joseph Spencer
  */
-public class ImportStatements implements Strategy, Characters {
+public class ImportStatements extends Production implements Characters {
    Output output;
    public ImportStatements(Output output) {
+      super(output);
       this.output=output;
    }
    
    @Override
-   public void execute(CharWrapper characters, StrategyContext context) throws Exception {
+   public void execute(CharWrapper characters, ProductionContext context) throws Exception {
       if(characters.charAt(0) == open && characters.charAt(1) == i){
-         context.addStrategy(new ImportStatement(output));
+         context.addProduction(new ImportStatement(output));
       } else {
-         context.removeStrategy();
+         context.removeProduction();
       }
    }
 }

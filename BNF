@@ -35,13 +35,10 @@
 # Terminals.  The regex flavor of choice is Perl.
 
 Program:
-   JSLNamespace
-   ImportStatements@"Optional"
-   GlobalStatements
+   ProgramNamespace + ImportStatements@"Optional" + GlobalStatements
 
-
-JSLNamespace:
-   '{JSL ' + Namespace + '}'
+ProgramNamespace:
+   '{namespace ' + Namespace + '}'
 
 Namespace:
    Name

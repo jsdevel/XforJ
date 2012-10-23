@@ -22,17 +22,18 @@ import jsl.*;
  *
  * @author Joseph Spencer
  */
-public class GlobalStatements implements Strategy, Characters {
+public class GlobalStatements extends Production implements Characters {
    Output output;
 
    public GlobalStatements(Output output) {
+      super(output);
       this.output = output;
    }
 
    @Override
-   public void execute(CharWrapper characters, StrategyContext context) throws Exception {
+   public void execute(CharWrapper characters, ProductionContext context) throws Exception {
       if(characters.charAt(0) == open){
-         context.addStrategy(new GlobalStatement(output));
+         context.addProduction(new GlobalStatement(output));
       } else if(!characters.removeSpace()){
          throw new Exception("Invalid character found while evaluating GlobalStatements.");
       }

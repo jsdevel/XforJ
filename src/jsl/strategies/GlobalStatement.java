@@ -22,27 +22,28 @@ import jsl.*;
  *
  * @author Joseph Spencer
  */
-public class GlobalStatement implements Strategy, Characters {
+public class GlobalStatement extends Production implements Characters {
    Output output;
 
    GlobalStatement(Output output){
+      super(output);
       this.output= output;
    }
 
    @Override
-   public void execute(CharWrapper characters, StrategyContext context) throws Exception {
+   public void execute(CharWrapper characters, ProductionContext context) throws Exception {
       if(characters.charAt(0) == open){
          switch(characters.charAt(1)){
          case v:
             break;
          case t:
-            context.addStrategy(new TemplateDeclaration(output)); 
+            context.addProduction(new TemplateDeclaration(output)); 
             break;
          default:
             throw new Exception("Invalid character found while evaluating GlobalStatement.");
          }
       } else {
-         context.removeStrategy();
+         context.removeProduction();
          return;
       }
    }

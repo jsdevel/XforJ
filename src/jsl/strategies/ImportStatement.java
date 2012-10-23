@@ -24,14 +24,15 @@ import jsl.Output;
  *
  * @author Joseph Spencer
  */
-public class ImportStatement implements Strategy, Characters {
+public class ImportStatement extends Production implements Characters {
    Output output;
    public ImportStatement(Output output) {
+      super(output);
       this.output=output;
    }
 
    @Override
-   public void execute(CharWrapper characters, StrategyContext context) throws Exception {
+   public void execute(CharWrapper characters, ProductionContext context) throws Exception {
       if(characters.charAt(0) == open && characters.charAt(1) == i){
          characters.shift(1);
          Matcher _import = characters.match(IMPORT);       
@@ -63,6 +64,6 @@ public class ImportStatement implements Strategy, Characters {
          }
          throw new Exception("Invalid Statement found while parsing ImportStatement.");
       }
-      context.removeStrategy();
+      context.removeProduction();
    }
 }

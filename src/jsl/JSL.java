@@ -38,7 +38,7 @@ public class JSL implements Characters {
 
    public static Output compileFile(String path) {
       File testFile = new File(path);
-      StrategyContext context = new StrategyContext(testFile.getAbsolutePath());
+      ProductionContext context = new ProductionContext(testFile.getAbsolutePath());
 
       try {
          CharWrapper characters = new CharWrapper(MainUtil.getChars(testFile));
