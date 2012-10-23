@@ -41,13 +41,18 @@ public class GlobalVariableDeclaration extends Production {
          if(variable.find()){
             characters.shift(variable.group(1).length());
 
-            Matcher name = characters.match(NAME);
-            if(name.find()){
-               String newVar = name.group(1);
-               characters.shift(newVar.length());
-               Output expressionOutput = new Output();
-               variableOutput.add(newVar, expressionOutput);
-               context.addProduction(new GlobalVariableAssignment(expressionOutput));
+            if(characters.removeSpace()){
+               Matcher name = characters.match(NAME);
+               if(name.find()){
+                  String newVar = name.group(1);
+                  characters.shift(newVar.length());
+                  Output expressionOutput = new Output();
+                  variableOutput.add(newVar, expressionOutput);
+                  if(characters.removeSpace()){
+                     context.addProduction(new GlobalVariableAssignment(expressionOutput));
+                  }
+                  return;
+               }
             }
          }
       } else if(hasOpen && characters.charAt(0) == close){
