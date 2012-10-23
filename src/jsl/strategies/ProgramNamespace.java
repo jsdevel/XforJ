@@ -59,11 +59,11 @@ public class ProgramNamespace extends Production {
                      } else {
                         builtNS+="."+split[i];
                         output.prepend("if(!"+builtNS+")"+
-                           ((i==(len-1))?"currentNS=":"")+
                            builtNS+"={};"
                         );
                      }
                   }
+                  output.prepend("currentNS="+builtNS+";");
 
                   if(characters.charAt(0) == close){
                      characters.shift(1);

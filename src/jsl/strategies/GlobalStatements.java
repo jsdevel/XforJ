@@ -28,13 +28,23 @@ public class GlobalStatements extends Production {
       super(output);
    }
 
+   private boolean hasStatements;
+
    @Override
    public void execute(CharWrapper characters, ProductionContext context) throws Exception {
       if(characters.charAt(0) == open){
          output.prepend(variableOutput);
+         hasStatements=true;
          context.addProduction(new GlobalStatement(variableOutput, output));
       } else if(!characters.removeSpace()){
          throw new Exception("Invalid character found while evaluating GlobalStatements.");
+      }
+   }
+
+   @Override
+   public void close(ProductionContext context){
+      if(!hasStatements){
+         LOGGER.warn("No Statements found in: \""+context.filePath+"\".");
       }
    }
 

@@ -88,4 +88,12 @@ public class ProductionContext {
       currentProduction.execute(wrap, this);
       return this;
    }
+
+   //CLOSING
+   public void close() throws Exception {
+      int size = productionStack.size();
+      for(int i = size-1;i>-1;i--){
+         productionStack.get(i).close(this);
+      }
+   }
 }

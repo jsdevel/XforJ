@@ -28,4 +28,8 @@ public abstract class Production implements Characters {
    }
 
    abstract void execute(CharWrapper characters, ProductionContext context) throws Exception;
+
+   public void close(ProductionContext context) throws Exception {
+      throw new Exception("Unable to close: \""+this.getClass().getSimpleName()+"\"");
+   }
 }

@@ -46,6 +46,7 @@ public class JSL implements Characters {
          while(characters.length() > 0){
             context.executeCurrent(characters);
          }
+         context.close();
          return context.output;
       } catch(Exception exc){
          LOGGER.out("Unable to parse \""+testFile.getAbsolutePath()+"\" for the following reason:\n"+exc.getMessage());

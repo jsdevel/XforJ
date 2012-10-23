@@ -60,7 +60,7 @@ public class TemplateDeclaration extends Production {
 
                      characters.shift(nm.length());
                      output.
-                        prepend(context.getNS()+"."+nm+"="+nm+";function "+nm+"(_data, _params){var data=_data||{},bld=new StringBuffer();").
+                        prepend("currentNS."+nm+"="+nm+";function "+nm+"(_data, _params){var data=_data||{},bld=new StringBuffer();").
                         prepend(paramDeclarationsOutput);
 
                      if(characters.charAt(0) == close){

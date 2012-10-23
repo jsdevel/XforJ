@@ -30,18 +30,18 @@ public class Program extends Production {
          append("function StringBuffer(){var v=[],i=0;this.append=function(s){v[i++]=s||'';};this.toString=function(){return v.join('');};}})();");
    }
 
-   private boolean hasJSLNamespace;
+   private boolean hasProgramNamespace;
    private boolean hasTemplates;
 
    @Override
    public void execute(CharWrapper characters, ProductionContext context) throws Exception {
       String exception = "The opening of JSL templtes must be a JSL declaration.";
 
-      if(characters.charAt(0) == open && !hasJSLNamespace){
-         hasJSLNamespace=true;
+      if(characters.charAt(0) == open && !hasProgramNamespace){
+         hasProgramNamespace=true;
          context.addProduction(new ProgramNamespace(output));
          return;
-      } else if(hasJSLNamespace){
+      } else if(hasProgramNamespace){
          characters.removeSpace();
          if(characters.charAt(0) == open){
             if(!hasTemplates){
@@ -55,5 +55,12 @@ public class Program extends Production {
          }
       }
       throw new Exception(exception);
+   }
+
+   @Override
+   public void close(ProductionContext context) throws Exception {
+      if(!hasProgramNamespace){
+         throw new Exception("No ProgramNamespace was declared in: \""+context.filePath+"\"");
+      }
    }
 }
