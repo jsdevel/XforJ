@@ -22,12 +22,9 @@ import jsl.*;
  *
  * @author Joseph Spencer
  */
-public class ParamDeclarations extends Production implements Characters {
-   VariableOutput output;
-
+public class ParamDeclarations extends Production {
    public ParamDeclarations(VariableOutput output) {
       super(output);
-      this.output = output;
    }
 
    @Override

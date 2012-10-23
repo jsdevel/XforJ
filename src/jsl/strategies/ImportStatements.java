@@ -22,11 +22,9 @@ import jsl.*;
  *
  * @author Joseph Spencer
  */
-public class ImportStatements extends Production implements Characters {
-   Output output;
+public class ImportStatements extends Production {
    public ImportStatements(Output output) {
       super(output);
-      this.output=output;
    }
    
    @Override

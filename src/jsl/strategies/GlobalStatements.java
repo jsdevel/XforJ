@@ -22,18 +22,17 @@ import jsl.*;
  *
  * @author Joseph Spencer
  */
-public class GlobalStatements extends Production implements Characters {
-   Output output;
-
+public class GlobalStatements extends Production {
+   VariableOutput variableOutput = new VariableOutput();
    public GlobalStatements(Output output) {
       super(output);
-      this.output = output;
    }
 
    @Override
    public void execute(CharWrapper characters, ProductionContext context) throws Exception {
       if(characters.charAt(0) == open){
-         context.addProduction(new GlobalStatement(output));
+         output.prepend(variableOutput);
+         context.addProduction(new GlobalStatement(variableOutput, output));
       } else if(!characters.removeSpace()){
          throw new Exception("Invalid character found while evaluating GlobalStatements.");
       }

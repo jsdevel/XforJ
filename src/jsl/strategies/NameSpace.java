@@ -23,11 +23,9 @@ import jsl.*;
  *
  * @author Joseph Spencer
  */
-public class NameSpace extends Production implements Characters {
-   Output output;
+public class NameSpace extends Production {
    public NameSpace(Output output) {
       super(output);
-      this.output = output;
    }
 
    @Override

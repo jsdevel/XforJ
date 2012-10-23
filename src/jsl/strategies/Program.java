@@ -22,11 +22,9 @@ import jsl.*;
  *
  * @author Joseph Spencer
  */
-public class Program extends Production implements Characters {
-   private Output output;
+public class Program extends Production {
    public Program(Output output){
       super(output);
-      this.output=output;
       output.
          prepend("(function(){").
          append("function StringBuffer(){var v=[],i=0;this.append=function(s){v[i++]=s||'';};this.toString=function(){return v.join('');};}})();");

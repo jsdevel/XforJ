@@ -22,12 +22,11 @@ import jsl.*;
  *
  * @author Joseph Spencer
  */
-public class GlobalStatement extends Production implements Characters {
-   Output output;
-
-   GlobalStatement(Output output){
+public class GlobalStatement extends Production {
+   VariableOutput variableOutput;
+   GlobalStatement(VariableOutput variableOutput, Output output){
       super(output);
-      this.output= output;
+      this.variableOutput= variableOutput;
    }
 
    @Override
@@ -35,6 +34,7 @@ public class GlobalStatement extends Production implements Characters {
       if(characters.charAt(0) == open){
          switch(characters.charAt(1)){
          case v:
+            context.addProduction(new GlobalVariableDeclaration(variableOutput, output));
             break;
          case t:
             context.addProduction(new TemplateDeclaration(output)); 

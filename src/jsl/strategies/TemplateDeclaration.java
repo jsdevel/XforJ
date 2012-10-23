@@ -24,12 +24,9 @@ import jsl.*;
  *
  * @author Joseph Spencer
  */
-public class TemplateDeclaration extends Production implements Characters {
-   Output output;
-
+public class TemplateDeclaration extends Production {
    public TemplateDeclaration(Output output) {
       super(output);
-      this.output = output;
    }
 
    private boolean isOpened;
@@ -63,7 +60,7 @@ public class TemplateDeclaration extends Production implements Characters {
 
                      characters.shift(nm.length());
                      output.
-                        prepend(context.getNS()+"."+nm+"="+nm+";function "+nm+"(_data, _params){var data=_data||{},params=_params||{},bld=new StringBuffer();").
+                        prepend(context.getNS()+"."+nm+"="+nm+";function "+nm+"(_data, _params){var data=_data||{},bld=new StringBuffer();").
                         prepend(paramDeclarationsOutput);
 
                      if(characters.charAt(0) == close){

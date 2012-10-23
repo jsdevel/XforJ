@@ -21,8 +21,8 @@ import jsl.*;
  *
  * @author Joseph Spencer
  */
-public abstract class Production {
-   Output output;
+public abstract class Production implements Characters {
+   protected Output output;
    public Production(Output output) {
       this.output = output;
    }

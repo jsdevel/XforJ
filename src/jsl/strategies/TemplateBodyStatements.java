@@ -23,11 +23,9 @@ import jsl.*;
  *
  * @author Joseph Spencer
  */
-public class TemplateBodyStatements extends Production implements Characters {
-   Output output;
+public class TemplateBodyStatements extends Production {
    public TemplateBodyStatements(Output output) {
       super(output);
-      this.output = output;
    }
    
 

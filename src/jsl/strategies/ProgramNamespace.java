@@ -23,11 +23,9 @@ import jsl.*;
  *
  * @author Joseph Spencer
  */
-public class ProgramNamespace extends Production implements Characters {
-   Output output;
+public class ProgramNamespace extends Production {
    ProgramNamespace(Output output){
       super(output);
-      this.output = output;
    }
 
    private Pattern NS = Pattern.compile("^((?:[a-zA-Z$_][a-zA-Z0-9$_]*+\\.)*+[a-zA-Z$_][a-zA-Z0-9$_]*+).*+");

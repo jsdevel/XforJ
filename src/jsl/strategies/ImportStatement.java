@@ -24,11 +24,9 @@ import jsl.Output;
  *
  * @author Joseph Spencer
  */
-public class ImportStatement extends Production implements Characters {
-   Output output;
+public class ImportStatement extends Production {
    public ImportStatement(Output output) {
       super(output);
-      this.output=output;
    }
 
    @Override
