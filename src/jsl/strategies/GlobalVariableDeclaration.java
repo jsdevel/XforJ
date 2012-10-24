@@ -35,7 +35,6 @@ public class GlobalVariableDeclaration extends Production {
       characters.removeSpace();
       if(!hasOpen && characters.charAt(0) == open){
          hasOpen=true;
-         characters.shift(1);
          Matcher variable = characters.match(VARIABLE);
          if(variable.find()){
             characters.shift(variable.group(1).length());
@@ -55,6 +54,7 @@ public class GlobalVariableDeclaration extends Production {
                }
             }
          }
+         context.removeProduction();
       } else if(hasOpen && characters.charAt(0) == close){
          characters.shift(1);
          context.removeProduction();

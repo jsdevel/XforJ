@@ -31,18 +31,12 @@ public class TemplateDeclaration extends Production {
 
    private boolean isOpened;
    private boolean expectingTemplateBody;
+   private boolean allowVariableDeclarations;
 
    @Override
    public void execute(CharWrapper characters, ProductionContext context) throws Exception {
       characters.removeSpace();
 
-      if(expectingTemplateBody){
-         expectingTemplateBody=false;
-         Output templateBodyOutput = new Output();
-         output.prepend(templateBodyOutput).prepend("return bld.toString()}");
-         context.addProduction(new TemplateBody(templateBodyOutput));
-         return;
-      }
       if(characters.charAt(0) == open){
          if(!isOpened){
             isOpened=true;
@@ -66,26 +60,39 @@ public class TemplateDeclaration extends Production {
                      if(characters.charAt(0) == close){
                         characters.shift(1);
                         context.addProduction(new ParamDeclarations(context.getCurrentVariableOutput()));                           
+
+                        allowVariableDeclarations=true;
                         expectingTemplateBody=true;
                         return;
                      }
                   }
                }
             }
+         } else if(allowVariableDeclarations && characters.charAt(1) == v){
+            context.addProduction(new VariableDeclarations(context.getCurrentVariableOutput()));
+            allowVariableDeclarations=false;
+            return;
          } else if(characters.charAt(1) == forward && characters.charAt(2) == t){
-               characters.shift(2);
-               Matcher template = characters.match(TEMPLATE);
-               if(template.find()){
-                  characters.shift(template.group(1).length());
-                  if(characters.charAt(0) == close){
-                     characters.shift(1);
-                     context.removeProduction();
-                     context.removeVariableOutput();
-                     return;
-                  }
+            characters.shift(2);
+            Matcher template = characters.match(TEMPLATE);
+            if(template.find()){
+               characters.shift(template.group(1).length());
+               if(characters.charAt(0) == close){
+                  characters.shift(1);
+                  context.removeProduction();
+                  context.removeVariableOutput();
+                  return;
                }
-            } 
+            }
+         } 
+      } else if(expectingTemplateBody){
+         expectingTemplateBody=false;
+         Output templateBodyOutput = new Output();
+         output.prepend(templateBodyOutput).prepend("return bld.toString()}");
+         context.addProduction(new TemplateBody(templateBodyOutput));
+         return;
       }
+
       throw new Exception("Invalid Character found while evaluating TemplateDeclaration.");
    }
 }

@@ -120,10 +120,15 @@ VariableValue:
    ContextSelector
 
 ContextSelector:
-   Name
-   /[0-9]+/
    Namespace
-   ContextSelector + '[' + ContextSelector + ']' + NameSpace@"Optional"
+   'position()'
+   'last()'
+   'count(' + ContextSelector + ')'
+   ContextSelector + '[' + ContextExpression + ']' + NameSpace@"Optional"
+
+ContextExpression:
+   VariableValue
+   ContextExpression + Operator + VariableValue
 
 TemplateBody:
    TemplateBodyStatements

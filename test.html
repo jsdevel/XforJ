@@ -1,5 +1,8 @@
 {namespace rms.people.cousins}
-{import src/jsl/test_2.html}
+
+{variable oo}
+{variable boo 5 === @oo }
+{variable soo 5 === @oo }
 
 {template showPeople}
    Hello there! 
@@ -8,9 +11,13 @@
    <h2>{dan}</h2>
 {/template}
 
+
 {template showProperties}
-   Hello there! 
+   {param boo 4 ||5 &&3}
+   {param soo}
+   {variable joo 4}
+   Hello there!
    
    {boo}
-   <h2 id="asdf">{dan}</h2>
-{/template}
+   <h2 id="asdf">{coo}</h2>
+{/template}}

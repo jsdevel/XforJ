@@ -26,6 +26,7 @@ public interface Characters {
    Pattern OPEN_BLOCK = Pattern.compile("^(\\{).*+");
    Pattern CLOSE_BLOCK = Pattern.compile("^(\\}).*+");
 
+   //RESERVED WORDS
    Pattern CHOOSE = Pattern.compile("^(choose)(?=\\}).*+");
    Pattern IF = Pattern.compile("^(if)(?=\\s|\\}).*+");
    Pattern IMPORT = Pattern.compile("^(import)(?=\\s).*+");
@@ -33,9 +34,14 @@ public interface Characters {
    Pattern NAMESPACE = Pattern.compile("^(namespace)(?=\\s).*+");
    Pattern NULL = Pattern.compile("^(null)(?![a-zA-Z0-9$_@'\"]).*+");
    Pattern OTHERWISE = Pattern.compile("^(otherwise)(?=\\}).*+");
-   Pattern PARAM = Pattern.compile("^(\\{param\\s).*+");
    Pattern TEMPLATE = Pattern.compile("^(template)(?=\\s|\\}).*+");
    Pattern WHEN = Pattern.compile("^(when)(?=\\s|\\}).*+");
+
+   //For now these two have the { at the beginning.  This probably needs to 
+   //change in the future, but for now it allows the other keywords to test
+   //directly on char rather than instantiating a Matcher.
+   Pattern PARAM = Pattern.compile("^(\\{param\\s).*+");
+   Pattern VARIABLE = Pattern.compile("^(\\{variable)(?=\\s).*+");
 
    Pattern IMPORT_PATH = Pattern.compile("^((?:/?(?:\\.\\./)?(?:[^/\\}]++/)*+)?[^/\\}]++).*+");
    Pattern ABSOLUTE_PATH = Pattern.compile("^(/(?:[^/\\}]++/)*+).*+");
@@ -48,7 +54,6 @@ public interface Characters {
 
    Pattern INPUT_TOKENS = Pattern.compile("^([^\\{]++).*+");
 
-   Pattern VARIABLE = Pattern.compile("^(variable)(?=\\s).*+");
 
    //SPACE
    char LF = 10;

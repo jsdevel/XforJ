@@ -23,16 +23,14 @@ import jsl.*;
  *
  * @author Joseph Spencer
  */
-public class ParamDeclaration extends AbstractVariableDeclaration {
-   VariableOutput variableOutput;
-   public ParamDeclaration(VariableOutput variableOutput) {
-      super(variableOutput);
-      this.variableOutput=variableOutput;
+public class VariableDeclaration extends AbstractVariableDeclaration {
+   public VariableDeclaration(Output output) {
+      super(output);
    }
-
+   
    @Override
    protected Pattern getPattern() {
-      return PARAM;
+      return VARIABLE;
    }
 
    @Override
@@ -41,20 +39,16 @@ public class ParamDeclaration extends AbstractVariableDeclaration {
    }
 
    @Override
-   protected void doAssignment(String name, Output output) {
-      output.prepend("_prams."+name+"||");
-   }
+   protected void doAssignment(String name, Output output) throws Exception {}
 
    @Override
    protected void doNoAssignment(String name, ProductionContext context) throws Exception {
-      context.getCurrentVariableOutput().add(name, "_params."+name);
+      context.getCurrentVariableOutput().add(name, "");
    }
 
    @Override
    protected String getErrorMsg() {
-      return "Invalid ParamDeclaration.";
+      return "Invalid VariableDeclaration.";
    }
-
-   
 
 }

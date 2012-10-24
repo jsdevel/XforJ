@@ -16,47 +16,20 @@
 
 package jsl.strategies;
 
-import java.util.regex.Matcher;
 import jsl.*;
 
 /**
  *
  * @author Joseph Spencer
  */
-public class VariableValue extends GlobalVariableValue {
-   public VariableValue(Output output) {
+public class ContextSelector extends Production {
+   public ContextSelector(Output output) {
       super(output);
    }
 
    @Override
    void execute(CharWrapper characters, ProductionContext context) throws Exception {
-      Matcher match;
-      characters.removeSpace();
-      switch(characters.charAt(0)){
-      case at:
-      case squote:
-      case quote:
-      case zero:
-      case one:
-      case two:
-      case three:
-      case four:
-      case five:
-      case six:
-      case seven:
-      case eight:
-      case nine:
-         super.execute(characters, context);
-         break;
-      case n:
-         match = characters.match(NULL);
-         if(match.find()){
-            super.execute(characters, context);
-            break;
-         }
-      default:
-         context.removeProduction();
-         context.addProduction(new ContextSelector(output));
-      }
+      throw new UnsupportedOperationException("Not supported yet.");
    }
+
 }
