@@ -37,6 +37,9 @@ public interface Characters {
    Pattern IMPORT_PATH = Pattern.compile("^((?:/?(?:\\.\\./)?(?:[^/\\}]++/)*+)?[^/\\}]++).*+");
    Pattern ABSOLUTE_PATH = Pattern.compile("^(/(?:[^/\\}]++/)*+).*+");
 
+
+   Pattern INTEGER = Pattern.compile("^((?:[0-9]++)(?!\\.)).*+");
+   Pattern DECIMAL = Pattern.compile("^(0x[0-9A-Fa-f]++(?:[eE][+-][0-9]++)?|(?:0(?=\\.)|[1-9][0-9]*+)(?:\\.?[0-9]*+[eE][+-][0-9]++|\\.[0-9]++(?:[eE][+-][0-9]++)?)).*+");
    Pattern STRING = Pattern.compile("^((['\"])((?:(?!\\2)(?!\\r?\\n)(?:\\\\\\\\|\\\\\\r?\\n|\\\\\\2|[^\\r\\n]))*+)\\2).*+");
 
 
@@ -81,4 +84,15 @@ public interface Characters {
    char x = 120;
    char y = 121;
    char z = 122;
+
+   char zero = 48;
+   char one = 49;
+   char two = 50;
+   char three = 51;
+   char four = 52;
+   char five = 53;
+   char six = 54;
+   char seven = 55;
+   char eight = 56;
+   char nine = 57;
 }
