@@ -27,7 +27,22 @@ public class Program extends Production {
       super(output);
       output.
          prepend("(function(){").
-         append("function StringBuffer(){var v=[],i=0;this.append=function(s){v[i++]=s||'';};this.toString=function(){return v.join('');};}})();");
+         append("function StringBuffer(){var v=[],i=0;this.append=function(s){v[i++]=s||'';};this.toString=function(){return v.join('');};}})();").
+         append(
+            "function count(obj){"+
+               "var count=0;"+
+               "var name;"+
+               "if(!!obj && typeof obj === 'object'){"+
+                  "if(obj.slice){"+
+                     "return obj.length>>>0;"+
+                  "} else {"+
+                  "for(name in obj){"+
+                     "count++;"+
+                  "}"+
+               "}"+
+               "return count;"+
+            "}"
+         );
    }
 
    private boolean hasProgramNamespace;
