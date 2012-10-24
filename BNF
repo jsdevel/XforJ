@@ -75,9 +75,8 @@ GlobalExpression:
 
 GlobalVariableValue:
    /[0-9]*/
-   '@' + Namespace
+   '@' + Name
    /^((['"])((?:(?!\2)(?!\r?\n)(?:\\|\\\r?\n|\\\2|[^\r\n]))*+)\2).*+/@"String"
-   undefined
    null
 
 Operator:

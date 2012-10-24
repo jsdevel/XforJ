@@ -58,6 +58,16 @@ public class VariableOutput extends Output {
       return parentScope.hasVariableBeenDeclared(name);
    }
 
+   public boolean lastVariableNameEquals(String name){
+      int size = keys.size();
+      if(size > 0){
+         String lastName = keys.get(size-1);
+         return lastName.equals(name);
+      }
+      return false;
+   }
+
+   @Override
    public String toString(){
       if(keys.size() > 0){
          String first = keys.remove(0);

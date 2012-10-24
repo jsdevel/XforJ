@@ -23,8 +23,10 @@ import jsl.*;
  * @author Joseph Spencer
  */
 public class GlobalExpression extends Production {
-   public GlobalExpression(Output output) {
+   VariableOutput variableOutput;
+   public GlobalExpression(VariableOutput variableOutput, Output output) {
       super(output);
+      this.variableOutput=variableOutput;
    }
 
    private boolean hasOperator=false;
@@ -37,7 +39,7 @@ public class GlobalExpression extends Production {
          if(hasValue == false || hasOperator){//Go to Value
             hasOperator=false;
             hasValue=true;
-            context.addProduction(new GlobalVariableValue(output));
+            context.addProduction(new GlobalVariableValue(variableOutput, output));
             return;
          } else if(hasValue){//Go to Operator
             hasOperator=true;

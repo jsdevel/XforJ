@@ -50,7 +50,7 @@ public class GlobalVariableDeclaration extends Production {
                   Output expressionOutput = new Output();
                   variableOutput.add(newVar, expressionOutput);
                   if(characters.removeSpace()){
-                     context.addProduction(new GlobalVariableAssignment(expressionOutput));
+                     context.addProduction(new GlobalVariableAssignment(variableOutput, expressionOutput));
                   }
                   return;
                }
