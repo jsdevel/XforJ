@@ -25,8 +25,10 @@ import jsl.*;
  * @author Joseph Spencer
  */
 public class TemplateDeclaration extends Production {
-   public TemplateDeclaration(Output output) {
+   VariableOutput variableOutput;
+   public TemplateDeclaration(VariableOutput variableOutput, Output output) {
       super(output);
+      this.variableOutput=new VariableOutput(variableOutput);
    }
 
    private boolean isOpened;
@@ -40,7 +42,7 @@ public class TemplateDeclaration extends Production {
          expectingTemplateBody=false;
          Output templateBodyOutput = new Output();
          output.prepend(templateBodyOutput).prepend("return bld.toString()}");
-         context.addProduction(new TemplateBody(templateBodyOutput));
+         context.addProduction(new TemplateBody(variableOutput, templateBodyOutput));
          return;
       }
       if(characters.charAt(0) == open){
@@ -56,16 +58,15 @@ public class TemplateDeclaration extends Production {
                   Matcher name = characters.match(NAME);
                   if(name.find()){
                      String nm = name.group(1);
-                     VariableOutput paramDeclarationsOutput = new VariableOutput();
 
                      characters.shift(nm.length());
                      output.
                         prepend("currentNS."+nm+"=$"+nm+";function $"+nm+"(_data, _params){var data=_data||{},bld=new StringBuffer();").
-                        prepend(paramDeclarationsOutput);
+                        prepend(variableOutput);
 
                      if(characters.charAt(0) == close){
                         characters.shift(1);
-                        context.addProduction(new ParamDeclarations(paramDeclarationsOutput));                           
+                        context.addProduction(new ParamDeclarations(variableOutput));                           
                         expectingTemplateBody=true;
                         return;
                      }

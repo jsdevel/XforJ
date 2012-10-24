@@ -1,5 +1,5 @@
 /*
- * Copyright 2012 Joseph Spencer
+ * Copyright 2012 Joseph Spencer.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,29 +13,22 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package jsl.strategies;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 import jsl.*;
 
 /**
  *
  * @author Joseph Spencer
  */
-public class TemplateBody extends Production {
-   VariableOutput variableOutput;
-   TemplateBody(VariableOutput variableOutput, Output output){
+public class ParamAssignment extends Production {
+   public ParamAssignment(Output output) {
       super(output);
-      this.variableOutput=variableOutput;
    }
-
+   
    @Override
-   public void execute(CharWrapper characters, ProductionContext context) throws Exception {
-      if(characters.charAt(0) == open && characters.charAt(1) == forward && characters.charAt(2) == t){
-         context.removeProduction();
-      } else {
-         context.addProduction(new TemplateBodyStatements(output));
-      }
+   void execute(CharWrapper characters, ProductionContext context) throws Exception {
+      throw new UnsupportedOperationException("Not supported yet.");
    }
 }

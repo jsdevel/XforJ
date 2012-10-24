@@ -26,7 +26,7 @@ import java.util.Map;
  */
 public class VariableOutput extends Output {
    private VariableOutput parentScope;
-   protected Map<String, Output> variables = new HashMap<String, Output>();
+   protected Map<String, Object> variables = new HashMap<String, Object>();
    protected ArrayList<String> keys = new ArrayList<>();
 
    public VariableOutput() {}
@@ -35,7 +35,7 @@ public class VariableOutput extends Output {
       this.parentScope = parentScope;
    }
 
-   public VariableOutput add(String name, Output value) throws Exception {
+   public VariableOutput add(String name, Object value) throws Exception {
       if(variables.containsKey("__"+name)){
          throw new Exception("The following variable has been declared twice: "+name);
       }

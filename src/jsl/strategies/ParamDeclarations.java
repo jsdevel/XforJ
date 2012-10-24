@@ -16,6 +16,7 @@
 
 package jsl.strategies;
 
+import java.util.regex.Matcher;
 import jsl.*;
 
 /**
@@ -23,18 +24,23 @@ import jsl.*;
  * @author Joseph Spencer
  */
 public class ParamDeclarations extends Production {
-   public ParamDeclarations(VariableOutput output) {
-      super(output);
+   VariableOutput variableOutput;
+   public ParamDeclarations(VariableOutput variableOutput) {
+      super(variableOutput);
+      this.variableOutput=variableOutput;
    }
 
    @Override
    public void execute(CharWrapper characters, ProductionContext context) throws Exception {
       characters.removeSpace();
       if(characters.charAt(0) == open && characters.charAt(1) == p){
-
-      } else {
-         context.removeProduction();
+         Matcher param = characters.match(PARAM);
+         if(param.find()){
+            context.addProduction(new ParamDeclaration(variableOutput));
+            return;
+         }
       }
+      context.removeProduction();
    }
 
 }

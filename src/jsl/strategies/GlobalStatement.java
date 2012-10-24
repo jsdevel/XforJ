@@ -37,7 +37,7 @@ public class GlobalStatement extends Production {
             context.addProduction(new GlobalVariableDeclaration(variableOutput, output));
             break;
          case t:
-            context.addProduction(new TemplateDeclaration(output)); 
+            context.addProduction(new TemplateDeclaration(variableOutput, output)); 
             break;
          default:
             throw new Exception("Invalid character found while evaluating GlobalStatement.");

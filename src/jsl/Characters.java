@@ -33,7 +33,7 @@ public interface Characters {
    Pattern NAMESPACE = Pattern.compile("^(namespace)(?=\\s).*+");
    Pattern NULL = Pattern.compile("^(null)(?![a-zA-Z0-9$_@'\"]).*+");
    Pattern OTHERWISE = Pattern.compile("^(otherwise)(?=\\}).*+");
-   Pattern PARAM = Pattern.compile("^\\{param\\s.*+");
+   Pattern PARAM = Pattern.compile("^(\\{param\\s).*+");
    Pattern TEMPLATE = Pattern.compile("^(template)(?=\\s|\\}).*+");
    Pattern WHEN = Pattern.compile("^(when)(?=\\s|\\}).*+");
 

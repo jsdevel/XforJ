@@ -45,6 +45,7 @@ public class GlobalVariableDeclaration extends Production {
             if(characters.removeSpace()){
                Matcher name = characters.match(NAME);
                if(name.find()){
+
                   String newVar = name.group(1);
                   characters.shift(newVar.length());
                   Output expressionOutput = new Output();
