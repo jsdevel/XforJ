@@ -36,33 +36,33 @@ public class VariableOutput extends Output {
    }
 
    public VariableOutput add(String name, Output value) throws Exception {
-      if(variables.containsKey(name)){
+      if(variables.containsKey("__"+name)){
          throw new Exception("The following variable has been declared twice: "+name);
       }
       if(value == null){
          throw new Exception("Null value was discovered for the following variable: \""+name+"\"");
       }
-      variables.put(name, value);
-      keys.add(name);
+      variables.put("__"+name, value);
+      keys.add("__"+name);
       return this;
    }
 
    public boolean hasVariableBeenDeclared(String name){
       if(null == parentScope){
-         if(variables.containsKey(name)){
+         if(variables.containsKey("__"+name)){
             return true;
          } else {
             return false;
          }
       }
-      return parentScope.hasVariableBeenDeclared(name);
+      return parentScope.hasVariableBeenDeclared("__"+name);
    }
 
    public boolean lastVariableNameEquals(String name){
       int size = keys.size();
       if(size > 0){
          String lastName = keys.get(size-1);
-         return lastName.equals(name);
+         return lastName.equals("__"+name);
       }
       return false;
    }

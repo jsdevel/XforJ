@@ -73,7 +73,7 @@ public class GlobalVariableValue extends Production {
                throw new Exception("Error while evaluating GlobalVariableValue.  Variable \""+value+"\" hasn't been declared yet.");
             }
             characters.shift(value.length());
-            output.prepend(value);
+            output.prepend("__"+value);
             context.removeProduction();
             return;
          }
