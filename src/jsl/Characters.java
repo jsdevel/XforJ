@@ -34,7 +34,7 @@ public interface Characters {
    Pattern TEMPLATE = Pattern.compile("^(template)(?=\\s|\\}).*+");
    Pattern OTHERWISE = Pattern.compile("^(otherwise)(?=\\}).*+");
    Pattern WHEN = Pattern.compile("^(when)(?=\\s|\\}).*+");
-   Pattern NAME = Pattern.compile("^([$_a-zA-Z][a-zA-Z0-9$_]*+)*+");
+   Pattern NAME = Pattern.compile("^([a-zA-Z][a-zA-Z0-9_]*+)*+");
    Pattern IMPORT_PATH = Pattern.compile("^((?:/?(?:\\.\\./)?(?:[^/\\}]++/)*+)?[^/\\}]++).*+");
    Pattern ABSOLUTE_PATH = Pattern.compile("^(/(?:[^/\\}]++/)*+).*+");
 
@@ -47,7 +47,6 @@ public interface Characters {
    Pattern INPUT_TOKENS = Pattern.compile("^([^\\{]++).*+");
 
    Pattern VARIABLE = Pattern.compile("^(variable)(?=\\s).*+");
-   Pattern RESERVED_SEQUENCE = Pattern.compile("^((?:callTemplate|forEach|variable|param|choose|if|import|otherwise|sort|template|when|withParam)\\s++[$_a-zA-Z]).*+");
 
    //SPACE
    char LF = 10;
