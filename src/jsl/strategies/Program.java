@@ -46,7 +46,11 @@ public class Program extends Production {
          if(characters.charAt(0) == open){
             if(!hasTemplates){
                if(characters.charAt(1) == i){
-                  context.addProduction(new ImportStatements(output));
+                  Output importOutput = new Output();
+                  output.prepend(importOutput);
+                  output.prepend("(function(){");
+                  output.append("})();");
+                  context.addProduction(new ImportStatements(importOutput));
                   return;
                }
             }
