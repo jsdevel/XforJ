@@ -48,6 +48,7 @@ public class ParamDeclaration extends Production {
                context.addProduction(new ParamAssignment(paramAssignmentOutput));
                
             } else if(characters.charAt(0) == close){
+               characters.shift(1);
                variableOutput.add(value, "_params."+value);
                context.removeProduction();
                return;
