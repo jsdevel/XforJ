@@ -26,15 +26,17 @@ public interface Characters {
    Pattern OPEN_BLOCK = Pattern.compile("^(\\{).*+");
    Pattern CLOSE_BLOCK = Pattern.compile("^(\\}).*+");
 
-   Pattern NAMESPACE = Pattern.compile("^(namespace)(?=\\s).*+");
-   Pattern NULL = Pattern.compile("^(null)(?![a-zA-Z0-9$_@'\"]).*+");
    Pattern CHOOSE = Pattern.compile("^(choose)(?=\\}).*+");
    Pattern IF = Pattern.compile("^(if)(?=\\s|\\}).*+");
    Pattern IMPORT = Pattern.compile("^(import)(?=\\s).*+");
-   Pattern TEMPLATE = Pattern.compile("^(template)(?=\\s|\\}).*+");
-   Pattern OTHERWISE = Pattern.compile("^(otherwise)(?=\\}).*+");
-   Pattern WHEN = Pattern.compile("^(when)(?=\\s|\\}).*+");
    Pattern NAME = Pattern.compile("^([a-zA-Z][a-zA-Z0-9_]*+).*+");
+   Pattern NAMESPACE = Pattern.compile("^(namespace)(?=\\s).*+");
+   Pattern NULL = Pattern.compile("^(null)(?![a-zA-Z0-9$_@'\"]).*+");
+   Pattern OTHERWISE = Pattern.compile("^(otherwise)(?=\\}).*+");
+   Pattern PARAM = Pattern.compile("^\\{param\\s.*+");
+   Pattern TEMPLATE = Pattern.compile("^(template)(?=\\s|\\}).*+");
+   Pattern WHEN = Pattern.compile("^(when)(?=\\s|\\}).*+");
+
    Pattern IMPORT_PATH = Pattern.compile("^((?:/?(?:\\.\\./)?(?:[^/\\}]++/)*+)?[^/\\}]++).*+");
    Pattern ABSOLUTE_PATH = Pattern.compile("^(/(?:[^/\\}]++/)*+).*+");
 
