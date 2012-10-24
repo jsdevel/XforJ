@@ -65,9 +65,18 @@ public class VariableOutput extends Output {
    public String toString(){
       if(keys.size() > 0){
          String first = keys.remove(0);
-         prepend("var "+first+"="+variables.get(first).toString());
+         String firstValue = variables.get(first).toString();
+         prepend("var "+first);
+
+         if(!"".equals(firstValue)){
+            prepend("="+firstValue);
+         }
          for(String key : keys){
-            prepend(","+key+"="+variables.get(key).toString());
+            prepend(","+key);
+            String value = variables.get(key).toString();
+            if(!"".equals(value)){
+               prepend("="+value);
+            }
          }
          prepend(";");
          keys.clear();
