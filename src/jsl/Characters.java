@@ -34,7 +34,7 @@ public interface Characters {
    Pattern TEMPLATE = Pattern.compile("^(template)(?=\\s|\\}).*+");
    Pattern OTHERWISE = Pattern.compile("^(otherwise)(?=\\}).*+");
    Pattern WHEN = Pattern.compile("^(when)(?=\\s|\\}).*+");
-   Pattern NAME = Pattern.compile("^([a-zA-Z][a-zA-Z0-9_]*+)*+");
+   Pattern NAME = Pattern.compile("^([a-zA-Z][a-zA-Z0-9_]*+).*+");
    Pattern IMPORT_PATH = Pattern.compile("^((?:/?(?:\\.\\./)?(?:[^/\\}]++/)*+)?[^/\\}]++).*+");
    Pattern ABSOLUTE_PATH = Pattern.compile("^(/(?:[^/\\}]++/)*+).*+");
 
