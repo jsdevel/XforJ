@@ -26,8 +26,8 @@ import java.util.Map;
  */
 public class VariableOutput extends Output {
    private VariableOutput parentScope;
-   private Map<String, Output> variables = new HashMap<String, Output>();
-   private ArrayList<String> keys = new ArrayList<>();
+   protected Map<String, Output> variables = new HashMap<String, Output>();
+   protected ArrayList<String> keys = new ArrayList<>();
 
    public VariableOutput() {}
 
