@@ -99,24 +99,7 @@ ParamDeclarations:
    ParamDeclarations + ParamDeclaration
 
 ParamDeclaration:
-   '{param ' + Name + ParamAssignment@"Optional" + '}'
-
-ParamAssignment:
-   ' ' + ParamExpression
-
-ParamExpression:
-   ParamValue
-   ParamExpression + Operator + ParamValue 
-
-ParamValue:
-   GlobalVariableValue
-   ContextSelector
-
-ContextSelector:
-   Name
-   /[0-9]+/
-   Namespace
-   ContextSelector + '[' + ContextSelector + ']' + NameSpace@"Optional"
+   '{param ' + Name + VariableAssignment@"Optional" + '}'
 
 VariableDeclarations:
    VariableDeclaration
@@ -136,6 +119,12 @@ VariableValue:
    GlobalVariableValue
    ContextSelector
 
+ContextSelector:
+   Name
+   /[0-9]+/
+   Namespace
+   ContextSelector + '[' + ContextSelector + ']' + NameSpace@"Optional"
+
 TemplateBody:
    TemplateBodyStatements
    TemplateBodyStatements + TemplateBody
@@ -154,10 +143,10 @@ InputTokens:
    /[^{]*/
 
 PrintStatement:
-   '{' + Name + '}'
+   '{' + VariableValue + '}'
 
 IfStatement:
-   '{if ' + Namespace + '}' + TemplateBody + '{/if}'
+   '{if ' + VariableExpression + '}' + TemplateBody + '{/if}'
 
 ChooseStatement:
    '{choose}' + ChooseBody + '{/choose}'
@@ -167,19 +156,19 @@ ChooseBody:
    ChooseBody + OtherwiseStatement
 
 WhenStatement:
-   '{when ' + Namespace + '}' + TemplateBody + '{/when}'
+   '{when ' + VariableExpression + '}' + TemplateBody + '{/when}'
 
 OtherwiseStatement:
    '{otherwise}' + TemplateBody + '{/otherwise}'
 
 WithStatement:
-   '{with ' + Namespace + '}' + TemplateBody + '{/with}'
+   '{with ' + ContextSelector + '}' + TemplateBody + '{/with}'
 
 ForEachStatement:
-   '{foreach ' + Namespace + '}' + VariableDeclarations@"Optional" + TemplateBody + '{/foreach}'
+   '{foreach ' + ContextSelector + '}' + VariableDeclarations@"Optional" + TemplateBody + '{/foreach}'
 
 ApplyStatement:
-   '{apply ' + Namespace + '}' + ApplyParams@"Optional" + '{/apply}'
+   '{apply ' + ContextSelector + '}' + ApplyParams@"Optional" + '{/apply}'
 
 ApplyParams:
    ApplyParam

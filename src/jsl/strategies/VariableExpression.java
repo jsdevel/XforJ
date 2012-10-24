@@ -22,14 +22,14 @@ import jsl.*;
  *
  * @author Joseph Spencer
  */
-public class ParamValue extends Production {
-   public ParamValue(Output output) {
-      super(output);
+public class VariableExpression extends AbstractExpression {
+   public VariableExpression(Output output) {
+      super("ParamExpression", output);
    }
 
    @Override
-   void execute(CharWrapper characters, ProductionContext context) throws Exception {
-      throw new UnsupportedOperationException("Not supported yet.");
+   protected Production getValue() {
+      return new VariableValue(output);
    }
 
 }

@@ -48,7 +48,7 @@ public class ParamDeclaration extends Production {
                Output paramAssignmentOutput = new Output();
                paramAssignmentOutput.prepend("_prams."+name+"||");
                variableOutput.add(name, paramAssignmentOutput);
-               context.addProduction(new ParamAssignment(paramAssignmentOutput));
+               context.addProduction(new VariableAssignment(paramAssignmentOutput));
             } else {
                variableOutput.add(name, "_params."+name);
             }
