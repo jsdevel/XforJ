@@ -30,6 +30,7 @@ public class GlobalVariableValue extends Production {
    
    @Override
    void execute(CharWrapper characters, ProductionContext context) throws Exception {
+      characters.removeSpace();
       switch(characters.charAt(0)){
       case zero:
       case one:
@@ -59,7 +60,11 @@ public class GlobalVariableValue extends Production {
             }
          }
          break;
+      case at:
+         characters.shift(1);
+         
       }
+      throw new Exception("Invalid value found while evaluating GlobalVariableValue.");
    }
 
 }

@@ -29,7 +29,50 @@ public class Operator extends Production {
    
    @Override
    void execute(CharWrapper characters, ProductionContext context) throws Exception {
-      throw new UnsupportedOperationException("Not supported yet.");
+      characters.removeSpace();
+      switch(characters.charAt(0)){
+      case equal:
+         if(characters.charAt(1) == equal){
+            characters.shift(2);
+            output.prepend("==");
+            context.removeProduction();
+            return;
+         }
+         break;
+      case exclamation:
+         if(characters.charAt(1) == equal){
+            characters.shift(2);
+            output.prepend("!=");
+            context.removeProduction();
+            return;
+         }
+         break;
+      case pipe:
+         if(characters.charAt(1) == pipe){
+            characters.shift(2);
+            output.prepend("||");
+            context.removeProduction();
+            return;
+         }
+         break;
+      case amp:
+         if(characters.charAt(1) == amp){
+            characters.shift(2);
+            output.prepend("&&");
+            context.removeProduction();
+            return;
+         }
+         break;
+      case plus:
+      case minus:
+      case mod:
+      case asterisk:
+      case forward:
+         characters.shift(1);
+         output.prepend(characters.charAt(0));
+         context.removeProduction();
+         return;
+      }
+      throw new Exception("Invalid Operator.");
    }
-
 }

@@ -32,6 +32,7 @@ public class GlobalExpression extends Production {
    
    @Override
    void execute(CharWrapper characters, ProductionContext context) throws Exception {
+      characters.removeSpace();
       if(characters.charAt(0) != close){
          if(hasValue == false || hasOperator){//Go to Value
             hasOperator=false;
@@ -46,6 +47,7 @@ public class GlobalExpression extends Production {
          }
       }
       if(hasValue && !hasOperator){
+         context.removeProduction();
          return;
       }
 

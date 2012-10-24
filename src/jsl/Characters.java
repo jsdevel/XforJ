@@ -48,16 +48,32 @@ public interface Characters {
    Pattern VARIABLE = Pattern.compile("^(variable)(?=\\s).*+");
    Pattern RESERVED_SEQUENCE = Pattern.compile("^((?:callTemplate|forEach|variable|param|choose|if|import|otherwise|sort|template|when|withParam)\\s++[$_a-zA-Z]).*+");
 
-   //white space
+   //SPACE
    char LF = 10;
    char CR = 13;
+   char space = 32;
+   char tab = 9;
 
-   //symbols
-   char open = 123;
+   //SYMBOLS
+   char amp = 38;
+   char asterisk = 42;
    char close = 125;
+   char colon = 58;
+   char equal = 61;
+   char exclamation = 33;
    char forward = 47;
+   char gt = 62;
+   char lt = 60;
+   char minus = 45;
+   char mod = 37;
+   char open = 123;
+   char pipe = 124;
+   char plus = 43;
+   char question = 63;
+   char tilde = 126;
    char at = 64;
 
+   //ALPHA
    char a = 97;
    char b = 98;
    char c = 99;
@@ -85,6 +101,7 @@ public interface Characters {
    char y = 121;
    char z = 122;
 
+   //NUMBERS
    char zero = 48;
    char one = 49;
    char two = 50;
@@ -95,4 +112,20 @@ public interface Characters {
    char seven = 55;
    char eight = 56;
    char nine = 57;
+
+
+   char squote = 39;
+   char quote = 34;
+
+   char cparen = 41;
+   char cbracket = 93;
+   char comma = 44;
+   char dot = 46;
+   char obracket = 91;
+   char oparen = 40;
+   char semic = 59;
+
+
+
+
 }
