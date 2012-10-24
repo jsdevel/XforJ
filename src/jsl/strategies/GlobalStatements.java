@@ -23,7 +23,6 @@ import jsl.*;
  * @author Joseph Spencer
  */
 public class GlobalStatements extends Production {
-   VariableOutput variableOutput = new VariableOutput();
    public GlobalStatements(Output output) {
       super(output);
    }
@@ -33,9 +32,9 @@ public class GlobalStatements extends Production {
    @Override
    public void execute(CharWrapper characters, ProductionContext context) throws Exception {
       if(characters.charAt(0) == open){
-         output.prepend(variableOutput);
+         output.prepend(context.getCurrentVariableOutput());
          hasStatements=true;
-         context.addProduction(new GlobalStatement(variableOutput, output));
+         context.addProduction(new GlobalStatement(output));
       } else if(!characters.removeSpace()){
          throw new Exception("Invalid character found while evaluating GlobalStatements.");
       }

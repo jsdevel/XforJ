@@ -24,10 +24,8 @@ import jsl.*;
  * @author Joseph Spencer
  */
 public class GlobalVariableDeclaration extends Production {
-   VariableOutput variableOutput;
-   public GlobalVariableDeclaration(VariableOutput variableOutput, Output output) {
+   public GlobalVariableDeclaration(Output output) {
       super(output);
-      this.variableOutput=variableOutput;
    }
 
    private boolean hasOpen;
@@ -49,9 +47,9 @@ public class GlobalVariableDeclaration extends Production {
                   String newVar = name.group(1);
                   characters.shift(newVar.length());
                   Output expressionOutput = new Output();
-                  variableOutput.add(newVar, expressionOutput);
+                  context.getCurrentVariableOutput().add(newVar, expressionOutput);
                   if(characters.removeSpace()){
-                     context.addProduction(new GlobalVariableAssignment(variableOutput, expressionOutput));
+                     context.addProduction(new GlobalVariableAssignment(expressionOutput));
                   }
                   return;
                }

@@ -24,10 +24,8 @@ import jsl.*;
  * @author Joseph Spencer
  */
 public class GlobalVariableValue extends Production {
-   VariableOutput variableOutput;
-   public GlobalVariableValue(VariableOutput variableOutput, Output output) {
+   public GlobalVariableValue(Output output) {
       super(output);
-      this.variableOutput=variableOutput;
    }
    
    @Override
@@ -67,9 +65,8 @@ public class GlobalVariableValue extends Production {
          Matcher name = characters.match(NAME);
          if(name.find()){
             String value = name.group(1);
-            boolean lastVarEquals = variableOutput.lastVariableNameEquals(value);
-            boolean hasVar = variableOutput.hasVariableBeenDeclared(value);
-            if(lastVarEquals || !hasVar){
+            boolean hasVar = context.getCurrentVariableOutput().hasVariableBeenDeclared(value);
+            if(!hasVar){
                throw new Exception("Error while evaluating GlobalVariableValue.  Variable \""+value+"\" hasn't been declared yet.");
             }
             characters.shift(value.length());

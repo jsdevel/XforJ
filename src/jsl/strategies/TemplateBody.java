@@ -24,10 +24,8 @@ import jsl.*;
  * @author Joseph Spencer
  */
 public class TemplateBody extends Production {
-   VariableOutput variableOutput;
-   TemplateBody(VariableOutput variableOutput, Output output){
+   TemplateBody(Output output){
       super(output);
-      this.variableOutput=variableOutput;
    }
 
    @Override

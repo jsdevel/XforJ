@@ -42,6 +42,7 @@ public class ParamDeclaration extends Production {
             String value = name.group(1);
             characters.shift(value.length());
             if(characters.removeSpace()){
+               //make this fail if it's adding additional params'
                Output paramAssignmentOutput = new Output();
                variableOutput.add(value, paramAssignmentOutput);
                context.addProduction(new ParamAssignment(paramAssignmentOutput));

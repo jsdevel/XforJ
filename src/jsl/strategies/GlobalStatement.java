@@ -23,10 +23,8 @@ import jsl.*;
  * @author Joseph Spencer
  */
 public class GlobalStatement extends Production {
-   VariableOutput variableOutput;
-   GlobalStatement(VariableOutput variableOutput, Output output){
+   GlobalStatement(Output output){
       super(output);
-      this.variableOutput= variableOutput;
    }
 
    @Override
@@ -34,10 +32,10 @@ public class GlobalStatement extends Production {
       if(characters.charAt(0) == open){
          switch(characters.charAt(1)){
          case v:
-            context.addProduction(new GlobalVariableDeclaration(variableOutput, output));
+            context.addProduction(new GlobalVariableDeclaration(output));
             break;
          case t:
-            context.addProduction(new TemplateDeclaration(variableOutput, output)); 
+            context.addProduction(new TemplateDeclaration(output)); 
             break;
          default:
             throw new Exception("Invalid character found while evaluating GlobalStatement.");

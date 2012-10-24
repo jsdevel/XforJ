@@ -89,6 +89,31 @@ public class ProductionContext {
       return this;
    }
 
+   //VARIABLES
+   private VariableOutput currentVariableOutput = new VariableOutput();
+   private ArrayList<VariableOutput> variableOutputStack = new ArrayList<>();
+   {
+      variableOutputStack.add(currentVariableOutput);
+   }
+   public VariableOutput getCurrentVariableOutput(){
+      return currentVariableOutput;
+   }
+   public ProductionContext addVaribleOutput(){
+      VariableOutput newOutput = new VariableOutput(currentVariableOutput);
+      currentVariableOutput=newOutput;
+      variableOutputStack.add(newOutput);
+      return this;
+   }
+   public ProductionContext removeVariableOutput() throws Exception {
+      int size = variableOutputStack.size();
+      if(size > 1){
+         variableOutputStack.remove(size-1);
+         currentVariableOutput=variableOutputStack.get(size-2);
+         return this;
+      }
+      throw new Exception("Illegal attempt to remove VariableOutput.");
+   }
+
    //CLOSING
    public void close() throws Exception {
       int size = productionStack.size();

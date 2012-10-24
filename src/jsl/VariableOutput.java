@@ -26,6 +26,7 @@ import java.util.Map;
  */
 public class VariableOutput extends Output {
    private VariableOutput parentScope;
+   private static final String variablePrefix = "__";
    protected Map<String, Object> variables = new HashMap<String, Object>();
    protected ArrayList<String> keys = new ArrayList<>();
 
@@ -48,23 +49,16 @@ public class VariableOutput extends Output {
    }
 
    public boolean hasVariableBeenDeclared(String name){
+      String proposedName = variablePrefix+name;
       if(null == parentScope){
-         if(variables.containsKey("__"+name)){
+         int size = keys.size();
+         if(variables.containsKey(proposedName) || size > 0 && proposedName.equals(keys.get(size-1))){
             return true;
          } else {
             return false;
          }
       }
-      return parentScope.hasVariableBeenDeclared("__"+name);
-   }
-
-   public boolean lastVariableNameEquals(String name){
-      int size = keys.size();
-      if(size > 0){
-         String lastName = keys.get(size-1);
-         return lastName.equals("__"+name);
-      }
-      return false;
+      return parentScope.hasVariableBeenDeclared(name);
    }
 
    @Override

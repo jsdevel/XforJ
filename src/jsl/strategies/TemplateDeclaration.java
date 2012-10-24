@@ -25,10 +25,8 @@ import jsl.*;
  * @author Joseph Spencer
  */
 public class TemplateDeclaration extends Production {
-   VariableOutput variableOutput;
-   public TemplateDeclaration(VariableOutput variableOutput, Output output) {
+   public TemplateDeclaration(Output output) {
       super(output);
-      this.variableOutput=new VariableOutput(variableOutput);
    }
 
    private boolean isOpened;
@@ -42,13 +40,14 @@ public class TemplateDeclaration extends Production {
          expectingTemplateBody=false;
          Output templateBodyOutput = new Output();
          output.prepend(templateBodyOutput).prepend("return bld.toString()}");
-         context.addProduction(new TemplateBody(variableOutput, templateBodyOutput));
+         context.addProduction(new TemplateBody(templateBodyOutput));
          return;
       }
       if(characters.charAt(0) == open){
          if(!isOpened){
             isOpened=true;
             characters.shift(1);
+            context.addVaribleOutput();
 
             Matcher template = characters.match(TEMPLATE);
             if(template.find()){
@@ -62,11 +61,11 @@ public class TemplateDeclaration extends Production {
                      characters.shift(nm.length());
                      output.
                         prepend("currentNS."+nm+"=$"+nm+";function $"+nm+"(_data, _params){var data=_data||{},bld=new StringBuffer();").
-                        prepend(variableOutput);
+                        prepend(context.getCurrentVariableOutput());
 
                      if(characters.charAt(0) == close){
                         characters.shift(1);
-                        context.addProduction(new ParamDeclarations(variableOutput));                           
+                        context.addProduction(new ParamDeclarations(context.getCurrentVariableOutput()));                           
                         expectingTemplateBody=true;
                         return;
                      }
@@ -81,6 +80,7 @@ public class TemplateDeclaration extends Production {
                   if(characters.charAt(0) == close){
                      characters.shift(1);
                      context.removeProduction();
+                     context.removeVariableOutput();
                      return;
                   }
                }

@@ -23,10 +23,8 @@ import jsl.*;
  * @author Joseph Spencer
  */
 public class GlobalVariableAssignment extends Production {
-   VariableOutput variableOutput;
-   public GlobalVariableAssignment(VariableOutput variableOutput, Output output) {
+   public GlobalVariableAssignment(Output output) {
       super(output);
-      this.variableOutput=variableOutput;
    }
    
    private boolean hasGlobalExpression;
@@ -35,7 +33,7 @@ public class GlobalVariableAssignment extends Production {
    void execute(CharWrapper characters, ProductionContext context) throws Exception {
       if(!hasGlobalExpression){
          hasGlobalExpression=true;
-         context.addProduction(new GlobalExpression(variableOutput, output));
+         context.addProduction(new GlobalExpression(output));
          return;
       } else if(hasGlobalExpression){
          context.removeProduction();
