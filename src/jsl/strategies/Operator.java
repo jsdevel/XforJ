@@ -34,7 +34,12 @@ public class Operator extends Production {
       case equal:
          if(characters.charAt(1) == equal){
             characters.shift(2);
-            output.prepend("==");
+            String value = "==";
+            if(characters.charAt(0) == equal){
+               characters.shift(1);
+               value = value + "=";
+            }
+            output.prepend(value);
             context.removeProduction();
             return;
          }
@@ -42,7 +47,12 @@ public class Operator extends Production {
       case exclamation:
          if(characters.charAt(1) == equal){
             characters.shift(2);
-            output.prepend("!=");
+            String value = "!=";
+            if(characters.charAt(0) == equal){
+               characters.shift(1);
+               value = value + "=";
+            }
+            output.prepend(value);
             context.removeProduction();
             return;
          }

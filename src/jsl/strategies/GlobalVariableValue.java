@@ -89,7 +89,15 @@ public class GlobalVariableValue extends Production {
             return;
          }
          break;
-         
+      case n:
+         Matcher nullMatch = characters.match(NULL);
+         if(nullMatch.find()){
+            String value = nullMatch.group(1);
+            characters.shift(value.length());
+            output.prepend(value);
+            context.removeProduction();
+            return;
+         }
       }
       throw new Exception("Invalid value found while evaluating GlobalVariableValue.");
    }

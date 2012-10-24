@@ -27,6 +27,7 @@ public interface Characters {
    Pattern CLOSE_BLOCK = Pattern.compile("^(\\}).*+");
 
    Pattern NAMESPACE = Pattern.compile("^(namespace)(?=\\s).*+");
+   Pattern NULL = Pattern.compile("^(null)(?![a-zA-Z0-9$_@'\"]).*+");
    Pattern CHOOSE = Pattern.compile("^(choose)(?=\\}).*+");
    Pattern IF = Pattern.compile("^(if)(?=\\s|\\}).*+");
    Pattern IMPORT = Pattern.compile("^(import)(?=\\s).*+");
