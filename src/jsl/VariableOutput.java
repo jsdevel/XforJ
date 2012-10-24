@@ -76,6 +76,8 @@ public class VariableOutput extends Output {
             prepend(","+key+"="+variables.get(key).toString());
          }
          prepend(";");
+         keys.clear();
+         variables.clear();
       }
       return super.toString();
    }

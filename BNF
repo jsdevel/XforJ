@@ -114,7 +114,10 @@ ParamValue:
    ContextSelector
 
 ContextSelector:
+   Name
+   /[0-9]+/
    Namespace
+   ContextSelector + '[' + ContextSelector + ']' + NameSpace@"Optional"
 
 TemplateBody:
    TemplateBodyStatements
