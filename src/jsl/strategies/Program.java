@@ -31,7 +31,6 @@ public class Program extends Production {
    }
 
    private boolean hasProgramNamespace;
-   private boolean hasTemplates;
 
    @Override
    public void execute(CharWrapper characters, ProductionContext context) throws Exception {
@@ -44,15 +43,17 @@ public class Program extends Production {
       } else if(hasProgramNamespace){
          characters.removeSpace();
          if(characters.charAt(0) == open){
-            if(!hasTemplates){
-               if(characters.charAt(1) == i){
-                  Output importOutput = new Output();
-                  output.prepend(importOutput);
-                  output.prepend("(function(){");
-                  output.append("})();");
-                  context.addProduction(new ImportStatements(importOutput));
-                  return;
-               }
+            if(characters.charAt(1) == i){
+               Output importOutput = new Output();
+               output.prepend(importOutput);
+               output.prepend("(function(){");
+               output.append("})();");
+               context.addProduction(new ImportStatements(importOutput));
+               return;
+            } else if(characters.charAt(1) == v){
+               output.prepend(context.getCurrentVariableOutput());
+               context.addProduction(new GlobalVariableDeclarations(output));
+               return;
             }
             context.addProduction(new GlobalStatements(output));
             return;

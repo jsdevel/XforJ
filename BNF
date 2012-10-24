@@ -35,7 +35,7 @@
 # Terminals.  The regex flavor of choice is Perl.
 
 Program:
-   ProgramNamespace + ImportStatements@"Optional" + GlobalStatements
+   ProgramNamespace + ImportStatements@"Optional" + GlobalVariableDeclarations@"Optional" + GlobalStatements
 
 ProgramNamespace:
    '{namespace ' + Namespace + '}'
@@ -54,14 +54,9 @@ ImportStatements:
 ImportStatement:
    '{import ' + @"NonProtocolFilePath" + '}'
 
-GlobalStatements:
-   GlobalStatement
-   GlobalStatements
-
-
-GlobalStatement:
+GlobalVariableDeclarations:
    GlobalVariableDeclaration
-   TemplateDeclaration 
+   GlobalVariableDeclarations
 
 GlobalVariableDeclaration:
    '{variable ' + Name + GlobalVariableAssignment@"Optional" + '}'
@@ -91,6 +86,10 @@ Operator:
    '%'
    '*'
    '/'
+
+GlobalStatements:
+   TemplateDeclaration 
+   GlobalStatements
 
 TemplateDeclaration:
    '{template ' + Name + '}' + ParamDeclarations + TemplateBody + '{/template}'

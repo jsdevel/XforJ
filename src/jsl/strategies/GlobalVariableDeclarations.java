@@ -1,5 +1,5 @@
 /*
- * Copyright 2012 Joseph Spencer
+ * Copyright 2012 Joseph Spencer.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,35 +13,28 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package jsl.strategies;
 
-import java.util.regex.Matcher;
 import jsl.*;
 
 /**
  *
  * @author Joseph Spencer
  */
-public class GlobalStatement extends Production {
-   GlobalStatement(Output output){
+public class GlobalVariableDeclarations extends Production{
+   public GlobalVariableDeclarations(Output output) {
       super(output);
    }
 
    @Override
-   public void execute(CharWrapper characters, ProductionContext context) throws Exception {
-      if(characters.charAt(0) == open){
-         switch(characters.charAt(1)){
-         case v:
-            context.addProduction(new GlobalVariableDeclaration(output));
-            break;
-         case t:
-            break;
-         default:
-            throw new Exception("Invalid character found while evaluating GlobalStatement.");
-         }
-      } else {
-         context.removeProduction();
+   void execute(CharWrapper characters, ProductionContext context) throws Exception {
+      characters.removeSpace();
+      if(characters.charAt(0) == open && characters.charAt(1) == v){
+         context.addProduction(new GlobalVariableDeclaration(output));
          return;
       }
+      context.removeProduction();
    }
+
 }

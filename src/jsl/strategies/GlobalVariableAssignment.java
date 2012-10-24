@@ -35,11 +35,9 @@ public class GlobalVariableAssignment extends Production {
          hasGlobalExpression=true;
          context.addProduction(new GlobalExpression(output));
          return;
-      } else if(hasGlobalExpression){
-         context.removeProduction();
-         return;
       }
-      throw new Exception("Invalid GlobalVariableAssignment");
+      context.removeProduction();
+      return;
    }
 
 }

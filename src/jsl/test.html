@@ -1,7 +1,9 @@
 {namespace rms.people.cousins}
 
 {variable oo 5 || 'asdf\'asdf'}
+
 {variable boo 5 === @oo }
+{variable soo 5 === @oo }
 
 {template showPeople}
    Hello there! 
@@ -10,8 +12,9 @@
    <h2>{dan}</h2>
 {/template}
 
+
 {template showProperties}
-   {param boo 5}
+   {param boo}
    {param soo}
    Hello there! 
    
