@@ -120,6 +120,8 @@ VariableValue:
    ContextSelector
 
 ContextSelector:
+   './' + ContextSelector
+   '../' + ContextSelector
    Namespace
    'position()'
    'last()'
