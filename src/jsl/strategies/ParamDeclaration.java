@@ -30,33 +30,36 @@ public class ParamDeclaration extends Production {
       this.variableOutput=variableOutput;
    }
 
+   private boolean hasValue;
+
    @Override
    void execute(CharWrapper characters, ProductionContext context) throws Exception {
       characters.removeSpace();
       Matcher param = characters.match(PARAM);
-      if(param.find()){
+      if(!hasValue && param.find()){
          characters.shift(param.group(1).length());
          characters.removeSpace();
-         Matcher name = characters.match(NAME);
-         if(name.find()){
-            String value = name.group(1);
-            characters.shift(value.length());
+         Matcher nameMatch = characters.match(NAME);
+         if(nameMatch.find()){
+            String name = nameMatch.group(1);
+            characters.shift(name.length());
             if(characters.removeSpace()){
-               //make this fail if it's adding additional params'
+               hasValue=true;
                Output paramAssignmentOutput = new Output();
-               variableOutput.add(value, paramAssignmentOutput);
+               paramAssignmentOutput.prepend("_prams."+name+"||");
+               variableOutput.add(name, paramAssignmentOutput);
                context.addProduction(new ParamAssignment(paramAssignmentOutput));
-               
-            } else if(characters.charAt(0) == close){
-               characters.shift(1);
-               variableOutput.add(value, "_params."+value);
-               context.removeProduction();
-               return;
+            } else {
+               variableOutput.add(name, "_params."+name);
             }
+            return;
          }
-         throw new Exception("Invalid ParamDeclaration.");
+      } else if(characters.charAt(0) == close){
+         characters.shift(1);
+         context.removeProduction();
+         return;
       }
-      context.removeProduction();
+      throw new Exception("Invalid ParamDeclaration.");
    }
 
 }
