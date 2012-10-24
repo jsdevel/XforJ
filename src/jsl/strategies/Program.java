@@ -49,7 +49,7 @@ public class Program extends Production {
 
    @Override
    public void execute(CharWrapper characters, ProductionContext context) throws Exception {
-      String exception = "The opening of JSL templtes must be a JSL declaration.";
+      String exception = "The first Production must be a ProgramNamespace.";
 
       if(characters.charAt(0) == open && !hasProgramNamespace){
          hasProgramNamespace=true;
