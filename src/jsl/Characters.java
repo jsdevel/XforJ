@@ -45,6 +45,11 @@ public interface Characters {
    Pattern VARIABLE = Pattern.compile("^(variable)(?=\\s).*+");
    Pattern RESERVED_SEQUENCE = Pattern.compile("^((?:callTemplate|forEach|variable|param|choose|if|import|otherwise|sort|template|when|withParam)\\s++[$_a-zA-Z]).*+");
 
+   //white space
+   char LF = 10;
+   char CR = 13;
+
+   //symbols
    char open = 123;
    char close = 125;
    char forward = 47;

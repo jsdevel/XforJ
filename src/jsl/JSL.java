@@ -15,7 +15,7 @@
  */
 package jsl;
 
-import java.io.File;
+import java.io.*;
 import java.util.Date;
 import jsl.strategies.*;
 
@@ -26,6 +26,7 @@ import jsl.strategies.*;
 public class JSL implements Characters {
    //Exit codes
    public static final int UNABLE_TO_PARSE_FILE=1;
+   public static final int IO_Error=2;
 
    /**
     * @param args the command line arguments
@@ -38,20 +39,38 @@ public class JSL implements Characters {
 
    public static Output compileFile(String path) {
       File testFile = new File(path);
+      CharWrapper wrapper=null;
 
-      try {
+      try{
          String absoluteFilePath = testFile.getCanonicalPath();
          ProductionContext context = new ProductionContext(absoluteFilePath);
-         CharWrapper characters = new CharWrapper(MainUtil.getChars(testFile));
+         char[] chars=MainUtil.getChars(testFile);
+
+         CharWrapper characters = new CharWrapper(chars);
+         wrapper=characters;
          while(characters.length() > 0){
             context.executeCurrent(characters);
          }
          context.close();
          return context.output;
+      } catch(IOException exc){
+         logException(testFile, exc, null);
+         System.exit(IO_Error);
       } catch(Exception exc){
-         LOGGER.out("Unable to parse \""+testFile.getAbsolutePath()+"\" for the following reason:\n"+exc.getMessage());
+         logException(testFile, exc, wrapper);
          System.exit(UNABLE_TO_PARSE_FILE);
       }
       return null;
+   }
+
+   private static void logException(File file, Exception exc, CharWrapper wrapper){
+      String message= "Unable to parse \""+
+            file.getAbsolutePath()+
+            "\" for the following reason:\n"+
+            exc.getMessage();
+      if(wrapper!=null){
+         message+="\n"+wrapper.getErrorLocation();
+      }
+      LOGGER.out(message);
    }
 }

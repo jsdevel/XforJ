@@ -23,9 +23,11 @@ import java.util.regex.Pattern;
  *
  * @author Joseph Spencer
  */
-public class CharWrapper {
+public class CharWrapper implements Characters {
    private char[] characters;
    private Pattern space = Pattern.compile("^(\\s++).*+");
+   private int line=1;
+   private int column=1;
 
    public CharWrapper(char[] characters) {
       this.characters=characters;
@@ -42,7 +44,22 @@ public class CharWrapper {
    public CharWrapper shift(int amount) throws Exception {
       int proposedLen = characters.length - amount;
       if(proposedLen > -1){
-         char[] oldArr = characters;//testing
+         //set the appropriate line / column values
+         for(int i=0;i<amount;i++){
+            char next = charAt(i);
+            switch(next){
+            case CR:
+               if(charAt(i+1) == LF){
+                  i++;
+               }
+            case LF:
+               line++;
+               column=1;
+               continue;
+            default:
+               column++;
+            }
+         }
          char[] newArr = new char[proposedLen];
          System.arraycopy(characters, amount, newArr, 0, proposedLen);
          characters=newArr;
@@ -65,10 +82,10 @@ public class CharWrapper {
       return false;
    }
 
-
-   //TESTING
-   public void destroy(){
-      characters=new char[0];
+   //ERROR HANDLING
+   public String getErrorLocation(){
+      return   "Line   : "+Integer.toString(line)+"\n"+
+               "Column : "+Integer.toString(column)+"\n";
    }
 
 } 
