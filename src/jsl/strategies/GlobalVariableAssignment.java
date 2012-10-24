@@ -22,22 +22,13 @@ import jsl.*;
  *
  * @author Joseph Spencer
  */
-public class GlobalVariableAssignment extends Production {
+public class GlobalVariableAssignment extends AbstractAssignment {
    public GlobalVariableAssignment(Output output) {
       super(output);
    }
    
-   private boolean hasGlobalExpression;
-
    @Override
-   void execute(CharWrapper characters, ProductionContext context) throws Exception {
-      if(!hasGlobalExpression){
-         hasGlobalExpression=true;
-         context.addProduction(new GlobalExpression(output));
-         return;
-      }
-      context.removeProduction();
-      return;
+   protected Production getExpression() {
+      return new GlobalExpression(output);
    }
-
 }

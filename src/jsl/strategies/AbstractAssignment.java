@@ -22,13 +22,22 @@ import jsl.*;
  *
  * @author Joseph Spencer
  */
-public class ParamAssignment extends AbstractAssignment {
-   public ParamAssignment(Output output) {
+public abstract class AbstractAssignment extends Production {
+   public AbstractAssignment(Output output) {
       super(output);
    }
-    
+   
+   private boolean hasExpression;
+
    @Override
-   protected Production getExpression() {
-      return new ParamExpression(output);
+   public final void execute(CharWrapper characters, ProductionContext context) throws Exception {
+      if(!hasExpression){
+         hasExpression=true;
+         context.addProduction(getExpression());
+         return;
+      }
+      context.removeProduction();
    }
+
+   protected abstract Production getExpression();
 }

@@ -22,36 +22,14 @@ import jsl.*;
  *
  * @author Joseph Spencer
  */
-public class GlobalExpression extends Production {
+public class GlobalExpression extends AbstractExpression {
    public GlobalExpression(Output output) {
-      super(output);
+      super("GlobalExpression", output);
    }
 
-   private boolean hasOperator=false;
-   private boolean hasValue=false;
-   
    @Override
-   void execute(CharWrapper characters, ProductionContext context) throws Exception {
-      characters.removeSpace();
-      if(characters.charAt(0) != close){
-         if(hasValue == false || hasOperator){//Go to Value
-            hasOperator=false;
-            hasValue=true;
-            context.addProduction(new GlobalVariableValue(output));
-            return;
-         } else if(hasValue){//Go to Operator
-            hasOperator=true;
-            hasValue=false;
-            context.addProduction(new Operator(output));
-            return;
-         }
-      }
-      if(hasValue && !hasOperator){
-         context.removeProduction();
-         return;
-      }
-
-      throw new Exception("Invalid GlobalExpression."+(hasOperator?"  Unclosed operator.":""));
+   protected Production getValue() {
+      return new GlobalVariableValue(output);
    }
 
 }

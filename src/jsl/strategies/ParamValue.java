@@ -22,13 +22,14 @@ import jsl.*;
  *
  * @author Joseph Spencer
  */
-public class ParamAssignment extends AbstractAssignment {
-   public ParamAssignment(Output output) {
+public class ParamValue extends Production {
+   public ParamValue(Output output) {
       super(output);
    }
-    
+
    @Override
-   protected Production getExpression() {
-      return new ParamExpression(output);
+   void execute(CharWrapper characters, ProductionContext context) throws Exception {
+      throw new UnsupportedOperationException("Not supported yet.");
    }
+
 }
