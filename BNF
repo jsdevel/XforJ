@@ -92,10 +92,10 @@ GlobalStatements:
    GlobalStatements
 
 TemplateDeclaration:
-   '{template ' + Name + '}' + ParamDeclarations + TemplateBody + '{/template}'
+   '{template ' + Name + '}' + ParamDeclarations@"Optional" + VariableDeclarations@"Optional" + TemplateBody + '{/template}'
 
 ParamDeclarations:
-   ParamDeclaration@"Optional"
+   ParamDeclaration
    ParamDeclarations + ParamDeclaration
 
 ParamDeclaration:
@@ -118,21 +118,6 @@ ContextSelector:
    Namespace
    ContextSelector + '[' + ContextSelector + ']' + NameSpace@"Optional"
 
-TemplateBody:
-   TemplateBodyStatements
-   TemplateBodyStatements + TemplateBody
-
-TemplateBodyStatements:
-   VariableDeclarations
-   InputTokens
-   PrintStatement
-   IfStatement
-   ChooseStatement
-   WithStatement
-   ForEachStatement
-   ApplyStatement
-   TemplateBody
-
 VariableDeclarations:
    VariableDeclaration
    VaribleDeclarations + VariableDeclaration
@@ -150,6 +135,20 @@ VariableExpression:
 VariableValue:
    GlobalVariableValue
    ContextSelector
+
+TemplateBody:
+   TemplateBodyStatements
+   TemplateBodyStatements + TemplateBody
+
+TemplateBodyStatements:
+   InputTokens
+   PrintStatement
+   IfStatement
+   ChooseStatement
+   WithStatement
+   ForEachStatement
+   ApplyStatement
+   TemplateBody
 
 InputTokens:
    /[^{]*/
@@ -177,7 +176,7 @@ WithStatement:
    '{with ' + Namespace + '}' + TemplateBody + '{/with}'
 
 ForEachStatement:
-   '{foreach ' + Namespace + '}' + TemplateBody + '{/foreach}'
+   '{foreach ' + Namespace + '}' + VariableDeclarations@"Optional" + TemplateBody + '{/foreach}'
 
 ApplyStatement:
    '{apply ' + Namespace + '}' + ApplyParams@"Optional" + '{/apply}'
