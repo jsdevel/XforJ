@@ -154,6 +154,9 @@ TemplateBodyStatements:
 InputTokens:
    /[^{]*/
 
+TextStatement:
+   '{text}' + InputTokens + '{/text}'
+
 PrintStatement:
    '{' + VariableExpression + '}'
 
