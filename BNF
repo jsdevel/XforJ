@@ -147,7 +147,6 @@ TemplateBodyStatements:
    PrintStatement
    IfStatement
    ChooseStatement
-   WithStatement
    ForEachStatement
    ApplyStatement
    TemplateBody
@@ -176,9 +175,6 @@ WhenStatement:
 
 OtherwiseStatement:
    '{otherwise}' + TemplateBody + '{/otherwise}'
-
-WithStatement:
-   '{with ' + ContextSelector + '}' + TemplateBody + '{/with}'
 
 ForEachStatement:
    '{foreach ' + ContextSelector + '}' + VariableDeclarations@"Optional" + TemplateBody + '{/foreach}'
