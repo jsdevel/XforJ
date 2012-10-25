@@ -2,7 +2,7 @@
 
 {import test_2.html}
 
-{variable oo}
+{variable oo 5}
 {variable boo 5 === @oo }
 {variable soo 5 === @oo }
 
@@ -20,7 +20,7 @@
    {variable joo position()}
    {variable zoo count(
       boo.
-      doo.dee
+      doo.dee[5+4||@joo]
    )}
 
 

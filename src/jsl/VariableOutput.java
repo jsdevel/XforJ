@@ -50,15 +50,17 @@ public class VariableOutput extends Output {
 
    public boolean hasVariableBeenDeclared(String name){
       String proposedName = variablePrefix+name;
-      if(null == parentScope){
-         int size = keys.size();
-         if(variables.containsKey(proposedName) || size > 0 && proposedName.equals(keys.get(size-1))){
-            return true;
-         } else {
-            return false;
-         }
+      int size = keys.size();
+      if(
+         variables.containsKey(proposedName) || 
+         size > 0 && 
+         proposedName.equals(keys.get(size-1))||
+         parentScope != null && parentScope.hasVariableBeenDeclared(name)
+      ){
+         return true;
+      } else {
+         return false;
       }
-      return parentScope.hasVariableBeenDeclared(name);
    }
 
    @Override
