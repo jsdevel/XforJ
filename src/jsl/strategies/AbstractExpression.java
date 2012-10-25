@@ -23,10 +23,8 @@ import jsl.*;
  * @author Joseph Spencer
  */
 public abstract class AbstractExpression extends Production {
-   String errorMsg;
-   public AbstractExpression(String errorMsg, Output output) {
+   public AbstractExpression(Output output) {
       super(output);
-      this.errorMsg=errorMsg;
    }
 
    private boolean hasOperator=false;
@@ -41,7 +39,7 @@ public abstract class AbstractExpression extends Production {
             hasValue=true;
             context.addProduction(getValue());
             return;
-         } else if(hasValue){//Go to Operator
+         } else if(hasValue && characters.charAt(0) != cbracket){//Go to Operator
             hasOperator=true;
             hasValue=false;
             context.addProduction(new Operator(output));
@@ -53,9 +51,10 @@ public abstract class AbstractExpression extends Production {
          return;
       }
 
-      throw new Exception("Invalid "+errorMsg+"."+(hasOperator?"  Unclosed operator.":"")+(!hasValue?"  No value given.":""));
+      throw new Exception("Invalid "+getErrorMsg()+"."+(hasOperator?"  Unclosed operator.":"")+(!hasValue?"  No value given.":""));
    }
 
    abstract protected Production getValue();
+   abstract protected String getErrorMsg();
 
 }

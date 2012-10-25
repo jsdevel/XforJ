@@ -134,12 +134,8 @@ ContextDynamicRefinement:
    '[' + ContextExpression + ']'
 
 ContextExpression:
-   ContextExpressionValue
-   ContextExpression + Operator + ContextExpressionValue
-
-ContextExpressionValue:
    VariableValue
-   ContextSelector
+   ContextExpression + Operator + VariableValue
 
 TemplateBody:
    TemplateBodyStatements

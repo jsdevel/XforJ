@@ -24,12 +24,17 @@ import jsl.*;
  */
 public class VariableExpression extends AbstractExpression {
    public VariableExpression(Output output) {
-      super("ParamExpression", output);
+      super(output);
    }
 
    @Override
    protected Production getValue() {
       return new VariableValue(output, false);
+   }
+
+   @Override
+   protected String getErrorMsg() {
+      return "ParamExpression";
    }
 
 }

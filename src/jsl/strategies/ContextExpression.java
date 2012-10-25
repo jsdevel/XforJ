@@ -22,7 +22,7 @@ import jsl.*;
  *
  * @author Joseph Spencer
  */
-public class ContextExpression extends Production {
+public class ContextExpression extends AbstractExpression {
    private boolean isNested;
 
    public ContextExpression(Output output, boolean isNested) {
@@ -31,8 +31,13 @@ public class ContextExpression extends Production {
    }
 
    @Override
-   void execute(CharWrapper characters, ProductionContext context) throws Exception {
-      throw new UnsupportedOperationException("Not supported yet.");
+   protected Production getValue() {
+      return new VariableValue(output, isNested);
+   }
+
+   @Override
+   protected String getErrorMsg() {
+      return "ContextExpression";
    }
 
 }

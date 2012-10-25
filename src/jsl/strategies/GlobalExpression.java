@@ -24,12 +24,17 @@ import jsl.*;
  */
 public class GlobalExpression extends AbstractExpression {
    public GlobalExpression(Output output) {
-      super("GlobalExpression", output);
+      super(output);
    }
 
    @Override
    protected Production getValue() {
       return new GlobalVariableValue(output);
+   }
+
+   @Override
+   protected String getErrorMsg() {
+      return "GlobalExpression";
    }
 
 }
