@@ -124,7 +124,8 @@ VariableValue:
 
 ContextSelector:
    Namespace
-   ContextSelector@"Optional" + '[' + ContextExpression + ']' + '.' + ContextSelector@"Optional"
+   ContextSelector + '.' + NameSpace
+   ContextSelector@"Optional" + '[' + ContextExpression + ']' + ContextSelector@"Optional"
 
 ContextExpression:
    ContextExpressionValue
