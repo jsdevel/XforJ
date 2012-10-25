@@ -16,6 +16,7 @@
 
 package jsl.strategies;
 
+import java.util.regex.Matcher;
 import jsl.*;
 
 /**
@@ -23,13 +24,59 @@ import jsl.*;
  * @author Joseph Spencer
  */
 public class ContextSelector extends Production {
-   public ContextSelector(Output output) {
+   private Output contextSelectorOutput;
+   public ContextSelector(Output output, boolean nested) {
       super(output);
+      if(!nested){
+         contextSelectorOutput=new Output();
+         output.prepend("((function("+js_context+"){try{return "+js_context+"."). 
+         prepend(contextSelectorOutput).
+         append("}catch(e){}})("+js_context+")||\"\")");
+      } else {
+         contextSelectorOutput=output;
+      }
    }
 
+   private boolean hasContextSelector;
    @Override
    void execute(CharWrapper characters, ProductionContext context) throws Exception {
-      throw new UnsupportedOperationException("Not supported yet.");
-   }
+      Matcher match;
 
+      characters.removeSpace();
+
+      switch(characters.charAt(0)){
+      case dot:
+         if(!hasContextSelector){
+            throw new Exception("Invalid ContextSeletor.  Unexpected \".\".");
+         }
+         match = characters.match(CONTEXT_STATIC_REFINEMENT);
+         if(match.find()){
+            String staticRefinement = match.group(1);
+            contextSelectorOutput.prepend(staticRefinement.replaceAll("\\s*+", ""));
+            characters.shift(staticRefinement.length());
+            return;
+         }
+         break;
+      case obracket:
+         hasContextSelector=true;
+         context.addProduction(new ContextDynamicRefinement(contextSelectorOutput));
+         return;
+      case cbracket:
+         break;
+      default:
+         match = characters.match(NS);
+         if(match.find()){
+            hasContextSelector=true;
+            String namesp = match.group(1);
+            characters.shift(namesp.length());
+            contextSelectorOutput.prepend(namesp.replaceAll("\\s*+", ""));
+            return;
+         }
+      }
+      if(hasContextSelector){
+         context.removeProduction();
+      } else {
+         throw new Exception("Invalid ContextSelector.  Empty statement");
+      }
+   }
 }

@@ -24,15 +24,27 @@ import jsl.*;
  * @author Joseph Spencer
  */
 public class VariableValue extends GlobalVariableValue {
-   public VariableValue(Output output) {
+   private boolean isNestedInContextSelector;
+   public VariableValue(Output output, boolean nestedInContextSelector) {
       super(output);
+      isNestedInContextSelector=nestedInContextSelector;
    }
 
+   private boolean hasOpenParen;
    @Override
    void execute(CharWrapper characters, ProductionContext context) throws Exception {
       Matcher match;
       characters.removeSpace();
       switch(characters.charAt(0)){
+      case cparen:
+         if(hasOpenParen){
+            characters.shift(1);
+            output.append(")");
+            context.removeProduction();
+            return;
+         } else {
+            throw new Exception("Invalid VariableValue:  Unexpected close paren.");
+         }
       case at:
       case squote:
       case quote:
@@ -62,9 +74,10 @@ public class VariableValue extends GlobalVariableValue {
          //needs work
          match=characters.match(COUNT);
          if(match.find()){
+            hasOpenParen=true;
             characters.shift(match.group(1).length());
-            output.prepend(js_count);
-            context.removeProduction();
+            output.prepend(js_CountElements).prepend("(");
+            context.addProduction(new ContextSelector(output, isNestedInContextSelector));
          } else {
             super.execute(characters, context);
          }
@@ -87,7 +100,7 @@ public class VariableValue extends GlobalVariableValue {
          }
       default:
          context.removeProduction();
-         context.addProduction(new ContextSelector(output));
+         context.addProduction(new ContextSelector(output, isNestedInContextSelector));
       }
    }
 }

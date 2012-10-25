@@ -28,7 +28,6 @@ public class ProgramNamespace extends Production {
       super(output);
    }
 
-   private Pattern NS = Pattern.compile("^((?:[a-zA-Z$_][a-zA-Z0-9$_]*+\\.)*+[a-zA-Z$_][a-zA-Z0-9$_]*+).*+");
 
    @Override
    public void execute(CharWrapper characters, ProductionContext context) throws Exception {

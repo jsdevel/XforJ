@@ -22,9 +22,15 @@ import java.util.regex.Pattern;
  * @author Joseph Spencer
  */
 public interface Characters {
+   //SEQUENCES
    Pattern SPACE = Pattern.compile("^(\\s++).*+");
    Pattern OPEN_BLOCK = Pattern.compile("^(\\{).*+");
    Pattern CLOSE_BLOCK = Pattern.compile("^(\\}).*+");
+   Pattern INPUT_TOKENS = Pattern.compile("^([^\\{]++).*+");
+   Pattern IMPORT_PATH = Pattern.compile("^((?:/?(?:\\.\\./)?(?:[^/\\}]++/)*+)?[^/\\}]++).*+");
+   Pattern ABSOLUTE_PATH = Pattern.compile("^(/(?:[^/\\}]++/)*+).*+");
+   Pattern NS = Pattern.compile("^((?:[a-zA-Z$_][a-zA-Z0-9$_]*+\\.)*+[a-zA-Z$_][a-zA-Z0-9$_]*+).*+");
+   Pattern CONTEXT_STATIC_REFINEMENT = Pattern.compile("^(\\.\\s*+(?:[a-zA-Z$_][a-zA-Z0-9$_]*+\\s*+\\.)*+\\s*+[a-zA-Z$_][a-zA-Z0-9$_]*+\\s*).*+");
 
    //RESERVED WORDS
    Pattern CHOOSE = Pattern.compile("^(choose)(?=\\}).*+");
@@ -34,7 +40,6 @@ public interface Characters {
    Pattern LAST = Pattern.compile("^(last\\(\\)).*+");
    Pattern NAME = Pattern.compile("^([a-zA-Z][a-zA-Z0-9_]*+).*+");
    Pattern NAMESPACE = Pattern.compile("^(namespace)(?=\\s).*+");
-   Pattern NULL = Pattern.compile("^(null)(?![a-zA-Z0-9$_@'\"]).*+");
    Pattern OTHERWISE = Pattern.compile("^(otherwise)(?=\\}).*+");
    Pattern POSITION = Pattern.compile("^(position\\(\\)).*+");
    Pattern TEMPLATE = Pattern.compile("^(template)(?=\\s|\\}).*+");
@@ -46,16 +51,14 @@ public interface Characters {
    Pattern PARAM = Pattern.compile("^(\\{param\\s).*+");
    Pattern VARIABLE = Pattern.compile("^(\\{variable)(?=\\s).*+");
 
-   Pattern IMPORT_PATH = Pattern.compile("^((?:/?(?:\\.\\./)?(?:[^/\\}]++/)*+)?[^/\\}]++).*+");
-   Pattern ABSOLUTE_PATH = Pattern.compile("^(/(?:[^/\\}]++/)*+).*+");
 
-
+   //PRIMITIVES
    Pattern INTEGER = Pattern.compile("^((?:[0-9]++)(?!\\.)).*+");
    Pattern DECIMAL = Pattern.compile("^(0x[0-9A-Fa-f]++(?:[eE][+-][0-9]++)?|(?:0(?=\\.)|[1-9][0-9]*+)(?:\\.?[0-9]*+[eE][+-][0-9]++|\\.[0-9]++(?:[eE][+-][0-9]++)?)).*+");
    Pattern STRING = Pattern.compile("^((['\"])((?:(?!\\2)(?!\\r?\\n)(?:\\\\\\\\|\\\\\\r?\\n|\\\\\\2|[^\\r\\n]))*+)\\2).*+");
+   Pattern NULL = Pattern.compile("^(null)(?![a-zA-Z0-9$_@'\"]).*+");
 
 
-   Pattern INPUT_TOKENS = Pattern.compile("^([^\\{]++).*+");
 
 
    //SPACE
@@ -138,6 +141,7 @@ public interface Characters {
 
    //JAVASCRIPT
    final String js_bld="bld";
+   final String js_context="context";
    final String js_count="count";
    final String js_CountElements="CountElements";
    final String js_currentNS="currentNS";

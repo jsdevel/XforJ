@@ -57,7 +57,7 @@ public class TemplateDeclaration extends Production {
                         prepend(
                            js_currentNS+"."+nm+"=$"+nm+";"+
                            "function $"+nm+"("+js__data+", "+js__params+"){"+
-                              "var "+js_data+"="+js__data+"||{},"+
+                              "var "+js_context+"="+js__data+"||{},"+
                                  js_params+"="+js__params+"||{},"+
                                  js_bld+"=new "+js_StringBuffer+"(),"+
                                  js_last+"=''/0,"+

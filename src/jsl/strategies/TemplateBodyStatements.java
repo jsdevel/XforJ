@@ -43,7 +43,7 @@ public class TemplateBodyStatements extends Production {
             if(name.find()){
                String nm = name.group(1);
                characters.shift(nm.length());
-               output.prepend(js_bld+".append("+js_data+"."+nm+");");
+               output.prepend(js_bld+".append("+js_context+"."+nm+");");
                characters.shift(1);//close block
                context.removeProduction();
                return;

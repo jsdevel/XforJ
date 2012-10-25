@@ -22,14 +22,17 @@ import jsl.*;
  *
  * @author Joseph Spencer
  */
-public class VariableExpression extends AbstractExpression {
-   public VariableExpression(Output output) {
-      super("ParamExpression", output);
+public class ContextExpression extends Production {
+   private boolean isNested;
+
+   public ContextExpression(Output output, boolean isNested) {
+      super(output);
+      this.isNested = isNested;
    }
 
    @Override
-   protected Production getValue() {
-      return new VariableValue(output, false);
+   void execute(CharWrapper characters, ProductionContext context) throws Exception {
+      throw new UnsupportedOperationException("Not supported yet.");
    }
 
 }

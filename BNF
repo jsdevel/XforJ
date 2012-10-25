@@ -124,8 +124,14 @@ VariableValue:
 
 ContextSelector:
    Namespace
-   ContextSelector + '.' + NameSpace
-   ContextSelector@"Optional" + '[' + ContextExpression + ']' + ContextSelector@"Optional"
+   ContextSelector + ContextStaticRefinement
+   ContextSelector@"Optional" + ContextDynamicRefinement + ContextSelector@"Optional"
+
+ContextStaticRefinement:
+   '.' + NameSpace
+
+ContextDynamicRefinement:
+   '[' + ContextExpression + ']'
 
 ContextExpression:
    ContextExpressionValue
