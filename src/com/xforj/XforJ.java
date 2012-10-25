@@ -17,6 +17,7 @@ package com.xforj;
 
 import com.xforj.productions.ProductionContext;
 import java.io.*;
+import java.util.ArrayList;
 import java.util.Date;
 
 /**
@@ -27,13 +28,31 @@ public class XforJ implements Characters {
    //Exit codes
    public static final int UNABLE_TO_PARSE_FILE=1;
    public static final int IO_Error=2;
+   public static final String PWD = System.getProperty("user.dir");
 
    /**
     * @param args the command line arguments
     */
    public static void main(String[] args) {
       long before = new Date().getTime();
-      LOGGER.out(compileFile(args[0], false).toString());
+      ArrayList<String> filesToProcess = new ArrayList<>();
+
+      if(args.length == 0){
+         LOGGER.out("No file paths given as arguments.");
+      }
+
+      MainUtil.addArrayToArrayList(args, filesToProcess);
+
+      for(String path : filesToProcess){
+         String pathToUse;
+         if(path.startsWith("/")){
+            pathToUse = path;
+         } else {
+            pathToUse = PWD+"/"+path;
+         }
+         LOGGER.out("Compiling: "+pathToUse);
+         LOGGER.out(compileFile(pathToUse, false).toString());
+      }
       LOGGER.out("Time taken: "+Long.toString(new Date().getTime() - before));
    }
 
