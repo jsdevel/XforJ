@@ -54,8 +54,13 @@ public class TemplateDeclaration extends Production {
 
                      characters.shift(nm.length());
                      output.
-                        prepend("currentNS."+nm+"=$"+nm+";function $"+nm+"(_data, _params){var data=_data||{},bld=new StringBuffer();").
-                        prepend(context.getCurrentVariableOutput());
+                        prepend(
+                           "currentNS."+nm+"=$"+nm+";"+
+                           "function $"+nm+"(_data, _params){"+
+                              "var data=_data||{},bld=new StringBuffer(),count=''/0,position=count;"
+                        ).
+                        prepend(context.getCurrentVariableOutput()).
+                        append("return bld.toString()}");
 
                      if(characters.charAt(0) == close){
                         characters.shift(1);
@@ -88,7 +93,7 @@ public class TemplateDeclaration extends Production {
       } else if(expectingTemplateBody){
          expectingTemplateBody=false;
          Output templateBodyOutput = new Output();
-         output.prepend(templateBodyOutput).prepend("return bld.toString()}");
+         output.prepend(templateBodyOutput);
          context.addProduction(new TemplateBody(templateBodyOutput));
          return;
       }

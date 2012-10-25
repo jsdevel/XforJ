@@ -33,7 +33,9 @@ public class GlobalStatements extends Production {
    public void execute(CharWrapper characters, ProductionContext context) throws Exception {
       if(characters.charAt(0) == open){
          hasStatements=true;
-         context.addProduction(new TemplateDeclaration(output)); 
+         Output templateDeclarationOutput = new Output();
+         output.prepend(templateDeclarationOutput);
+         context.addProduction(new TemplateDeclaration(templateDeclarationOutput)); 
       } else if(!characters.removeSpace()){
          throw new Exception("Invalid character found while evaluating GlobalStatements.");
       }
