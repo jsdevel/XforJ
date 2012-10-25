@@ -35,7 +35,8 @@ public interface Characters {
    //RESERVED WORDS
    Pattern CHOOSE = Pattern.compile("^(choose)(?=\\}).*+");
    Pattern COUNT = Pattern.compile("^(count\\().*+");
-   Pattern IF = Pattern.compile("^(if)(?=\\s|\\}).*+");
+   Pattern IF = Pattern.compile("^(\\{if\\s++).*+");
+   Pattern IF_CLOSING = Pattern.compile("^(\\{/if\\}).*+");
    Pattern IMPORT = Pattern.compile("^(import)(?=\\s).*+");
    Pattern LAST = Pattern.compile("^(last\\(\\)).*+");
    Pattern NAME = Pattern.compile("^([a-zA-Z][a-zA-Z0-9_]*+).*+");

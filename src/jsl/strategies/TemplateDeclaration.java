@@ -80,8 +80,9 @@ public class TemplateDeclaration extends Production {
          } else if(allowVariableDeclarations && characters.charAt(1) == v){
             context.addProduction(new VariableDeclarations(context.getCurrentVariableOutput()));
             allowVariableDeclarations=false;
+            expectingTemplateBody=true;
             return;
-         } else if(characters.charAt(1) == forward && characters.charAt(2) == t){
+         } else if(characters.charAt(1) == forward){
             characters.shift(2);
             Matcher template = characters.match(TEMPLATE);
             if(template.find()){
@@ -93,15 +94,23 @@ public class TemplateDeclaration extends Production {
                   return;
                }
             }
-         } 
+         } else if(expectingTemplateBody){
+            evaluateTemplateBody(context);
+            return;
+         }
+
       } else if(expectingTemplateBody){
-         expectingTemplateBody=false;
-         Output templateBodyOutput = new Output();
-         output.prepend(templateBodyOutput);
-         context.addProduction(new TemplateBody(templateBodyOutput));
+         evaluateTemplateBody(context);
          return;
       }
 
       throw new Exception("Invalid Character found while evaluating TemplateDeclaration.");
+   }
+
+   private void evaluateTemplateBody(ProductionContext context){
+      expectingTemplateBody=false;
+      Output templateBodyOutput = new Output();
+      output.prepend(templateBodyOutput);
+      context.addProduction(new TemplateBody(templateBodyOutput));
    }
 }

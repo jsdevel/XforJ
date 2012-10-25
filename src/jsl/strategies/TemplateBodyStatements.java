@@ -32,6 +32,7 @@ public class TemplateBodyStatements extends Production {
 
    @Override
    public void execute(CharWrapper characters, ProductionContext context) throws Exception {
+      Matcher match;
       Output statementOutput;
 
       if(characters.charAt(0) == open){
@@ -39,6 +40,15 @@ public class TemplateBodyStatements extends Production {
          case forward:
             context.removeProduction();
             return;
+         case i:
+            match = characters.match(IF);
+            if(match.find()){
+               characters.shift(match.group(1).length());
+               statementOutput=new Output();
+               context.addProduction(new IfStatement(statementOutput));
+               output.prepend(statementOutput);
+               return;
+            }
          }
 
          //PrintStatement
