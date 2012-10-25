@@ -49,8 +49,12 @@ public class ContextSelector extends Production {
          if(!hasContextSelector){
             throw new Exception("Invalid ContextSeletor.  Unexpected \".\".");
          }
-         match = characters.match(CONTEXT_STATIC_REFINEMENT);
+         hasContextSelector=false;
+         characters.shift(1);
+         contextSelectorOutput.prepend(".");
+         match = characters.match(CONTEXT_STATIC_REFINEMENT_NAMESPACE);
          if(match.find()){
+            hasContextSelector=true;
             String staticRefinement = match.group(1);
             contextSelectorOutput.prepend(staticRefinement.replaceAll("\\s*+", ""));
             characters.shift(staticRefinement.length());
@@ -64,7 +68,7 @@ public class ContextSelector extends Production {
       case cbracket:
          break;
       default:
-         match = characters.match(NS);
+         match = characters.match(CONTEXT_STATIC_REFINEMENT_NAMESPACE);
          if(match.find()){
             hasContextSelector=true;
             String namesp = match.group(1);
