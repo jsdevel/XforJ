@@ -23,11 +23,38 @@ import jsl.*;
  * @author Joseph Spencer
  */
 public class Program extends Production {
+   Output programNamespaceOutput;
+   Output importOutput;
+   Output variableOutput;
+   Output globalStatementsOutput;
    public Program(Output output){
       super(output);
+      programNamespaceOutput=new Output();
+      importOutput=new Output();
+      variableOutput=new Output();
+      globalStatementsOutput=new Output();
+
       output.
          prepend("(function(){").
-         append("function StringBuffer(){var v=[],i=0;this.append=function(s){v[i++]=s||'';};this.toString=function(){return v.join('');};}})();").
+            prepend(programNamespaceOutput).
+            prepend(importOutput).
+            prepend(variableOutput).
+            prepend(globalStatementsOutput).
+         prepend("})();");
+
+
+      globalStatementsOutput.
+      append(
+            "function StringBuffer(){"+
+               "var v=[],i=0;"+
+               "this.append=function(s){"+
+                  "v[i++]=s||'';"+
+               "};"+
+               "this.toString=function(){"+
+                  "return v.join('');"+
+               "};"+
+            "}"
+         ).
          append(
             "function count(obj){"+
                "var count=0;"+
@@ -36,8 +63,9 @@ public class Program extends Production {
                   "if(obj.slice){"+
                      "return obj.length>>>0;"+
                   "} else {"+
-                  "for(name in obj){"+
-                     "count++;"+
+                     "for(name in obj){"+
+                        "count++;"+
+                     "}"+
                   "}"+
                "}"+
                "return count;"+
@@ -53,24 +81,21 @@ public class Program extends Production {
 
       if(characters.charAt(0) == open && !hasProgramNamespace){
          hasProgramNamespace=true;
-         context.addProduction(new ProgramNamespace(output));
+         context.addProduction(new ProgramNamespace(programNamespaceOutput));
          return;
       } else if(hasProgramNamespace){
          characters.removeSpace();
          if(characters.charAt(0) == open){
             if(characters.charAt(1) == i){
-               Output importOutput = new Output();
-               output.prepend(importOutput);
-               output.prepend("(function(){");
-               output.append("})();");
+               importOutput.prepend("(function(){");
+               importOutput.append("})();");
                context.addProduction(new ImportStatements(importOutput));
                return;
             } else if(characters.charAt(1) == v){
-               output.prepend(context.getCurrentVariableOutput());
-               context.addProduction(new GlobalVariableDeclarations(output));
+               context.addProduction(new GlobalVariableDeclarations(variableOutput));
                return;
             }
-            context.addProduction(new GlobalStatements(output));
+            context.addProduction(new GlobalStatements(globalStatementsOutput));
             return;
          }
       }
