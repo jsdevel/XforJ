@@ -155,7 +155,7 @@ InputTokens:
    /[^{]*/
 
 PrintStatement:
-   '{' + VariableValue + '}'
+   '{' + VariableExpression + '}'
 
 IfStatement:
    '{if ' + VariableExpression + '}' + TemplateBody + '{/if}'

@@ -32,23 +32,20 @@ public class TemplateBodyStatements extends Production {
 
    @Override
    public void execute(CharWrapper characters, ProductionContext context) throws Exception {
+      Output statementOutput;
+
       if(characters.charAt(0) == open){
-         //closing
-         if(characters.charAt(1) == forward){
-               context.removeProduction();
-               return;
-         } else {//assuming access to data here;
-            characters.shift(1);
-            Matcher name = characters.match(NAME);
-            if(name.find()){
-               String nm = name.group(1);
-               characters.shift(nm.length());
-               output.prepend(js_bld+".append("+js_context+"."+nm+");");
-               characters.shift(1);//close block
-               context.removeProduction();
-               return;
-            }
+         switch(characters.charAt(1)){
+         case forward:
+            context.removeProduction();
+            return;
          }
+
+         //PrintStatement
+         statementOutput=new Output();
+         output.prepend(statementOutput);
+         context.addProduction(new PrintStatement(statementOutput));
+         return;
       } else {
          Matcher inputTokens = characters.match(INPUT_TOKENS);
          if(inputTokens.find()){

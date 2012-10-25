@@ -85,6 +85,8 @@ public interface Characters {
    char question = 63;
    char tilde = 126;
    char at = 64;
+   char ccurly = 125;
+   char ocurly = 123;
 
    //ALPHA
    char a = 97;

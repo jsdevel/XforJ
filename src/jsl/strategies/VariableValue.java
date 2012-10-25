@@ -59,27 +59,24 @@ public class VariableValue extends GlobalVariableValue {
       case eight:
       case nine:
          super.execute(characters, context);
-         break;
+         return;
       case p:
          match=characters.match(POSITION);
          if(match.find()){
             characters.shift(match.group(1).length());
             output.prepend(js_position);
             context.removeProduction();
-         } else {
-            super.execute(characters, context);
+            return;
          }
          break;
       case c:
-         //needs work
          match=characters.match(COUNT);
          if(match.find()){
             hasOpenParen=true;
             characters.shift(match.group(1).length());
             output.prepend(js_CountElements).prepend("(");
             context.addProduction(new ContextSelector(output, isNestedInContextSelector));
-         } else {
-            super.execute(characters, context);
+            return;//we need to come back for the close paren.
          }
          break;
       case l:
@@ -88,19 +85,19 @@ public class VariableValue extends GlobalVariableValue {
             characters.shift(match.group(1).length());
             output.prepend(js_last);
             context.removeProduction();
-         } else {
-            super.execute(characters, context);
+            return;
          }
          break;
       case n:
          match = characters.match(NULL);
          if(match.find()){
             super.execute(characters, context);
-            break;
+            return;
          }
+         break;
       default:
-         context.removeProduction();
-         context.addProduction(new ContextSelector(output, isNestedInContextSelector));
       }
+      context.removeProduction();
+      context.addProduction(new ContextSelector(output, isNestedInContextSelector));
    }
 }
