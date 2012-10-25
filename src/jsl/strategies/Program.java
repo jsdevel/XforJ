@@ -27,7 +27,7 @@ public class Program extends Production {
    Output importOutput;
    Output variableOutput;
    Output globalStatementsOutput;
-   public Program(Output output){
+   public Program(Output output, boolean imported){
       super(output);
       programNamespaceOutput=new Output();
       importOutput=new Output();
@@ -35,42 +35,46 @@ public class Program extends Production {
       globalStatementsOutput=new Output();
 
       output.
-         prepend("(function(){").
+         prepend("(function(StringBuffer, count){").
             prepend(programNamespaceOutput).
             prepend(importOutput).
             prepend(variableOutput).
-            prepend(globalStatementsOutput).
-         prepend("})();");
+            prepend(globalStatementsOutput);
 
-
-      globalStatementsOutput.
-      append(
-            "function StringBuffer(){"+
-               "var v=[],i=0;"+
-               "this.append=function(s){"+
-                  "v[i++]=s||'';"+
-               "};"+
-               "this.toString=function(){"+
-                  "return v.join('');"+
-               "};"+
-            "}"
-         ).
-         append(
-            "function count(obj){"+
-               "var count=0;"+
-               "var name;"+
-               "if(!!obj && typeof obj === 'object'){"+
-                  "if(obj.slice){"+
-                     "return obj.length>>>0;"+
-                  "} else {"+
-                     "for(name in obj){"+
-                        "count++;"+
+      if(imported){
+         output.prepend("})(StringBuffer, count);");
+      } else {
+         output.prepend("})(").
+         prepend(
+               "function StringBuffer(){"+
+                  "var v=[],i=0;"+
+                  "this.append=function(s){"+
+                     "v[i++]=s||'';"+
+                  "};"+
+                  "this.toString=function(){"+
+                     "return v.join('');"+
+                  "};"+
+               "}"
+            ).
+         prepend(",").
+            prepend(
+               "function count(obj){"+
+                  "var count=0;"+
+                  "var name;"+
+                  "if(!!obj && typeof obj === 'object'){"+
+                     "if(obj.slice){"+
+                        "return obj.length>>>0;"+
+                     "} else {"+
+                        "for(name in obj){"+
+                           "count++;"+
+                        "}"+
                      "}"+
                   "}"+
-               "}"+
-               "return count;"+
-            "}"
-         );
+                  "return count;"+
+               "}"
+            ).
+         prepend(");");
+      }
    }
 
    private boolean hasProgramNamespace;

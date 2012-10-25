@@ -55,7 +55,7 @@ public class ImportStatement extends Production {
                         throw new Exception("Invalid Absolute Path given in: "+pth);
                      }
                   }
-                  output.prepend(context.importFile(newPath));
+                  output.prepend(context.importFile(newPath, true));
                   return;
                }
             }

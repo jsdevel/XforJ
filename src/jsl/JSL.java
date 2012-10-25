@@ -33,17 +33,17 @@ public class JSL implements Characters {
     */
    public static void main(String[] args) {
       long before = new Date().getTime();
-      LOGGER.out(compileFile(args[0]).toString());
+      LOGGER.out(compileFile(args[0], false).toString());
       LOGGER.out("Time taken: "+Long.toString(new Date().getTime() - before));
    }
 
-   public static Output compileFile(String path) {
+   public static Output compileFile(String path, boolean imported) {
       File testFile = new File(path);
       CharWrapper wrapper=null;
 
       try{
          String absoluteFilePath = testFile.getCanonicalPath();
-         ProductionContext context = new ProductionContext(absoluteFilePath);
+         ProductionContext context = new ProductionContext(absoluteFilePath, imported);
          char[] chars=MainUtil.getChars(testFile);
 
          CharWrapper characters = new CharWrapper(chars);

@@ -40,11 +40,11 @@ public class ProductionContext {
 
    public final String filePath;
 
-   public ProductionContext(String absoluteFilePath) {
+   public ProductionContext(String absoluteFilePath, boolean imported) {
       //at some point these need to be configurable.
       stripNewLines=true;
       minifyHTML=true;
-      currentProduction= new Program(output);
+      currentProduction= new Program(output, imported);
       productionStack.add(currentProduction);
       filePath=absoluteFilePath;
    }
@@ -61,7 +61,7 @@ public class ProductionContext {
 
    //IMPORTS
    private static Map<String, Boolean> importedFiles = new HashMap<String, Boolean>();
-   public Output importFile(String path) throws Exception {
+   public Output importFile(String path, boolean imported) throws Exception {
 
       File targetFile = new File(path);
       String absolutePath = targetFile.getCanonicalPath();
@@ -70,7 +70,7 @@ public class ProductionContext {
          return new Output();
       }
       importedFiles.put(absolutePath, true);
-      return JSL.compileFile(path);
+      return JSL.compileFile(path, imported);
    }
 
    //PRODUCTIONS

@@ -57,7 +57,7 @@ public class TemplateDeclaration extends Production {
                         prepend(
                            "currentNS."+nm+"=$"+nm+";"+
                            "function $"+nm+"(_data, _params){"+
-                              "var data=_data||{},bld=new StringBuffer(),count=''/0,position=count;"
+                              "var data=_data||{},params=_params||{},bld=new StringBuffer(),count=''/0,position=count;"
                         ).
                         prepend(context.getCurrentVariableOutput()).
                         append("return bld.toString()}");
