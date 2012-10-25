@@ -15,7 +15,7 @@
 #
 # =========================================================
 #
-# This is a non standard BNF that describes the JSL grammar.  
+# This is a non standard BNF that describes the XforJ grammar.  
 #
 # Character sequences not wrapped in ' are Non-Terminals.
 #
