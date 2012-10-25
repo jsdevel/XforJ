@@ -28,12 +28,15 @@ public interface Characters {
 
    //RESERVED WORDS
    Pattern CHOOSE = Pattern.compile("^(choose)(?=\\}).*+");
+   Pattern COUNT = Pattern.compile("^(count\\().*+");
    Pattern IF = Pattern.compile("^(if)(?=\\s|\\}).*+");
    Pattern IMPORT = Pattern.compile("^(import)(?=\\s).*+");
+   Pattern LAST = Pattern.compile("^(last\\(\\)).*+");
    Pattern NAME = Pattern.compile("^([a-zA-Z][a-zA-Z0-9_]*+).*+");
    Pattern NAMESPACE = Pattern.compile("^(namespace)(?=\\s).*+");
    Pattern NULL = Pattern.compile("^(null)(?![a-zA-Z0-9$_@'\"]).*+");
    Pattern OTHERWISE = Pattern.compile("^(otherwise)(?=\\}).*+");
+   Pattern POSITION = Pattern.compile("^(position\\(\\)).*+");
    Pattern TEMPLATE = Pattern.compile("^(template)(?=\\s|\\}).*+");
    Pattern WHEN = Pattern.compile("^(when)(?=\\s|\\}).*+");
 
@@ -133,6 +136,18 @@ public interface Characters {
    char semic = 59;
 
 
+   //JAVASCRIPT
+   final String js_bld="bld";
+   final String js_count="count";
+   final String js_CountElements="CountElements";
+   final String js_currentNS="currentNS";
+   final String js_data="data";
+   final String js__data="_data";
+   final String js_last="last";
+   final String js_params="params";
+   final String js__params="_params";
+   final String js_position="position";
+   final String js_StringBuffer="StringBuffer";
 
 
 }

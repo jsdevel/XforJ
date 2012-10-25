@@ -43,7 +43,7 @@ public class TemplateBodyStatements extends Production {
             if(name.find()){
                String nm = name.group(1);
                characters.shift(nm.length());
-               output.prepend("bld.append(data."+nm+");");
+               output.prepend(js_bld+".append("+js_data+"."+nm+");");
                characters.shift(1);//close block
                context.removeProduction();
                return;
@@ -65,7 +65,7 @@ public class TemplateBodyStatements extends Production {
             }
             newTokens = newTokens.replaceAll("\"", "\\\\\"").replaceAll("'", "\\\\'");
             characters.shift(oldTokens.length());
-            output.prepend("bld.append('"+newTokens+"');");
+            output.prepend(js_bld+".append('"+newTokens+"');");
             return;
          }
       }

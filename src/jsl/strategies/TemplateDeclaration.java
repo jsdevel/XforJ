@@ -55,12 +55,16 @@ public class TemplateDeclaration extends Production {
                      characters.shift(nm.length());
                      output.
                         prepend(
-                           "currentNS."+nm+"=$"+nm+";"+
-                           "function $"+nm+"(_data, _params){"+
-                              "var data=_data||{},params=_params||{},bld=new StringBuffer(),count=''/0,position=count;"
+                           js_currentNS+"."+nm+"=$"+nm+";"+
+                           "function $"+nm+"("+js__data+", "+js__params+"){"+
+                              "var "+js_data+"="+js__data+"||{},"+
+                                 js_params+"="+js__params+"||{},"+
+                                 js_bld+"=new "+js_StringBuffer+"(),"+
+                                 js_last+"=''/0,"+
+                                 js_position+"="+js_last+";"
                         ).
                         prepend(context.getCurrentVariableOutput()).
-                        append("return bld.toString()}");
+                        append("return "+js_bld+".toString()}");
 
                      if(characters.charAt(0) == close){
                         characters.shift(1);

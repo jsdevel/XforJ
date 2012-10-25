@@ -117,20 +117,22 @@ VariableExpression:
 
 VariableValue:
    GlobalVariableValue
+   'count(' + ContextSelector + ')'
+   'position()'
+   'last()'
    ContextSelector
 
 ContextSelector:
-   './' + ContextSelector
-   '../' + ContextSelector
    Namespace
-   'position()'
-   'last()'
-   'count(' + ContextSelector + ')'
-   ContextSelector + '[' + ContextExpression + ']' + NameSpace@"Optional"
+   ContextSelector@"Optional" + '[' + ContextExpression + ']' + '.' + ContextSelector@"Optional"
 
 ContextExpression:
+   ContextExpressionValue
+   ContextExpression + Operator + ContextExpressionValue
+
+ContextExpressionValue:
    VariableValue
-   ContextExpression + Operator + VariableValue
+   ContextSelector
 
 TemplateBody:
    TemplateBodyStatements

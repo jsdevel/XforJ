@@ -48,6 +48,37 @@ public class VariableValue extends GlobalVariableValue {
       case nine:
          super.execute(characters, context);
          break;
+      case p:
+         match=characters.match(POSITION);
+         if(match.find()){
+            characters.shift(match.group(1).length());
+            output.prepend(js_position);
+            context.removeProduction();
+         } else {
+            super.execute(characters, context);
+         }
+         break;
+      case c:
+         //needs work
+         match=characters.match(COUNT);
+         if(match.find()){
+            characters.shift(match.group(1).length());
+            output.prepend(js_count);
+            context.removeProduction();
+         } else {
+            super.execute(characters, context);
+         }
+         break;
+      case l:
+         match=characters.match(LAST);
+         if(match.find()){
+            characters.shift(match.group(1).length());
+            output.prepend(js_last);
+            context.removeProduction();
+         } else {
+            super.execute(characters, context);
+         }
+         break;
       case n:
          match = characters.match(NULL);
          if(match.find()){

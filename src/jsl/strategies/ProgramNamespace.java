@@ -55,7 +55,7 @@ public class ProgramNamespace extends Production {
                   for(int i=0;i<len;i++){
                      if(i==0){
                         builtNS = split[i];
-                        output.prepend("var currentNS;try{"+builtNS+"}catch(e){"+builtNS+"={}}");
+                        output.prepend("var "+js_currentNS+";try{"+builtNS+"}catch(e){"+builtNS+"={}}");
                      } else {
                         builtNS+="."+split[i];
                         output.prepend("if(!"+builtNS+")"+
@@ -63,7 +63,7 @@ public class ProgramNamespace extends Production {
                         );
                      }
                   }
-                  output.prepend("currentNS="+builtNS+";");
+                  output.prepend(js_currentNS+"="+builtNS+";");
 
                   if(characters.charAt(0) == close){
                      characters.shift(1);

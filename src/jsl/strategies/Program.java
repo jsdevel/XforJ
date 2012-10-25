@@ -35,18 +35,18 @@ public class Program extends Production {
       globalStatementsOutput=new Output();
 
       output.
-         prepend("(function(StringBuffer, count){").
+         prepend("(function("+js_StringBuffer+", "+js_CountElements+"){").
             prepend(programNamespaceOutput).
             prepend(importOutput).
             prepend(variableOutput).
             prepend(globalStatementsOutput);
 
       if(imported){
-         output.prepend("})(StringBuffer, count);");
+         output.prepend("})("+js_StringBuffer+", "+js_CountElements+");");
       } else {
          output.prepend("})(").
          prepend(
-               "function StringBuffer(){"+
+               "function "+js_StringBuffer+"(){"+
                   "var v=[],i=0;"+
                   "this.append=function(s){"+
                      "v[i++]=s||'';"+
@@ -58,19 +58,19 @@ public class Program extends Production {
             ).
          prepend(",").
             prepend(
-               "function count(obj){"+
-                  "var count=0;"+
+               "function "+js_CountElements+"(obj){"+
+                  "var cnt=0;"+
                   "var name;"+
                   "if(!!obj && typeof obj === 'object'){"+
                      "if(obj.slice){"+
                         "return obj.length>>>0;"+
                      "} else {"+
                         "for(name in obj){"+
-                           "count++;"+
+                           "cnt++;"+
                         "}"+
                      "}"+
                   "}"+
-                  "return count;"+
+                  "return cnt;"+
                "}"
             ).
          prepend(");");
