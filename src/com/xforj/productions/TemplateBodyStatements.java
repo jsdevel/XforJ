@@ -55,33 +55,28 @@ public class TemplateBodyStatements extends Production {
                output.prepend(statementOutput);
                return;
             }
+            break;
+         case t:
+            match = characters.match(TEXT);
+            if(match.find()){
+               characters.shift(match.group(1).length());
+               statementOutput= new Output();
+               context.addProduction(new TextStatement(statementOutput));
+               output.prepend(statementOutput);
+               return;
+            }
+            break;
          }
 
          //PrintStatement
          statementOutput=new Output();
          output.prepend(statementOutput);
          context.addProduction(new PrintStatement(statementOutput));
-         return;
       } else {
-         Matcher inputTokens = characters.match(INPUT_TOKENS);
-         if(inputTokens.find()){
-            String oldTokens = inputTokens.group(1);
-            String newTokens;
-            if(context.stripNewLines){
-               newTokens = oldTokens.replaceAll("\\n|\\r", "");
-            } else {
-               newTokens = oldTokens.replaceAll("\\n|\\r", "\\\\\n");
-
-            }
-            if(context.minifyHTML){
-               newTokens = newTokens.replaceAll("(>|<)\\s++|\\s++(>|<)", "$1$2");
-            }
-            newTokens = newTokens.replaceAll("\"", "\\\\\"").replaceAll("'", "\\\\'");
-            characters.shift(oldTokens.length());
-            output.prepend(js_bld+".append('"+newTokens+"');");
-            return;
-         }
+         //InputTokens
+         statementOutput=new Output();
+         output.prepend(statementOutput);
+         context.addProduction(new InputTokens(statementOutput));
       }
-      throw new Exception("Invalid Template");
    }
 }

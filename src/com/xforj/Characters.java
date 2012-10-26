@@ -46,6 +46,8 @@ public interface Characters {
    Pattern OTHERWISE = Pattern.compile("^(otherwise)(?=\\}).*+");
    Pattern POSITION = Pattern.compile("^(position\\(\\)).*+");
    Pattern TEMPLATE = Pattern.compile("^(template)(?=\\s|\\}).*+");
+   Pattern TEXT = Pattern.compile("^(\\{text\\}).*+");
+   Pattern TEXT_CLOSING = Pattern.compile("^(\\{/text\\}).*+");
    Pattern WHEN = Pattern.compile("^(when)(?=\\s|\\}).*+");
 
    //For now these two have the { at the beginning.  This probably needs to 
