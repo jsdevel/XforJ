@@ -36,14 +36,14 @@ public class Program extends Production {
       globalStatementsOutput=new Output();
 
       output.
-         prepend("(function("+js_StringBuffer+", "+js_CountElements+"){").
+         prepend("(function("+js_StringBuffer+","+js_CountElements+"){").
             prepend(programNamespaceOutput).
             prepend(importOutput).
             prepend(variableOutput).
             prepend(globalStatementsOutput);
 
       if(imported){
-         output.prepend("})("+js_StringBuffer+", "+js_CountElements+");");
+         output.prepend("})("+js_StringBuffer+","+js_CountElements+");");
       } else {
          output.prepend("})(").
          prepend(
@@ -52,8 +52,7 @@ public class Program extends Production {
                   "var v=[],i=0;"+
                   "return{"+
                      js_append+":function(s){"+
-                        "v[i++]=s||'';"+
-                        "return this"+
+                        "v[i++]=s||''"+
                      "},"+
                      "toString:function(){"+
                         "return v.join('');"+
