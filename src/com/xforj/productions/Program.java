@@ -92,9 +92,12 @@ public class Program extends Production {
          characters.removeSpace();
          if(characters.charAt(0) == open){
             if(characters.charAt(1) == i){
-               importOutput.prepend("(function(){");
-               importOutput.append("})();");
-               context.addProduction(new ImportStatements(importOutput));
+               Output importStatementsOutput = new Output();
+               importOutput.
+                  prepend("(function(){").
+                  prepend(importStatementsOutput).
+                  prepend("})();");
+               context.addProduction(new ImportStatements(importStatementsOutput));
                return;
             } else if(characters.charAt(1) == v){
                context.addProduction(new GlobalVariableDeclarations(variableOutput));

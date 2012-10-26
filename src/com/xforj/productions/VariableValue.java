@@ -40,7 +40,7 @@ public class VariableValue extends GlobalVariableValue {
       case cparen:
          if(hasOpenParen){
             characters.shift(1);
-            output.append(")");
+            output.prepend(")");
             context.removeProduction();
             return;
          } else {
@@ -74,9 +74,13 @@ public class VariableValue extends GlobalVariableValue {
          match=characters.match(COUNT);
          if(match.find()){
             hasOpenParen=true;
+            Output contextSelectorOutput = new Output();
             characters.shift(match.group(1).length());
-            output.prepend(js_CountElements).prepend("(");
-            context.addProduction(new ContextSelector(output, isNestedInContextSelector));
+            output.
+               prepend(js_CountElements).
+               prepend("(").
+               prepend(contextSelectorOutput);
+            context.addProduction(new ContextSelector(contextSelectorOutput, isNestedInContextSelector));
             return;//we need to come back for the close paren.
          }
          break;

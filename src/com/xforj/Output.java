@@ -23,29 +23,19 @@ import java.util.List;
  * @author Joseph Spencer
  */
 public class Output {
-   List<Object> prependNodes = new ArrayList();
-   List<Object> appendNodes = new ArrayList();
+   List<Object> nodes = new ArrayList();
    
    public Output prepend(Object obj){
-      prependNodes.add(obj);
-      return this;
-   }
-
-   public Output append(Object obj){
-      appendNodes.add(0, obj);
+      nodes.add(obj);
       return this;
    }
 
    @Override
    public String toString(){
       StringBuilder str = new StringBuilder();
-      while(!prependNodes.isEmpty()){
-         str.append(prependNodes.remove(0).toString());
-      }
-      while(!appendNodes.isEmpty()){
-         str.append(appendNodes.remove(appendNodes.size()-1).toString());
+      while(!nodes.isEmpty()){
+         str.append(nodes.remove(0).toString());
       }
       return str.toString();
    }
-   
 }

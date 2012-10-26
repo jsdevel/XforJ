@@ -26,6 +26,7 @@ import java.util.regex.Matcher;
  * @author Joseph Spencer
  */
 public class TemplateDeclaration extends Production {
+   Output templateBodyOutput = new Output();
    public TemplateDeclaration(Output output) {
       super(output);
    }
@@ -65,7 +66,8 @@ public class TemplateDeclaration extends Production {
                                  js_position+"="+js_last+";"
                         ).
                         prepend(context.getCurrentVariableOutput()).
-                        append("return "+js_bld+".toString()}");
+                        prepend(templateBodyOutput).
+                        prepend("return "+js_bld+".toString()}");
 
                      if(characters.charAt(0) == close){
                         characters.shift(1);
@@ -110,8 +112,6 @@ public class TemplateDeclaration extends Production {
 
    private void evaluateTemplateBody(ProductionContext context){
       expectingTemplateBody=false;
-      Output templateBodyOutput = new Output();
-      output.prepend(templateBodyOutput);
       context.addProduction(new TemplateBody(templateBodyOutput));
    }
 }

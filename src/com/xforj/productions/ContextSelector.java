@@ -32,7 +32,7 @@ public class ContextSelector extends Production {
          contextSelectorOutput=new Output();
          output.prepend("((function("+js_context+"){try{return "+js_context+"."). 
          prepend(contextSelectorOutput).
-         append("}catch(e){}})("+js_context+")||\"\")");
+         prepend("}catch(e){}})("+js_context+")||\"\")");
       } else {
          contextSelectorOutput=output;
       }
