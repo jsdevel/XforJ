@@ -124,8 +124,16 @@ VariableValue:
 
 ContextSelector:
    Namespace
-   ContextSelector + ContextStaticRefinement
-   ContextSelector@"Optional" + ContextDynamicRefinement + ContextSelector@"Optional"
+   'current()'
+   ContextSelector + ContextRefinements
+
+ContextRefinements:
+   ContextRefinement
+   ContextRefinements + ContextRefinement
+
+ContextRefinement:
+   ContextStaticRefinement
+   ContextDynamicRefinement
 
 ContextStaticRefinement:
    '.' + NameSpace
