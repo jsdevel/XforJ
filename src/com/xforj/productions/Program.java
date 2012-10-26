@@ -79,6 +79,7 @@ public class Program extends Production {
    }
 
    private boolean hasProgramNamespace;
+   private boolean hasGlobalVariableDeclarations;
 
    @Override
    public void execute(CharWrapper characters, ProductionContext context) throws Exception {
@@ -92,14 +93,19 @@ public class Program extends Production {
          characters.removeSpace();
          if(characters.charAt(0) == open){
             if(characters.charAt(1) == i){
-               Output importStatementsOutput = new Output();
-               importOutput.
-                  prepend("(function(){").
-                  prepend(importStatementsOutput).
-                  prepend("})();");
-               context.addProduction(new ImportStatements(importStatementsOutput));
-               return;
+               if(!hasGlobalVariableDeclarations){
+                  Output importStatementsOutput = new Output();
+                  importOutput.
+                     prepend("(function(){").
+                     prepend(importStatementsOutput).
+                     prepend("})();");
+                  context.addProduction(new ImportStatements(importStatementsOutput));
+                  return;
+               } else {
+                  throw new Exception("ImportStatements must appear before GlobalVariableStatements.");
+               }
             } else if(characters.charAt(1) == v){
+               hasGlobalVariableDeclarations=true;
                context.addProduction(new GlobalVariableDeclarations(variableOutput));
                return;
             }
