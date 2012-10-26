@@ -125,6 +125,7 @@ VariableValue:
 ContextSelector:
    Namespace
    'current()'
+   ContextDynamicRefinement
    ContextSelector + ContextRefinements
 
 ContextRefinements:

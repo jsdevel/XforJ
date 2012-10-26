@@ -35,6 +35,7 @@ public interface Characters {
    //RESERVED WORDS
    Pattern CHOOSE = Pattern.compile("^(choose)(?=\\}).*+");
    Pattern COUNT = Pattern.compile("^(count\\().*+");
+   Pattern CURRENT = Pattern.compile("^(current\\(\\)).*+");
    Pattern IF = Pattern.compile("^(\\{if\\s++).*+");
    Pattern IF_CLOSING = Pattern.compile("^(\\{/if\\}).*+");
    Pattern IMPORT = Pattern.compile("^(import)(?=\\s).*+");

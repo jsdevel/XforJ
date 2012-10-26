@@ -30,7 +30,7 @@ public class ContextSelector extends Production {
       super(output);
       if(!nested){
          contextSelectorOutput=new Output();
-         output.prepend("((function("+js_context+"){try{return "+js_context+"."). 
+         output.prepend("((function("+js_context+"){try{return "). 
          prepend(contextSelectorOutput).
          prepend("}catch(e){}})("+js_context+")||\"\")");
       } else {
@@ -63,18 +63,30 @@ public class ContextSelector extends Production {
          }
          break;
       case obracket:
+         if(!hasContextSelector){
+            contextSelectorOutput.prepend(js_context);
+         }
          hasContextSelector=true;
          context.addProduction(new ContextDynamicRefinement(contextSelectorOutput));
          return;
       case cbracket:
          break;
+      case c:
+         match = characters.match(CURRENT);
+         if(match.find()){
+            hasContextSelector=true;
+            characters.shift(match.group(1).length());
+            contextSelectorOutput.prepend(js_context);
+            return;
+         }
+         //c could be a name start so we let it flow through.
       default:
          match = characters.match(CONTEXT_STATIC_REFINEMENT_NAMESPACE);
          if(match.find()){
             hasContextSelector=true;
             String namesp = match.group(1);
             characters.shift(namesp.length());
-            contextSelectorOutput.prepend(namesp.replaceAll("\\s*+", ""));
+            contextSelectorOutput.prepend(js_context+".").prepend(namesp.replaceAll("\\s*+", ""));
             return;
          }
       }
