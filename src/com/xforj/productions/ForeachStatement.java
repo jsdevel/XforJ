@@ -17,19 +17,36 @@
 package com.xforj.productions;
 
 import com.xforj.*;
+import java.util.regex.*;
 
 /**
  *
  * @author Joseph Spencer
  */
-public class ForeachStatement extends Production {
+public class ForeachStatement extends AbstractConditionBlock {
    public ForeachStatement(Output output) {
       super(output);
+      output.
+         prepend(js_foreach+"(").
+            prepend(variableExpressionOutput).
+            prepend(",function("+js_context+","+js_position+","+js_last+"){").
+         prepend(templateBodyStatementsOutput).
+         prepend("});");
    }
 
    @Override
-   void execute(CharWrapper characters, ProductionContext context) throws Exception {
-      throw new UnsupportedOperationException("Not supported yet.");
+   protected Production getVariableExpression(Output output) {
+      return new ContextSelector(output, false);
+   }
+
+   @Override
+   protected Production getBodyStatements(Output output) {
+      return new TemplateBodyStatements(output);
+   }
+
+   @Override
+   protected Pattern getClosingPattern() {
+      return FOREACH_CLOSING;
    }
 
 }

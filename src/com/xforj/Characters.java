@@ -152,7 +152,7 @@ public interface Characters {
 
 
    //JAVASCRIPT
-   /*DEVELOPMENT
+   /*DEVELOPMENT*/
    final String js_append="append";
    final String js_bld="bld";
    final String js_context="context";
@@ -161,14 +161,15 @@ public interface Characters {
    final String js_currentNS="currentNS";
    final String js_data="data";
    final String js__data="_data";
+   final String js_foreach="Foreach";
    final String js_last="last";
    final String js_params="params";
    final String js__params="_params";
    final String js_position="position";
    final String js_StringBuffer="StringBuffer";
-   */
+   /**/
 
-   /*MUNGED*/
+   /*MUNGED
    final String js_append="a";
    final String js_bld="b";
    final String js_context="ct";
@@ -177,10 +178,11 @@ public interface Characters {
    final String js_currentNS="n";
    final String js_data="d";
    final String js__data="_d";
+   final String js_foreach="f";
    final String js_last="l";
    final String js_params="p";
    final String js__params="_p";
    final String js_position="po";
    final String js_StringBuffer="S";
-   /**/
+   */
 }

@@ -36,14 +36,18 @@ public class Program extends Production {
       globalStatementsOutput=new Output();
 
       output.
-         prepend("(function("+js_StringBuffer+","+js_CountElements+"){").
+         prepend("(function("+js_StringBuffer+","+js_CountElements+","+js_foreach+"){").
             prepend(programNamespaceOutput).
             prepend(importOutput).
             prepend(variableOutput).
             prepend(globalStatementsOutput);
 
       if(imported){
-         output.prepend("})("+js_StringBuffer+","+js_CountElements+");");
+         output.prepend("})("+
+            js_StringBuffer+","+
+            js_CountElements+","+
+            js_foreach+
+         ");");
       } else {
          output.prepend("})(").
          prepend(
@@ -78,6 +82,40 @@ public class Program extends Production {
                   "return c"+
                "}"
             ).
+         prepend(",").
+            //Foreach
+            /*
+             * function(context, position, last){
+             * 
+             * }
+             */
+            prepend(
+               "function(o,c,s){"+
+                  "var l=0,i=0,k=[];"+
+                  "if(!!o&&typeof(o)==='object'&&typeof(c)==='function'){"+
+                     //Arrays
+                     "if(o.push&&o.slice&&o.join){"+
+                        "l=o.length;"+
+                        "for(;i<l;i++){"+
+                           "c(o[i],i+1,l)"+
+                        "}"+
+                     //Objects
+                     "}else{"+
+                        "for(i in o){"+
+                           "k[k.length]=i;"+
+                           "l++"+
+                        "}"+
+                        "if(!!s){"+
+                        //sorting of the array happens here
+                        "}"+
+                        "for(i=0;i<l;i++){"+
+                           "c(o[k[i]],i,l)"+
+                        "}"+
+                     "}"+
+                  "}"+
+               "}"
+            ).
+
          prepend(");");
       }
    }

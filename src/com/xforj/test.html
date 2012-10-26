@@ -1,17 +1,16 @@
 {namespace people.cousins}
 
-{import test_1.html}
-
 {variable oo 5}
 {variable boo 5 === @oo }
 {variable soo 5 === @oo }
 
 
-{template showPeople}
-   Hello there! 
+{template show}
+   {text}Hello there!{/text}
 
-   {boo}
-   <h2>{dan}</h2>
+   {foreach current().cousins}
+      <h2>{name}</h2>
+   {/foreach}
 {/template}
 
 

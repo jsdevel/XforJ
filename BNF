@@ -186,7 +186,11 @@ OtherwiseStatement:
    '{otherwise}' + TemplateBodyStatements + '{/otherwise}'
 
 ForEachStatement:
-   '{foreach ' + ContextSelector + '}' + VariableDeclarations@"Optional" + TemplateBodyStatements + '{/foreach}'
+   '{foreach ' + ContextSelector + SortAlgorithm@"Optional" + '}' + VariableDeclarations@"Optional" + TemplateBodyStatements + '{/foreach}'
+
+SortAlgorithm:
+   ' asc'
+   ' desc'
 
 ApplyStatement:
    '{apply ' + ContextSelector + '}' + ApplyParams@"Optional" + '{/apply}'
