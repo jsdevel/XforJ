@@ -17,6 +17,7 @@
 package com.xforj.productions;
 
 import com.xforj.*;
+import java.util.regex.Matcher;
 
 /**
  *
@@ -36,11 +37,17 @@ public class WhenStatements extends Production {
          characters.charAt(0) == open &&
          characters.charAt(1) == w
       ){
-         Output whenStatementOutput=new Output();
-         context.addProduction(new WhenStatement(whenStatementOutput, hasWhen));
-         output.prepend(whenStatementOutput);
-         hasWhen=true;
-         return;
+         Matcher match = characters.match(WHEN);
+         if(match.find()){
+            characters.shift(match.group(1).length());
+            Output whenStatementOutput=new Output();
+            context.addProduction(new WhenStatement(whenStatementOutput, hasWhen));
+            output.prepend(whenStatementOutput);
+            hasWhen=true;
+            return;
+         } else {
+            throw new Exception("Invalid WhenStatements.");
+         }
       }
       context.removeProduction();
    }

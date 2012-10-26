@@ -17,15 +17,13 @@
 package com.xforj.productions;
 
 import com.xforj.*;
-import java.util.regex.Matcher;
+import java.util.regex.*;
 
 /**
  *
  * @author Joseph Spencer
  */
-public class WhenStatement extends Production {
-   Output variableExpressionOutput = new Output();
-   Output templateBodyOutput = new Output();
+public class WhenStatement extends AbstractConditionBlock {
    public WhenStatement(Output output, boolean hasWhen) {
       super(output);
       if(hasWhen){
@@ -35,50 +33,23 @@ public class WhenStatement extends Production {
          prepend("if(").
          prepend(variableExpressionOutput).
          prepend("){").
-         prepend(templateBodyOutput).
+         prepend(templateBodyStatementsOutput).
          prepend("}");
    }
 
-   private boolean isOpen;
-   private boolean expectingTemplateBody=true;
+   @Override
+   protected Production getVariableExpression(Output output) {
+      return new VariableExpression(variableExpressionOutput);
+   }
 
    @Override
-   void execute(CharWrapper characters, ProductionContext context) throws Exception {
-      Matcher match;
+   protected Production getBodyStatements(Output output) {
+      return new TemplateBodyStatements(templateBodyStatementsOutput);
+   }
 
-      characters.removeSpace();
-
-      switch(characters.charAt(0)){
-      case open:
-         if(!isOpen){
-            if(characters.charAt(1) == forward){
-               break;
-            }
-            match = characters.match(WHEN);
-            if(match.find()){
-               characters.shift(match.group(1).length());
-               isOpen=true;
-               context.addProduction(new VariableExpression(variableExpressionOutput));
-               return;
-            }
-         } else if(!expectingTemplateBody){
-            match = characters.match(WHEN_CLOSING);
-            if(match.find()){
-               characters.shift(match.group(1).length());
-               context.removeProduction();
-               return;
-            }
-         }
-         break;
-      case close:
-         if(isOpen && expectingTemplateBody){
-            expectingTemplateBody=false;
-            characters.shift(1);
-            context.addProduction(new TemplateBodyStatements(templateBodyOutput));
-            return;
-         }
-      }
-      throw new Exception("Invalid WhenStatement.");
+   @Override
+   protected Pattern getClosingPattern() {
+      return WHEN_CLOSING;
    }
 
 }

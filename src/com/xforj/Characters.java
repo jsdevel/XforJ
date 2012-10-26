@@ -38,6 +38,8 @@ public interface Characters {
    Pattern CHOOSE_CLOSING = Pattern.compile("^(\\{/choose\\}).*+");
    Pattern COUNT = Pattern.compile("^(count\\().*+");
    Pattern CURRENT = Pattern.compile("^(current\\(\\)).*+");
+   Pattern FOREACH = Pattern.compile("^(\\{foreach\\s++).*+");
+   Pattern FOREACH_CLOSING = Pattern.compile("^(\\{/foreach\\}).*+");
    Pattern IF = Pattern.compile("^(\\{if\\s++).*+");
    Pattern IF_CLOSING = Pattern.compile("^(\\{/if\\}).*+");
    Pattern IMPORT = Pattern.compile("^(import)(?=\\s).*+");

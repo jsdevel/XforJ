@@ -16,40 +16,20 @@
 
 package com.xforj.productions;
 
-import com.xforj.Output;
-import com.xforj.CharWrapper;
-import java.util.regex.*;
+import com.xforj.*;
 
 /**
  *
  * @author Joseph Spencer
  */
-public class IfStatement extends AbstractConditionBlock {
-   public IfStatement(Output output) {
+public class ApplyParam extends Production {
+   public ApplyParam(Output output) {
       super(output);
-      output.
-         prepend("if(").
-         prepend(variableExpressionOutput).
-         prepend("){").
-         prepend(templateBodyStatementsOutput).
-         prepend("}");
    }
 
    @Override
-   protected Production getVariableExpression(Output output) {
-      return new VariableExpression(output);
-
+   void execute(CharWrapper characters, ProductionContext context) throws Exception {
+      throw new UnsupportedOperationException("Not supported yet.");
    }
-
-   @Override
-   protected Production getBodyStatements(Output output) {
-      return new TemplateBodyStatements(output);
-   }
-
-   @Override
-   protected Pattern getClosingPattern() {
-      return IF_CLOSING;
-   }
-
 
 }
