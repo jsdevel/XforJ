@@ -152,7 +152,7 @@ public interface Characters {
 
 
    //JAVASCRIPT
-   /*DEVELOPMENT*/
+   /*DEVELOPMENT
    final String js_append="append";
    final String js_bld="bld";
    final String js_context="context";
@@ -167,9 +167,9 @@ public interface Characters {
    final String js__params="_params";
    final String js_position="position";
    final String js_StringBuffer="StringBuffer";
-   /**/
+   */
 
-   /*MUNGED
+   /*MUNGED*/
    final String js_append="a";
    final String js_bld="b";
    final String js_context="ct";
@@ -184,5 +184,5 @@ public interface Characters {
    final String js__params="_p";
    final String js_position="po";
    final String js_StringBuffer="S";
-   */
+   /**/
 }

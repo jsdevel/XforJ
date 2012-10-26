@@ -10,6 +10,13 @@
 
    {foreach current().cousins}
       <h2>{name}</h2>
+      {if hobbies}
+      <ul>
+         {foreach hobbies}
+            <li>{current()}</li>
+         {/foreach}
+      </ul>
+      {/if}
    {/foreach}
 {/template}
 
