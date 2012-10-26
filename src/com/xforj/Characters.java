@@ -24,6 +24,7 @@ import java.util.regex.Pattern;
 public interface Characters {
    //SEQUENCES
    Pattern SPACE = Pattern.compile("^(\\s++).*+");
+   Pattern SPACE_PRECEDING_CURLY = Pattern.compile("^(\\s++)(?=\\{).*+");
    Pattern OPEN_BLOCK = Pattern.compile("^(\\{).*+");
    Pattern CLOSE_BLOCK = Pattern.compile("^(\\}).*+");
    Pattern INPUT_TOKENS = Pattern.compile("^([^\\{]++).*+");

@@ -36,6 +36,11 @@ public class TemplateBodyStatements extends Production {
       Matcher match;
       Output statementOutput;
 
+      Matcher spacePrecedingCurly = characters.match(SPACE_PRECEDING_CURLY);
+      if(spacePrecedingCurly.find()){
+         characters.shift(spacePrecedingCurly.group(1).length());
+      }
+
       if(characters.charAt(0) == open){
          switch(characters.charAt(1)){
          case forward:
