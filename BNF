@@ -173,20 +173,20 @@ IfStatement:
    '{if ' + VariableExpression + '}' + TemplateBody + '{/if}'
 
 ChooseStatement:
-   '{choose}' + ChooseBody + '{/choose}'
+   '{choose}' + WhenStatements@"Optional" + OtherwiseStatement + '{/choose}'
 
-ChooseBody:
-   WhenStatement + ChooseBody
-   ChooseBody + OtherwiseStatement
+WhenStatements:
+   WhenStatement
+   WhenStatements + WhenStatement
 
 WhenStatement:
-   '{when ' + VariableExpression + '}' + TemplateBody + '{/when}'
+   '{when ' + VariableExpression + '}' + TemplateBodyStatements + '{/when}'
 
 OtherwiseStatement:
-   '{otherwise}' + TemplateBody + '{/otherwise}'
+   '{otherwise}' + TemplateBodyStatements + '{/otherwise}'
 
 ForEachStatement:
-   '{foreach ' + ContextSelector + '}' + VariableDeclarations@"Optional" + TemplateBody + '{/foreach}'
+   '{foreach ' + ContextSelector + '}' + VariableDeclarations@"Optional" + TemplateBodyStatements + '{/foreach}'
 
 ApplyStatement:
    '{apply ' + ContextSelector + '}' + ApplyParams@"Optional" + '{/apply}'

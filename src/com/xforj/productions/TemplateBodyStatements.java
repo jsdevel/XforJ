@@ -56,6 +56,16 @@ public class TemplateBodyStatements extends Production {
                return;
             }
             break;
+         case c:
+            match = characters.match(CHOOSE);
+            if(match.find()){
+               characters.shift(match.group(1).length());
+               statementOutput= new Output();
+               context.addProduction(new ChooseStatement(statementOutput));
+               output.prepend(statementOutput);
+               return;
+            }
+            break;
          case t:
             match = characters.match(TEXT);
             if(match.find()){

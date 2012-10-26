@@ -41,4 +41,17 @@
          {text}Some paragraph.{/text}
       </p>
    </div>
+   {choose}
+      {when @boo}
+         {if 5}
+            Hey there!!!
+         {/if}
+      {/when}
+      {when 2}
+
+      {/when}
+      {otherwise}
+
+      {/otherwise}
+   {/choose}
 {/template}

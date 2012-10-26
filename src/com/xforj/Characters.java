@@ -34,7 +34,8 @@ public interface Characters {
    Pattern CONTEXT_STATIC_REFINEMENT_NAMESPACE = Pattern.compile("^(\\s*+(?:[a-zA-Z$_][a-zA-Z0-9$_]*+\\s*+\\.)*+\\s*+[a-zA-Z$_][a-zA-Z0-9$_]*+\\s*).*+");
 
    //RESERVED WORDS
-   Pattern CHOOSE = Pattern.compile("^(choose)(?=\\}).*+");
+   Pattern CHOOSE = Pattern.compile("^(\\{choose\\}).*+");
+   Pattern CHOOSE_CLOSING = Pattern.compile("^(\\{/choose\\}).*+");
    Pattern COUNT = Pattern.compile("^(count\\().*+");
    Pattern CURRENT = Pattern.compile("^(current\\(\\)).*+");
    Pattern IF = Pattern.compile("^(\\{if\\s++).*+");
@@ -43,12 +44,14 @@ public interface Characters {
    Pattern LAST = Pattern.compile("^(last\\(\\)).*+");
    Pattern NAME = Pattern.compile("^([a-zA-Z][a-zA-Z0-9_]*+).*+");
    Pattern NAMESPACE = Pattern.compile("^(namespace)(?=\\s).*+");
-   Pattern OTHERWISE = Pattern.compile("^(otherwise)(?=\\}).*+");
+   Pattern OTHERWISE = Pattern.compile("^(\\{otherwise\\}).*+");
+   Pattern OTHERWISE_CLOSING = Pattern.compile("^(\\{/otherwise\\}).*+");
    Pattern POSITION = Pattern.compile("^(position\\(\\)).*+");
    Pattern TEMPLATE = Pattern.compile("^(template)(?=\\s|\\}).*+");
    Pattern TEXT = Pattern.compile("^(\\{text\\}).*+");
    Pattern TEXT_CLOSING = Pattern.compile("^(\\{/text\\}).*+");
-   Pattern WHEN = Pattern.compile("^(when)(?=\\s|\\}).*+");
+   Pattern WHEN = Pattern.compile("^(\\{when\\s++).*+");
+   Pattern WHEN_CLOSING = Pattern.compile("^(\\{/when\\}).*+");
 
    //For now these two have the { at the beginning.  This probably needs to 
    //change in the future, but for now it allows the other keywords to test
