@@ -47,31 +47,36 @@ public class Program extends Production {
       } else {
          output.prepend("})(").
          prepend(
-               "function "+js_StringBuffer+"(){"+
+               //StringBuffer
+               "function(){"+
                   "var v=[],i=0;"+
-                  "this.append=function(s){"+
-                     "v[i++]=s||'';"+
-                  "};"+
-                  "this.toString=function(){"+
-                     "return v.join('');"+
+                  "return{"+
+                     js_append+":function(s){"+
+                        "v[i++]=s||'';"+
+                        "return this"+
+                     "},"+
+                     "toString:function(){"+
+                        "return v.join('');"+
+                     "}"+
                   "};"+
                "}"
             ).
          prepend(",").
             prepend(
-               "function "+js_CountElements+"(obj){"+
-                  "var cnt=0;"+
-                  "var name;"+
-                  "if(!!obj && typeof obj === 'object'){"+
-                     "if(obj.slice){"+
-                        "return obj.length>>>0;"+
-                     "} else {"+
-                        "for(name in obj){"+
-                           "cnt++;"+
+               //CountElements
+               "function(o){"+
+                  "var c=0;"+
+                  "var n;"+
+                  "if(!!o && typeof(o)==='object'){"+
+                     "if(o.slice&&o.join&&o.pop){"+
+                        "return o.length>>>0;"+
+                     "}else{"+
+                        "for(n in o){"+
+                           "c++;"+
                         "}"+
                      "}"+
                   "}"+
-                  "return cnt;"+
+                  "return c"+
                "}"
             ).
          prepend(");");

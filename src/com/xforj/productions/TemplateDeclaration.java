@@ -57,17 +57,16 @@ public class TemplateDeclaration extends Production {
                      characters.shift(nm.length());
                      output.
                         prepend(
-                           js_currentNS+"."+nm+"=$"+nm+";"+
-                           "function $"+nm+"("+js__data+", "+js__params+"){"+
+                           js_currentNS+"."+nm+"=function("+js__data+", "+js__params+"){"+
                               "var "+js_context+"="+js__data+"||{},"+
                                  js_params+"="+js__params+"||{},"+
-                                 js_bld+"=new "+js_StringBuffer+"(),"+
+                                 js_bld+"="+js_StringBuffer+"(),"+
                                  js_last+"=''/0,"+
                                  js_position+"="+js_last+";"
                         ).
                         prepend(context.getCurrentVariableOutput()).
                         prepend(templateBodyOutput).
-                        prepend("return "+js_bld+".toString()}");
+                        prepend("return "+js_bld+".toString()};");
 
                      if(characters.charAt(0) == close){
                         characters.shift(1);

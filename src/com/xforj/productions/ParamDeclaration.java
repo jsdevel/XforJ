@@ -43,12 +43,12 @@ public class ParamDeclaration extends AbstractVariableDeclaration {
 
    @Override
    protected void doAssignment(String name, Output output) {
-      output.prepend("params."+name+"||");
+      output.prepend(js_params+"."+name+"||");
    }
 
    @Override
    protected void doNoAssignment(String name, ProductionContext context) throws Exception {
-      context.getCurrentVariableOutput().add(name, "params."+name);
+      context.getCurrentVariableOutput().add(name, js_params+"."+name);
    }
 
    @Override

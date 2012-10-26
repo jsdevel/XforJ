@@ -150,6 +150,8 @@ public interface Characters {
 
 
    //JAVASCRIPT
+   /*DEVELOPMENT
+   final String js_append="append";
    final String js_bld="bld";
    final String js_context="context";
    final String js_count="count";
@@ -162,6 +164,21 @@ public interface Characters {
    final String js__params="_params";
    final String js_position="position";
    final String js_StringBuffer="StringBuffer";
+   */
 
-
+   /*MUNGED*/
+   final String js_append="a";
+   final String js_bld="b";
+   final String js_context="ct";
+   final String js_count="c";
+   final String js_CountElements="C";
+   final String js_currentNS="n";
+   final String js_data="d";
+   final String js__data="_d";
+   final String js_last="l";
+   final String js_params="p";
+   final String js__params="_p";
+   final String js_position="po";
+   final String js_StringBuffer="S";
+   /**/
 }
