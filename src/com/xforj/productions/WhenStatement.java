@@ -31,20 +31,20 @@ public class WhenStatement extends AbstractConditionBlock {
       }
       output.
          prepend("if(").
-         prepend(variableExpressionOutput).
+         prepend(expressionOutput).
          prepend("){").
-         prepend(templateBodyStatementsOutput).
+         prepend(bodyOutput).
          prepend("}");
    }
 
    @Override
    protected Production getVariableExpression(Output output) {
-      return new VariableExpression(variableExpressionOutput);
+      return new VariableExpression(expressionOutput);
    }
 
    @Override
    protected Production getBodyStatements(Output output) {
-      return new TemplateBodyStatements(templateBodyStatementsOutput);
+      return new TemplateBodyStatements(bodyOutput);
    }
 
    @Override

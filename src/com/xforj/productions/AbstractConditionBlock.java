@@ -24,13 +24,13 @@ import java.util.regex.*;
  * @author Joseph Spencer
  */
 public abstract class AbstractConditionBlock extends Production {
-   Output variableExpressionOutput;
-   Output templateBodyStatementsOutput;
+   Output expressionOutput;
+   Output bodyOutput;
 
    public AbstractConditionBlock(Output output) {
       super(output);
-      variableExpressionOutput=new Output();
-      templateBodyStatementsOutput=new Output();
+      expressionOutput=new Output();
+      bodyOutput=new Output();
    }
 
    private boolean expectingVariableExpression=true;
@@ -39,7 +39,7 @@ public abstract class AbstractConditionBlock extends Production {
    @Override
    final void execute(CharWrapper characters, ProductionContext context) throws Exception {
       if(expectingVariableExpression){
-         context.addProduction(getVariableExpression(variableExpressionOutput));
+         context.addProduction(getVariableExpression(expressionOutput));
          expectingVariableExpression=false;
          return;
       }
@@ -51,7 +51,7 @@ public abstract class AbstractConditionBlock extends Production {
          if(expectingBodyStatements){
             characters.shift(1);
             expectingBodyStatements=false;
-            context.addProduction(getBodyStatements(templateBodyStatementsOutput));
+            context.addProduction(getBodyStatements(bodyOutput));
             return;
          }
          break;
@@ -67,7 +67,7 @@ public abstract class AbstractConditionBlock extends Production {
             }
          }
       }
-      throw new Exception("Invalid VariableExpression found in "+this.getClass().getSimpleName());
+      throw new Exception("Invalid Expression found in "+getClassName());
    }
 
    protected abstract Production getVariableExpression(Output output);

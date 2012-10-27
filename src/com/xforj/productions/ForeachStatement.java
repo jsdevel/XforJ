@@ -28,9 +28,9 @@ public class ForeachStatement extends AbstractConditionBlock {
       super(output);
       output.
          prepend(js_foreach+"(").
-            prepend(variableExpressionOutput).
+            prepend(expressionOutput).
             prepend(",function("+js_context+","+js_position+","+js_last+"){").
-         prepend(templateBodyStatementsOutput).
+         prepend(bodyOutput).
          prepend("});");
    }
 

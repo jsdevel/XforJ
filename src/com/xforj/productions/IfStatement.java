@@ -29,9 +29,9 @@ public class IfStatement extends AbstractConditionBlock {
       super(output);
       output.
          prepend("if(").
-         prepend(variableExpressionOutput).
+         prepend(expressionOutput).
          prepend("){").
-         prepend(templateBodyStatementsOutput).
+         prepend(bodyOutput).
          prepend("}");
    }
 
