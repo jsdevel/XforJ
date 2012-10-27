@@ -35,32 +35,37 @@ public abstract class AbstractVariableDeclaration extends Production {
    @Override
    public final void execute(CharWrapper characters, ProductionContext context) throws Exception {
       characters.removeSpace();
-      Matcher match = characters.match(getPattern());
-      if(!hasValue && match.find()){
-         characters.shift(match.group(1).length());
-         characters.removeSpace();
-         Matcher nameMatch = characters.match(NAME);
-         if(nameMatch.find()){
-            String name = nameMatch.group(1);
-            characters.shift(name.length());
-            if(characters.removeSpace()){
-               hasValue=true;
-               
-               Output assignmentOutput = new Output();
-               doAssignment(name, assignmentOutput);
-               context.getCurrentVariableOutput().add(name, assignmentOutput);
-               context.addProduction(getProduction(assignmentOutput));
-            } else {
-               doNoAssignment(name, context);
+      String extraExcMsg="";
+
+      if(!hasValue){
+         Matcher match = characters.match(getPattern());
+         if(match.find()){
+            characters.shift(match.group(1).length());
+            characters.removeSpace();
+            Matcher nameMatch = characters.match(NAME);
+            if(nameMatch.find()){
+               String name = nameMatch.group(1);
+               characters.shift(name.length());
+               if(characters.removeSpace()){
+                  hasValue=true;
+                  
+                  Output assignmentOutput = new Output();
+                  doAssignment(name, assignmentOutput);
+                  context.getCurrentVariableOutput().add(name, assignmentOutput);
+                  context.addProduction(getProduction(assignmentOutput));
+               } else {
+                  doNoAssignment(name, context);
+               }
+               return;
             }
-            return;
          }
+         extraExcMsg="  No Name found.";
       } else if(characters.charAt(0) == close){
          characters.shift(1);
          context.removeProduction();
          return;
       }
-      throw new Exception("Invalid "+getClassName());
+      throw new Exception("Invalid "+getClassName()+"."+extraExcMsg);
    }
    protected abstract Pattern getPattern();
    protected abstract Production getProduction(Output output);
