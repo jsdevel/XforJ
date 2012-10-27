@@ -67,6 +67,7 @@ public abstract class AbstractConditionBlock extends Production {
             }
          }
       }
+      throw new Exception("Invalid VariableExpression found in "+this.getClass().getSimpleName());
    }
 
    protected abstract Production getVariableExpression(Output output);

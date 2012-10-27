@@ -50,12 +50,4 @@ public class ParamDeclaration extends AbstractVariableDeclaration {
    protected void doNoAssignment(String name, ProductionContext context) throws Exception {
       context.getCurrentVariableOutput().add(name, js_params+"."+name);
    }
-
-   @Override
-   protected String getErrorMsg() {
-      return "Invalid ParamDeclaration.";
-   }
-
-   
-
 }

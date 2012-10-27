@@ -31,10 +31,4 @@ public class VariableExpression extends AbstractExpression {
    protected Production getValue() {
       return new VariableValue(output, false);
    }
-
-   @Override
-   protected String getErrorMsg() {
-      return "ParamExpression";
-   }
-
 }

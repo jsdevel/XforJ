@@ -52,10 +52,9 @@ public abstract class AbstractExpression extends Production {
          return;
       }
 
-      throw new Exception("Invalid "+getErrorMsg()+"."+(hasOperator?"  Unclosed operator.":"")+(!hasValue?"  No value given.":""));
+      throw new Exception("Invalid "+getClassName()+"."+(hasOperator?"  Unclosed operator.":"")+(!hasValue?"  No value given.":""));
    }
 
    abstract protected Production getValue();
-   abstract protected String getErrorMsg();
 
 }

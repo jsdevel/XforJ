@@ -31,10 +31,4 @@ public class GlobalExpression extends AbstractExpression {
    protected Production getValue() {
       return new GlobalVariableValue(output);
    }
-
-   @Override
-   protected String getErrorMsg() {
-      return "GlobalExpression";
-   }
-
 }

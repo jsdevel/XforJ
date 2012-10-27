@@ -34,4 +34,8 @@ public abstract class Production implements Characters {
    public void close(ProductionContext context) throws Exception {
       throw new Exception("Unable to close: \""+this.getClass().getSimpleName()+"\"");
    }
+
+   protected final String getClassName(){
+      return this.getClass().getSimpleName();
+   }
 }

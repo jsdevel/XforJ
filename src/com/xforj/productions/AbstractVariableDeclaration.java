@@ -60,11 +60,10 @@ public abstract class AbstractVariableDeclaration extends Production {
          context.removeProduction();
          return;
       }
-      throw new Exception(getErrorMsg());
+      throw new Exception("Invalid "+getClassName());
    }
    protected abstract Pattern getPattern();
    protected abstract Production getProduction(Output output);
    protected abstract void doAssignment(String name, Output output) throws Exception;
    protected abstract void doNoAssignment(String name, ProductionContext context) throws Exception;
-   protected abstract String getErrorMsg();
 }

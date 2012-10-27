@@ -45,10 +45,4 @@ public class VariableDeclaration extends AbstractVariableDeclaration {
    protected void doNoAssignment(String name, ProductionContext context) throws Exception {
       context.getCurrentVariableOutput().add(name, "");
    }
-
-   @Override
-   protected String getErrorMsg() {
-      return "Invalid VariableDeclaration.";
-   }
-
 }

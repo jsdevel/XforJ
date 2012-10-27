@@ -34,10 +34,4 @@ public class ContextExpression extends AbstractExpression {
    protected Production getValue() {
       return new VariableValue(output, isNested);
    }
-
-   @Override
-   protected String getErrorMsg() {
-      return "ContextExpression";
-   }
-
 }
