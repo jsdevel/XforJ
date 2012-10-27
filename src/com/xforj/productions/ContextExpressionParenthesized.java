@@ -16,24 +16,20 @@
 
 package com.xforj.productions;
 
-import com.xforj.Output;
+import com.xforj.*;
 
 /**
  *
  * @author Joseph Spencer
  */
-public class VariableExpression extends AbstractExpression {
-   public VariableExpression(Output output) {
+public class ContextExpressionParenthesized extends AbstractParenthesizedExpression {
+   public ContextExpressionParenthesized(Output output) {
       super(output);
    }
-
+   
    @Override
-   protected Production getValue() {
-      return new VariableValue(output, false);
+   protected Production getExpression(Output output) throws Exception {
+      return new ContextExpression(output, true);
    }
 
-   @Override
-   protected Production getParenthesizedExpression(Output output) {
-      return new VariableExpressionParenthesized(output);
-   }
 }

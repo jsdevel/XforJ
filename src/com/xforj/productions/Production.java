@@ -38,4 +38,11 @@ public abstract class Production implements Characters {
    protected final String getClassName(){
       return this.getClass().getSimpleName();
    }
+
+   protected final void exc() throws Exception {
+      exc("");
+   }
+   protected final void exc(String msg) throws Exception {
+      throw new Exception("Invalid "+getClassName()+"."+msg);
+   }
 }

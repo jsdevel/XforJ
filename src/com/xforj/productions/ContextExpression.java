@@ -34,4 +34,9 @@ public class ContextExpression extends AbstractExpression {
    protected Production getValue() {
       return new VariableValue(output, isNested);
    }
+
+   @Override
+   protected Production getParenthesizedExpression(Output output) {
+      return new ContextExpressionParenthesized(output);
+   }
 }

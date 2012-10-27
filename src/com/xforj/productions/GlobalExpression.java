@@ -31,4 +31,9 @@ public class GlobalExpression extends AbstractExpression {
    protected Production getValue() {
       return new GlobalVariableValue(output);
    }
+
+   @Override
+   protected Production getParenthesizedExpression(Output output) {
+      return new GlobalExpressionParenthesized(output);
+   }
 }

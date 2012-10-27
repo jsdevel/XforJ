@@ -66,7 +66,11 @@ GlobalVariableAssignment:
 
 GlobalExpression:
    GlobalVariableValue
+   GlobalExpressionParenthesized
    GlobalExpression + Operator + GlobalVariableValue
+
+GlobalExpressionParenthesized:
+   '(' + GlobalExpression + ')'
 
 GlobalVariableValue:
    /[0-9]*/
@@ -113,7 +117,11 @@ VariableAssignment:
 
 VariableExpression:
    VariableValue
+   VariableExpressionParenthesized
    VariableExpression + Operator + VariableValue
+
+VariableExpressionParenthesized:
+   '(' + VariableExpression + ')'
 
 VariableValue:
    GlobalVariableValue
@@ -144,7 +152,11 @@ ContextDynamicRefinement:
 
 ContextExpression:
    VariableValue
+   ContextExpressionParenthesized
    ContextExpression + Operator + VariableValue
+
+ContextExpressionParenthesized:
+   '(' + ContextExpression + ')'
 
 TemplateBody:
    TemplateBodyStatement

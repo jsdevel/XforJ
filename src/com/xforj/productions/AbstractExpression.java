@@ -30,6 +30,7 @@ public abstract class AbstractExpression extends Production {
 
    private boolean hasOperator=false;
    private boolean hasValue=false;
+   private String excMsg="  Empty Expression.";
    
    @Override
    public final void execute(CharWrapper characters, ProductionContext context) throws Exception {
@@ -38,13 +39,28 @@ public abstract class AbstractExpression extends Production {
          if(hasValue == false || hasOperator){//Go to Value
             hasOperator=false;
             hasValue=true;
-            context.addProduction(getValue());
+            if(characters.charAt(0) == oparen){
+               characters.shift(1);
+               Output parenthesizedExpressionOutput = new Output();
+               output.prepend(parenthesizedExpressionOutput);
+               context.addProduction(getParenthesizedExpression(parenthesizedExpressionOutput));
+            } else {
+               context.addProduction(getValue());
+            }
+            excMsg="";
             return;
-         } else if(hasValue && characters.charAt(0) != cbracket){//Go to Operator
-            hasOperator=true;
-            hasValue=false;
-            context.addProduction(new Operator(output));
-            return;
+         } else if(hasValue){//Go to Operator
+            switch(characters.charAt(0)){
+            case cbracket:
+            case cparen:
+               break;
+            default:
+               hasOperator=true;
+               hasValue=false;
+               context.addProduction(new Operator(output));
+               excMsg="  Unclosed Operator.";
+               return;
+            }
          }
       }
       if(hasValue && !hasOperator){
@@ -52,9 +68,21 @@ public abstract class AbstractExpression extends Production {
          return;
       }
 
-      throw new Exception("Invalid "+getClassName()+"."+(hasOperator?"  Unclosed operator.":"")+(!hasValue?"  No value given.":""));
+      exc(excMsg);
    }
 
+   /**
+    * Used to get the Value Production.
+    * 
+    * @return 
+    */
    abstract protected Production getValue();
+   /**
+    * Used when parenthesis are found.
+    * 
+    * @param
+    * @return 
+    */
+   abstract protected Production getParenthesizedExpression(Output output);
 
 }
