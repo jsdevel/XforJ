@@ -1,6 +1,6 @@
 {namespace people.cousins}
 
-{variable oo 5}
+{variable oo}
 {variable boo 5 === @oo }
 {variable soo 5 === @oo }
 
@@ -10,8 +10,9 @@
 
    {text}Hello there!{/text}
 
+   {variable > count(cousins)}
    {choose}
-      {when @numberOfCousins > 0}
+      {when @numberOfCousins >= 1}
          <h1>Total number of Cousins: {@numberOfCousins}</h1>
          {foreach current().cousins}
             <h2>Cousin #{position()}: {name}</h2>
@@ -47,16 +48,16 @@
    {/if}
 
    {if @dang === 5}
-   &lt;div>
+   <div>
       Somedays I feel so overwhelmed.
-   &lt;/div>
+   </div>
    {/if}
    
    {count(relatives)}
    {[current()]}
-   &lt;h2 id="asdf">{dan.boo[5].boo[4]}&lt;/h2>
-   &lt;div>
-      &lt;p>
+   <h2 id="asdf">{dan.boo[5].boo[4]}</h2>
+   <div>
+      <p>
          {text}Some paragraph.{/text}
       </p>
    </div>
