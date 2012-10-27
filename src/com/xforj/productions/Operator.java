@@ -79,6 +79,8 @@ public class Operator extends Production {
       case mod:
       case asterisk:
       case forward:
+      case lt:
+      case gt:
          output.prepend(characters.charAt(0));
          characters.shift(1);
          context.removeProduction();
