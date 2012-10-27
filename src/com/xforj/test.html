@@ -8,8 +8,9 @@
 {template show}
    {text}Hello there!{/text}
 
+   <h1>Total number of Cousins: {count(cousins)}</h1>
    {foreach current().cousins}
-      <h2>{name}</h2>
+      <h2>Cousin #{position()}: {name}</h2>
       {if hobbies}
       <ul>
          {foreach hobbies}
@@ -37,16 +38,16 @@
    {/if}
 
    {if @dang === 5}
-   <div>
+   &lt;div>
       Somedays I feel so overwhelmed.
-   </div>
+   &lt;/div>
    {/if}
    
    {count(relatives)}
    {[current()]}
-   <h2 id="asdf">{dan.boo[5].boo[4]}</h2>
-   <div>
-      <p>
+   &lt;h2 id="asdf">{dan.boo[5].boo[4]}&lt;/h2>
+   &lt;div>
+      &lt;p>
          {text}Some paragraph.{/text}
       </p>
    </div>
