@@ -64,6 +64,16 @@ public abstract class AbstractVariableDeclaration extends Production {
    }
    protected abstract Pattern getPattern();
    protected abstract Production getProduction(Output output);
+   /**
+    * This gives the instances a chance to add something special to the assignment.
+    * 
+    * For instance, in the case of ParamDeclarations, we want the following to be
+    * prepended to the assignment: 'params.d||'.
+    * 
+    * @param name
+    * @param output  The Assignment Output.
+    * @throws Exception 
+    */
    protected abstract void doAssignment(String name, Output output) throws Exception;
    protected abstract void doNoAssignment(String name, ProductionContext context) throws Exception;
 }
