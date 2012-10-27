@@ -37,19 +37,28 @@ limitations under the License.
 
 
 {template show}
+   {variable numberOfCousins count(cousins)}
+
    {text}Hello there!{/text}
 
-   &lt;h1&gt;Total number of Cousins: {count(cousins)}&lt;/h1&gt
-   {foreach current().cousins}
-      &lt;h2&gt;Cousin #{position()}: {name}&lt;/h2&gt;
-      {if hobbies}
-      &lt;ul&gt;
-         {foreach hobbies}
-            &lt;li&gt;{current()}&lt;/li&gt;
+   {choose}
+      {when @numberOfCousins &gt; 0}
+         &lt;h1&gt;Total number of Cousins: {@numberOfCousins}&lt;/h1&gt;
+         {foreach current().cousins}
+            &lt;h2&gt;Cousin #{position()}: {name}&lt;/h2&gt;
+            {if hobbies}
+            &lt;ul&gt;
+               {foreach hobbies}
+                  &lt;li&gt;{current()}&lt;/li&gt;
+               {/foreach}
+            &lt;/ul&gt;
+            {/if}
          {/foreach}
-      &lt;/ul&gt;
-      {/if}
-   {/foreach}
+      {/when}
+      {otherwise}
+         &lt;h1&gt;You have no cousins&lt;/h1&gt;
+      {/otherwise}
+   {/choose}
 {/template}
       </pre>
       <textarea id="code">

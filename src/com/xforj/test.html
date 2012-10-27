@@ -6,19 +6,28 @@
 
 
 {template show}
+   {variable numberOfCousins count(cousins)}
+
    {text}Hello there!{/text}
 
-   <h1>Total number of Cousins: {count(cousins)}</h1>
-   {foreach current().cousins}
-      <h2>Cousin #{position()}: {name}</h2>
-      {if hobbies}
-      <ul>
-         {foreach hobbies}
-            <li>{current()}</li>
+   {choose}
+      {when @numberOfCousins > 0}
+         <h1>Total number of Cousins: {@numberOfCousins}</h1>
+         {foreach current().cousins}
+            <h2>Cousin #{position()}: {name}</h2>
+            {if hobbies}
+            <ul>
+               {foreach hobbies}
+                  <li>{current()}</li>
+               {/foreach}
+            </ul>
+            {/if}
          {/foreach}
-      </ul>
-      {/if}
-   {/foreach}
+      {/when}
+      {otherwise}
+         <h1>You have no cousins</h1>
+      {/otherwise}
+   {/choose}
 {/template}
 
 
