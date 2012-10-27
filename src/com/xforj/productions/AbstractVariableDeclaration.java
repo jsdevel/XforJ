@@ -38,6 +38,7 @@ public abstract class AbstractVariableDeclaration extends Production {
       String extraExcMsg="";
 
       if(!hasValue){
+         hasValue=true;
          Matcher match = characters.match(getPattern());
          if(match.find()){
             characters.shift(match.group(1).length());
@@ -47,7 +48,6 @@ public abstract class AbstractVariableDeclaration extends Production {
                String name = nameMatch.group(1);
                characters.shift(name.length());
                if(characters.removeSpace()){
-                  hasValue=true;
                   
                   Output assignmentOutput = new Output();
                   doAssignment(name, assignmentOutput);
