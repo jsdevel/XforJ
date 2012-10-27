@@ -49,14 +49,14 @@ Name:
 
 ImportStatements:
    ImportStatement
-   ImportStatements
+   ImportStatements + ImportStatement
 
 ImportStatement:
    '{import ' + @"NonProtocolFilePath" + '}'
 
 GlobalVariableDeclarations:
    GlobalVariableDeclaration
-   GlobalVariableDeclarations
+   GlobalVariableDeclarations + GlobalVariableDeclaration
 
 GlobalVariableDeclaration:
    '{variable ' + Name + GlobalVariableAssignment@"Optional" + '}'
@@ -89,7 +89,7 @@ Operator:
 
 GlobalStatements:
    TemplateDeclaration 
-   GlobalStatements
+   GlobalStatements + TemplateDeclaration
 
 TemplateDeclaration:
    '{template ' + Name + '}' + ParamDeclarations@"Optional" + VariableDeclarations@"Optional" + TemplateBody + '{/template}'
@@ -147,16 +147,16 @@ ContextExpression:
    ContextExpression + Operator + VariableValue
 
 TemplateBody:
-   TemplateBodyStatements
-   TemplateBodyStatements + TemplateBody
+   TemplateBodyStatement
+   TemplateBodyStatement + TemplateBody
 
-TemplateBodyStatements:
+TemplateBodyStatement:
    InputTokens
    TextStatement
    PrintStatement
    IfStatement
    ChooseStatement
-   ForEachStatement
+   ForeachStatement
    ApplyStatement
    TemplateBody
 
@@ -185,8 +185,16 @@ WhenStatement:
 OtherwiseStatement:
    '{otherwise}' + TemplateBodyStatements + '{/otherwise}'
 
-ForEachStatement:
-   '{foreach ' + ContextSelector + SortAlgorithm@"Optional" + '}' + VariableDeclarations@"Optional" + TemplateBodyStatements + '{/foreach}'
+ForeachStatement:
+   '{foreach ' + ContextSelector + '}' + ForeachBody + '{/foreach}'
+
+ForeachBody:
+      SortStatement@"Optional" +
+      VariableDeclarations@"Optional" + 
+      TemplateBody + 
+
+SortStatement:
+   '{sort ' + ContextSelector + SortAlgorithm + '}'
 
 SortAlgorithm:
    ' asc'
