@@ -30,15 +30,16 @@ public class ContextSelector extends Production {
       super(output);
       if(!nested){
          contextSelectorOutput=new Output();
-         output.prepend("((function("+js_context+"){try{return "). 
+         output.prepend("(function("+js_context+"){try{return "). 
          prepend(contextSelectorOutput).
-         prepend("}catch(e){}})("+js_context+")||\"\")");
+         prepend("}catch(e){}})("+js_context+")");
       } else {
          contextSelectorOutput=output;
       }
    }
 
    private boolean hasContextSelector;
+   private boolean contextHasBeenPrependedToOutput;
    @Override
    void execute(CharWrapper characters, ProductionContext context) throws Exception {
       Matcher match;
@@ -52,13 +53,7 @@ public class ContextSelector extends Production {
          }
          hasContextSelector=false;
          characters.shift(1);
-         contextSelectorOutput.prepend(".");
-         match = characters.match(CONTEXT_STATIC_REFINEMENT_NAMESPACE);
-         if(match.find()){
-            hasContextSelector=true;
-            String staticRefinement = match.group(1);
-            contextSelectorOutput.prepend(staticRefinement.replaceAll("\\s*+", ""));
-            characters.shift(staticRefinement.length());
+         if(parseNamespace(characters)){
             return;
          }
          break;
@@ -70,23 +65,20 @@ public class ContextSelector extends Production {
          context.addProduction(new ContextDynamicRefinement(contextSelectorOutput));
          return;
       case cbracket:
+         //ContextDynamicRefinement should handle this.
          break;
       case c:
          match = characters.match(CURRENT);
          if(match.find()){
             hasContextSelector=true;
+            contextHasBeenPrependedToOutput=true;
             characters.shift(match.group(1).length());
             contextSelectorOutput.prepend(js_context);
             return;
          }
          //c could be a name start so we let it flow through.
       default:
-         match = characters.match(CONTEXT_STATIC_REFINEMENT_NAMESPACE);
-         if(match.find()){
-            hasContextSelector=true;
-            String namesp = match.group(1);
-            characters.shift(namesp.length());
-            contextSelectorOutput.prepend(js_context+".").prepend(namesp.replaceAll("\\s*+", ""));
+         if(parseNamespace(characters)){
             return;
          }
       }
@@ -95,5 +87,25 @@ public class ContextSelector extends Production {
       } else {
          throw new Exception("Invalid ContextSelector.  Empty statement");
       }
+   }
+
+   private boolean parseNamespace(CharWrapper characters) throws Exception {
+      if(!hasContextSelector){
+         Matcher match = characters.match(CONTEXT_STATIC_REFINEMENT_NAMESPACE);
+         if(match.find()){
+            hasContextSelector=true;
+            String namesp = match.group(1);
+            characters.shift(namesp.length());
+            //name
+            if(!contextHasBeenPrependedToOutput){
+               contextHasBeenPrependedToOutput=true;
+               contextSelectorOutput.prepend(js_context);
+            }
+            contextSelectorOutput.prepend(".");
+            contextSelectorOutput.prepend(namesp.replaceAll("\\s*+", ""));
+            return true;
+         }
+      }
+      return false;
    }
 }
