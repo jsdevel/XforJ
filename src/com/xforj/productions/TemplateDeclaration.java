@@ -37,6 +37,7 @@ public class TemplateDeclaration extends Production {
 
    @Override
    public void execute(CharWrapper characters, ProductionContext context) throws Exception {
+      String extraExcMsg="";
       characters.removeSpace();
 
       if(characters.charAt(0) == open){
@@ -85,16 +86,14 @@ public class TemplateDeclaration extends Production {
             expectingTemplateBody=true;
             return;
          } else if(characters.charAt(1) == forward){
-            characters.shift(2);
-            Matcher template = characters.match(TEMPLATE);
+            Matcher template = characters.match(TEMPLATE_CLOSING);
             if(template.find()){
                characters.shift(template.group(1).length());
-               if(characters.charAt(0) == close){
-                  characters.shift(1);
-                  context.removeProduction();
-                  context.removeVariableOutput();
-                  return;
-               }
+               context.removeProduction();
+               context.removeVariableOutput();
+               return;
+            } else {
+               extraExcMsg="  Template Declarations must be followed by '{/template}.";
             }
          } else if(expectingTemplateBody){
             evaluateTemplateBody(context);
@@ -106,7 +105,7 @@ public class TemplateDeclaration extends Production {
          return;
       }
 
-      throw new Exception("Invalid Character found while evaluating TemplateDeclaration.");
+      throw new Exception("Invalid TemplateDeclaration." + extraExcMsg);
    }
 
    private void evaluateTemplateBody(ProductionContext context){

@@ -31,7 +31,7 @@ public class TemplateBody extends Production {
 
    @Override
    public void execute(CharWrapper characters, ProductionContext context) throws Exception {
-      if(characters.charAt(0) == open && characters.charAt(1) == forward && characters.charAt(2) == t){
+      if(characters.charAt(0) == open && characters.charAt(1) == forward){
          context.removeProduction();
       } else {
          context.addProduction(new TemplateBodyStatements(output));
