@@ -74,13 +74,19 @@ public class Operator extends Production {
             return;
          }
          break;
+      case lt:
+      case gt:
+         if(characters.charAt(1) == equal){
+            output.prepend(characters.charAt(0)).prepend(characters.charAt(1));
+            characters.shift(2);
+            context.removeProduction();
+            return;
+         }
       case plus:
       case minus:
       case mod:
       case asterisk:
       case forward:
-      case lt:
-      case gt:
          output.prepend(characters.charAt(0));
          characters.shift(1);
          context.removeProduction();
