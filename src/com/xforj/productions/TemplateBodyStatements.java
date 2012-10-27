@@ -46,6 +46,19 @@ public class TemplateBodyStatements extends Production {
          case forward:
             context.removeProduction();
             return;
+         case v:
+            match = characters.match(VARIABLE);
+            if(match.find()){
+               throw new Exception("VariableDeclarations are not allowed in this context.");
+            }
+            break;
+         case p:
+            match = characters.match(PARAM);
+            if(match.find()){
+               throw new Exception("ParamDeclarations are not allowed in this context.");
+            }
+            break;
+
          case i:
             match = characters.match(IF);
             if(match.find()){
