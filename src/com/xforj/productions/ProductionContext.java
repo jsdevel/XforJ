@@ -47,7 +47,7 @@ public class ProductionContext {
       //at some point these need to be configurable.
       stripNewLines=true;
       minifyHTML=true;
-      currentProduction= new Program(output, imported);
+      currentProduction= new Program(output, currentVariableOutput, imported);
       productionStack.add(currentProduction);
       filePath=absoluteFilePath;
    }

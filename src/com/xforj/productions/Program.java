@@ -17,7 +17,7 @@ package com.xforj.productions;
 
 import com.xforj.Output;
 import com.xforj.CharWrapper;
-import java.util.regex.Matcher;
+import com.xforj.VariableOutput;
 
 /**
  *
@@ -28,11 +28,11 @@ public class Program extends Production {
    Output importOutput;
    Output variableOutput;
    Output globalStatementsOutput;
-   public Program(Output output, boolean imported){
+   public Program(Output output, VariableOutput currentVariableOutput, boolean imported){
       super(output);
       programNamespaceOutput=new Output();
       importOutput=new Output();
-      variableOutput=new Output();
+      variableOutput=currentVariableOutput;
       globalStatementsOutput=new Output();
 
       output.
