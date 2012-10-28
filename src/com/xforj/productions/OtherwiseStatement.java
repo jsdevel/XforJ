@@ -44,7 +44,7 @@ public class OtherwiseStatement extends Production {
    void execute(CharWrapper characters, ProductionContext context) throws Exception {
       Matcher match;
 
-      if(characters.charAt(0) == open){
+      if(characters.charAt(0) == '{'){
          if(isOpen){
             match = characters.match(OTHERWISE_CLOSING);
             if(match.find()){

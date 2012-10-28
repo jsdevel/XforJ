@@ -37,9 +37,9 @@ public class ChooseStatement extends Production {
       Output statementOutput;
 
       characters.removeSpace();
-      if(characters.charAt(0) == open){
+      if(characters.charAt(0) == '{'){
          switch(characters.charAt(1)){
-         case w:
+         case 'w':
             if(!hasOtherwise){
                hasWhen=true;
                statementOutput=new Output();
@@ -48,13 +48,13 @@ public class ChooseStatement extends Production {
                return;
             }
             break;
-         case o:
+         case 'o':
             hasOtherwise=true;
             statementOutput=new Output();
             context.addProduction(new OtherwiseStatement(statementOutput, hasWhen));
             output.prepend(statementOutput);
             return;
-         case forward:
+         case '/':
             if(hasOtherwise){
                match=characters.match(CHOOSE_CLOSING);
                if(match.find()){

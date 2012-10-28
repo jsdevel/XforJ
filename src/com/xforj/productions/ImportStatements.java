@@ -30,7 +30,7 @@ public class ImportStatements extends Production {
    
    @Override
    public void execute(CharWrapper characters, ProductionContext context) throws Exception {
-      if(characters.charAt(0) == open && characters.charAt(1) == i){
+      if(characters.charAt(0) == '{' && characters.charAt(1) == 'i'){
          context.addProduction(new ImportStatement(output));
       } else {
          context.removeProduction();

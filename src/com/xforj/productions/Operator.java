@@ -32,11 +32,11 @@ public class Operator extends Production {
    void execute(CharWrapper characters, ProductionContext context) throws Exception {
       characters.removeSpace();
       switch(characters.charAt(0)){
-      case equal:
-         if(characters.charAt(1) == equal){
+      case '=':
+         if(characters.charAt(1) == '='){
             characters.shift(2);
             String value = "==";
-            if(characters.charAt(0) == equal){
+            if(characters.charAt(0) == '='){
                characters.shift(1);
                value = value + "=";
             }
@@ -45,11 +45,11 @@ public class Operator extends Production {
             return;
          }
          break;
-      case exclamation:
-         if(characters.charAt(1) == equal){
+      case '!':
+         if(characters.charAt(1) == '='){
             characters.shift(2);
             String value = "!=";
-            if(characters.charAt(0) == equal){
+            if(characters.charAt(0) == '='){
                characters.shift(1);
                value = value + "=";
             }
@@ -58,35 +58,35 @@ public class Operator extends Production {
             return;
          }
          break;
-      case pipe:
-         if(characters.charAt(1) == pipe){
+      case '|':
+         if(characters.charAt(1) == '|'){
             characters.shift(2);
             output.prepend("||");
             context.removeProduction();
             return;
          }
          break;
-      case amp:
-         if(characters.charAt(1) == amp){
+      case '&':
+         if(characters.charAt(1) == '&'){
             characters.shift(2);
             output.prepend("&&");
             context.removeProduction();
             return;
          }
          break;
-      case lt:
-      case gt:
-         if(characters.charAt(1) == equal){
+      case '<':
+      case '>':
+         if(characters.charAt(1) == '='){
             output.prepend(characters.charAt(0)).prepend(characters.charAt(1));
             characters.shift(2);
             context.removeProduction();
             return;
          }
-      case plus:
-      case minus:
-      case mod:
-      case asterisk:
-      case forward:
+      case '+':
+      case '-':
+      case '%':
+      case '*':
+      case '/':
          output.prepend(characters.charAt(0));
          characters.shift(1);
          context.removeProduction();

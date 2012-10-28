@@ -35,11 +35,11 @@ public abstract class AbstractExpression extends Production {
    @Override
    public final void execute(CharWrapper characters, ProductionContext context) throws Exception {
       characters.removeSpace();
-      if(characters.charAt(0) != close){
+      if(characters.charAt(0) != '}'){
          if(hasValue == false || hasOperator){//Go to Value
             hasOperator=false;
             hasValue=true;
-            if(characters.charAt(0) == oparen){
+            if(characters.charAt(0) == '('){
                characters.shift(1);
                Output parenthesizedExpressionOutput = new Output();
                output.prepend(parenthesizedExpressionOutput);
@@ -51,8 +51,8 @@ public abstract class AbstractExpression extends Production {
             return;
          } else if(hasValue){//Go to Operator
             switch(characters.charAt(0)){
-            case cbracket:
-            case cparen:
+            case ']':
+            case ')':
                break;
             default:
                hasOperator=true;

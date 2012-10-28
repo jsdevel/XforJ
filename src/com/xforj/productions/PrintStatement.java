@@ -34,7 +34,7 @@ public class PrintStatement extends Production {
    void execute(CharWrapper characters, ProductionContext context) throws Exception {
       Output variableAssignmentOutput;
       switch(characters.charAt(0)){
-      case ocurly:
+      case '{':
          if(!hasOpenCurly){
             hasOpenCurly=true;
             variableAssignmentOutput=new Output();
@@ -47,7 +47,7 @@ public class PrintStatement extends Production {
             return;
          }
          break;
-      case ccurly:
+      case '}':
          if(hasOpenCurly){
             characters.shift(1);
             context.removeProduction();

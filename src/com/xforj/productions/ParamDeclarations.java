@@ -34,7 +34,7 @@ public class ParamDeclarations extends Production {
    @Override
    public void execute(CharWrapper characters, ProductionContext context) throws Exception {
       characters.removeSpace();
-      if(characters.charAt(0) == open && characters.charAt(1) == p){
+      if(characters.charAt(0) == '{' && characters.charAt(1) == 'p'){
          Matcher param = characters.match(PARAM);
          if(param.find()){
             context.addProduction(new ParamDeclaration(variableOutput));

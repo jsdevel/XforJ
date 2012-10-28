@@ -37,7 +37,7 @@ public class ContextDynamicRefinement extends Production {
       characters.removeSpace();
 
       switch(characters.charAt(0)){
-      case obracket:
+      case '[':
          if(!hasOpenBracket){
             hasOpenBracket=true;
             characters.shift(1);
@@ -49,7 +49,7 @@ public class ContextDynamicRefinement extends Production {
             return;
          }
          break;
-      case cbracket:
+      case ']':
          if(hasOpenBracket){
             hasOpenBracket=false;
             characters.shift(1);

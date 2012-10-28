@@ -127,14 +127,14 @@ public class Program extends Production {
    public void execute(CharWrapper characters, ProductionContext context) throws Exception {
       String exception = "The first Production must be a ProgramNamespace.";
 
-      if(characters.charAt(0) == open && !hasProgramNamespace){
+      if(characters.charAt(0) == '{' && !hasProgramNamespace){
          hasProgramNamespace=true;
          context.addProduction(new ProgramNamespace(programNamespaceOutput));
          return;
       } else if(hasProgramNamespace){
          characters.removeSpace();
-         if(characters.charAt(0) == open){
-            if(characters.charAt(1) == i){
+         if(characters.charAt(0) == '{'){
+            if(characters.charAt(1) == 'i'){
                if(!hasGlobalVariableDeclarations){
                   Output importStatementsOutput = new Output();
                   importOutput.
@@ -146,7 +146,7 @@ public class Program extends Production {
                } else {
                   throw new Exception("ImportStatements must appear before GlobalVariableStatements.");
                }
-            } else if(characters.charAt(1) == v){
+            } else if(characters.charAt(1) == 'v'){
                hasGlobalVariableDeclarations=true;
                context.addProduction(new GlobalVariableDeclarations(variableOutput));
                return;

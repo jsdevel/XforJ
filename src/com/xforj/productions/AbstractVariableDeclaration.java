@@ -60,7 +60,7 @@ public abstract class AbstractVariableDeclaration extends Production {
             }
          }
          extraExcMsg="  No Name found.";
-      } else if(characters.charAt(0) == close){
+      } else if(characters.charAt(0) == '}'){
          characters.shift(1);
          context.removeProduction();
          return;

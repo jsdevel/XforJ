@@ -34,8 +34,8 @@ public class WhenStatements extends Production {
    void execute(CharWrapper characters, ProductionContext context) throws Exception {
       characters.removeSpace();
       if(
-         characters.charAt(0) == open &&
-         characters.charAt(1) == w
+         characters.charAt(0) == '{' &&
+         characters.charAt(1) == 'w'
       ){
          Matcher match = characters.match(WHEN);
          if(match.find()){

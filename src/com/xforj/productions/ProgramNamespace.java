@@ -33,7 +33,7 @@ public class ProgramNamespace extends Production {
    @Override
    public void execute(CharWrapper characters, ProductionContext context) throws Exception {
       String chunk;
-      if(characters.charAt(0) == open){
+      if(characters.charAt(0) == '{'){
          characters.shift(1);
          Matcher namespace = characters.match(NAMESPACE);
 
@@ -65,7 +65,7 @@ public class ProgramNamespace extends Production {
                   }
                   output.prepend(js_currentNS+"="+builtNS+";");
 
-                  if(characters.charAt(0) == close){
+                  if(characters.charAt(0) == '}'){
                      characters.shift(1);
                      context.removeProduction();
                      return;

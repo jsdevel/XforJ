@@ -48,11 +48,11 @@ public class CharWrapper implements Characters {
          for(int i=0;i<amount;i++){
             char next = charAt(i);
             switch(next){
-            case CR:
-               if(charAt(i+1) == LF){
+            case '\r':
+               if(charAt(i+1) == '\n'){
                   i++;
                }
-            case LF:
+            case '\n':
                line++;
                column=1;
                continue;

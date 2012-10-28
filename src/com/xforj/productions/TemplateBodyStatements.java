@@ -41,25 +41,25 @@ public class TemplateBodyStatements extends Production {
          characters.shift(spacePrecedingCurly.group(1).length());
       }
 
-      if(characters.charAt(0) == open){
+      if(characters.charAt(0) == '{'){
          switch(characters.charAt(1)){
-         case forward:
+         case '/':
             context.removeProduction();
             return;
-         case v:
+         case 'v':
             match = characters.match(VARIABLE);
             if(match.find()){
                throw new Exception("VariableDeclarations are not allowed in this context.");
             }
             break;
-         case p:
+         case 'p':
             match = characters.match(PARAM);
             if(match.find()){
                throw new Exception("ParamDeclarations are not allowed in this context.");
             }
             break;
 
-         case i:
+         case 'i':
             match = characters.match(IF);
             if(match.find()){
                characters.shift(match.group(1).length());
@@ -69,7 +69,7 @@ public class TemplateBodyStatements extends Production {
                return;
             }
             break;
-         case c:
+         case 'c':
             match = characters.match(CHOOSE);
             if(match.find()){
                characters.shift(match.group(1).length());
@@ -79,7 +79,7 @@ public class TemplateBodyStatements extends Production {
                return;
             }
             break;
-         case f:
+         case 'f':
             match = characters.match(FOREACH);
             if(match.find()){
                characters.shift(match.group(1).length());
@@ -89,7 +89,7 @@ public class TemplateBodyStatements extends Production {
                return;
             }
             break;
-         case t:
+         case 't':
             match = characters.match(TEXT);
             if(match.find()){
                characters.shift(match.group(1).length());

@@ -37,7 +37,7 @@ public class VariableValue extends GlobalVariableValue {
       Matcher match;
       characters.removeSpace();
       switch(characters.charAt(0)){
-      case cparen:
+      case ')':
          if(hasOpenParen){
             characters.shift(1);
             output.prepend(")");
@@ -46,22 +46,22 @@ public class VariableValue extends GlobalVariableValue {
          } else {
             throw new Exception("Invalid VariableValue:  Unexpected close paren.");
          }
-      case at:
-      case squote:
-      case quote:
-      case zero:
-      case one:
-      case two:
-      case three:
-      case four:
-      case five:
-      case six:
-      case seven:
-      case eight:
-      case nine:
+      case '@':
+      case '\'':
+      case '"':
+      case '0':
+      case '1':
+      case '2':
+      case '3':
+      case '4':
+      case '5':
+      case '6':
+      case '7':
+      case '8':
+      case '9':
          super.execute(characters, context);
          return;
-      case p:
+      case 'p':
          match=characters.match(POSITION);
          if(match.find()){
             characters.shift(match.group(1).length());
@@ -70,7 +70,7 @@ public class VariableValue extends GlobalVariableValue {
             return;
          }
          break;
-      case c:
+      case 'c':
          match=characters.match(COUNT);
          if(match.find()){
             hasOpenParen=true;
@@ -84,7 +84,7 @@ public class VariableValue extends GlobalVariableValue {
             return;//we need to come back for the close paren.
          }
          break;
-      case l:
+      case 'l':
          match=characters.match(LAST);
          if(match.find()){
             characters.shift(match.group(1).length());
@@ -93,7 +93,7 @@ public class VariableValue extends GlobalVariableValue {
             return;
          }
          break;
-      case n:
+      case 'n':
          match = characters.match(NULL);
          if(match.find()){
             super.execute(characters, context);

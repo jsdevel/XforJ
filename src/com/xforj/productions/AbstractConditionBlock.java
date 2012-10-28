@@ -47,7 +47,7 @@ public abstract class AbstractConditionBlock extends Production {
       characters.removeSpace();
 
       switch(characters.charAt(0)){
-      case ccurly:
+      case '}':
          if(expectingBodyStatements){
             characters.shift(1);
             expectingBodyStatements=false;
@@ -55,9 +55,9 @@ public abstract class AbstractConditionBlock extends Production {
             return;
          }
          break;
-      case ocurly:
+      case '{':
          if(!expectingBodyStatements){
-            if(characters.charAt(1) == forward){
+            if(characters.charAt(1) == '/'){
                Matcher match = characters.match(getClosingPattern());
                if(match.find()){
                   characters.shift(match.group(1).length());

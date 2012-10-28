@@ -31,7 +31,7 @@ public class GlobalVariableDeclarations extends Production{
    @Override
    void execute(CharWrapper characters, ProductionContext context) throws Exception {
       characters.removeSpace();
-      if(characters.charAt(0) == open && characters.charAt(1) == v){
+      if(characters.charAt(0) == '{' && characters.charAt(1) == 'v'){
          context.addProduction(new GlobalVariableDeclaration(output));
          return;
       }

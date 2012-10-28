@@ -10,7 +10,7 @@
 
    {text}Hello there!{/text}
 
-   {variable > count(cousins)}
+   {([(5&&3)||3] || 5) && 3}
    {choose}
       {when @numberOfCousins >= 1}
          <h1>Total number of Cousins: {@numberOfCousins}</h1>

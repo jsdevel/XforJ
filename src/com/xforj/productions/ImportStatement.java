@@ -31,7 +31,7 @@ public class ImportStatement extends Production {
 
    @Override
    public void execute(CharWrapper characters, ProductionContext context) throws Exception {
-      if(characters.charAt(0) == open && characters.charAt(1) == i){
+      if(characters.charAt(0) == '{' && characters.charAt(1) == 'i'){
          characters.shift(1);
          Matcher _import = characters.match(IMPORT);       
          if(_import.find()){
@@ -42,10 +42,10 @@ public class ImportStatement extends Production {
                String pth = path.group(1);
                //handle importing new Programs
                characters.shift(pth.length());
-               if(characters.charAt(0) == close){
+               if(characters.charAt(0) == '}'){
                   characters.shift(1);
                   String newPath;
-                  if(pth.charAt(0) == forward){
+                  if(pth.charAt(0) == '/'){
                      newPath = pth;
                   } else {
                      Matcher absPath = ABSOLUTE_PATH.matcher(context.filePath);

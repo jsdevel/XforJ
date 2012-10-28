@@ -47,7 +47,7 @@ public class ContextSelector extends Production {
       characters.removeSpace();
 
       switch(characters.charAt(0)){
-      case dot:
+      case '.':
          if(!hasContextSelector){
             throw new Exception("Invalid ContextSeletor.  Unexpected \".\".");
          }
@@ -57,17 +57,17 @@ public class ContextSelector extends Production {
             return;
          }
          break;
-      case obracket:
+      case '[':
          if(!hasContextSelector){
             contextSelectorOutput.prepend(js_context);
          }
          hasContextSelector=true;
          context.addProduction(new ContextDynamicRefinement(contextSelectorOutput));
          return;
-      case cbracket:
+      case ']':
          //ContextDynamicRefinement should handle this.
          break;
-      case c:
+      case 'c':
          match = characters.match(CURRENT);
          if(match.find()){
             hasContextSelector=true;

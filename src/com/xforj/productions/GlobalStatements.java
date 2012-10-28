@@ -33,7 +33,7 @@ public class GlobalStatements extends Production {
 
    @Override
    public void execute(CharWrapper characters, ProductionContext context) throws Exception {
-      if(characters.charAt(0) == open){
+      if(characters.charAt(0) == '{'){
          hasStatements=true;
          Output templateDeclarationOutput = new Output();
          output.prepend(templateDeclarationOutput);

@@ -33,16 +33,16 @@ public class GlobalVariableValue extends Production {
    void execute(CharWrapper characters, ProductionContext context) throws Exception {
       characters.removeSpace();
       switch(characters.charAt(0)){
-      case zero:
-      case one:
-      case two:
-      case three:
-      case four:
-      case five:
-      case six:
-      case seven:
-      case eight:
-      case nine:
+      case '0':
+      case '1':
+      case '2':
+      case '3':
+      case '4':
+      case '5':
+      case '6':
+      case '7':
+      case '8':
+      case '9':
          Matcher integer = characters.match(INTEGER);
          if(integer.find()){
             String intStr = integer.group(1);
@@ -61,7 +61,7 @@ public class GlobalVariableValue extends Production {
             }
          }
          break;
-      case at:
+      case '@':
          characters.shift(1);
          Matcher name = characters.match(NAME);
          if(name.find()){
@@ -76,8 +76,8 @@ public class GlobalVariableValue extends Production {
             return;
          }
          break;
-      case squote:
-      case quote:
+      case '\'':
+      case '"':
          Matcher string = characters.match(STRING);
          if(string.find()){
             String value = string.group(1);
@@ -87,7 +87,7 @@ public class GlobalVariableValue extends Production {
             return;
          }
          break;
-      case n:
+      case 'n':
          Matcher nullMatch = characters.match(NULL);
          if(nullMatch.find()){
             String value = nullMatch.group(1);

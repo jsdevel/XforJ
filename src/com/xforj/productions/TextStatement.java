@@ -34,7 +34,7 @@ public class TextStatement extends Production {
       Matcher match;
       Output inputTokenOutput;
       switch(characters.charAt(0)){
-      case ocurly:
+      case '{':
          if(!hasInputTokens){
             break;
          }

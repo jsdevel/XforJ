@@ -40,7 +40,7 @@ public class TemplateDeclaration extends Production {
       String extraExcMsg="";
       characters.removeSpace();
 
-      if(characters.charAt(0) == open){
+      if(characters.charAt(0) == '{'){
          if(!isOpened){
             isOpened=true;
             characters.shift(1);
@@ -69,7 +69,7 @@ public class TemplateDeclaration extends Production {
                         prepend(templateBodyOutput).
                         prepend("return "+js_bld+".toString()};");
 
-                     if(characters.charAt(0) == close){
+                     if(characters.charAt(0) == '}'){
                         characters.shift(1);
                         context.addProduction(new ParamDeclarations(context.getCurrentVariableOutput()));                           
 
@@ -80,12 +80,12 @@ public class TemplateDeclaration extends Production {
                   }
                }
             }
-         } else if(allowVariableDeclarations && characters.charAt(1) == v){
+         } else if(allowVariableDeclarations && characters.charAt(1) == 'v'){
             context.addProduction(new VariableDeclarations(context.getCurrentVariableOutput()));
             allowVariableDeclarations=false;
             expectingTemplateBody=true;
             return;
-         } else if(characters.charAt(1) == forward){
+         } else if(characters.charAt(1) == '/'){
             Matcher template = characters.match(TEMPLATE_CLOSING);
             if(template.find()){
                characters.shift(template.group(1).length());

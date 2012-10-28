@@ -40,7 +40,7 @@ public abstract class AbstractParenthesizedExpression extends Production {
       char firstChar = characters.charAt(0);
 
       switch(firstChar){
-      case cparen:
+      case ')':
          if(!hasExpression){
             exc("  Empty Expressions are not allowed.");
          }
