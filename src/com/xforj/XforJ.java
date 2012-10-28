@@ -19,6 +19,7 @@ import com.xforj.productions.ProductionContext;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.logging.*;
 
 /**
  *
@@ -34,26 +35,31 @@ public class XforJ implements Characters {
     * @param args the command line arguments
     */
    public static void main(String[] args) {
+      if(args.length < 2){
+         LOGGER.out("\n\u00A9 Joseph Spencer.  Licensed under the Apache 2.0 License.\n"+
+                     "Visit http://www.xforj.com for more info.");
+         LOGGER.out("Usage:    java -jar XforJ.x.x.x.jar template output");
+         LOGGER.out("Example:  java -jar XforJ.x.x.x.jar /my/template/file.html /my/template/output.js");
+         return;
+      }
+
+      String inPath = getPathToUse(args[0]);
+      String outPath = getPathToUse(args[1]);
+
+
       long before = new Date().getTime();
-      ArrayList<String> filesToProcess = new ArrayList<>();
-
-      if(args.length == 0){
-         LOGGER.out("No file paths given as arguments.");
-      }
-
-      MainUtil.addArrayToArrayList(args, filesToProcess);
-
-      for(String path : filesToProcess){
-         String pathToUse;
-         if(path.startsWith("/")){
-            pathToUse = path;
-         } else {
-            pathToUse = PWD+"/"+path;
-         }
-         LOGGER.out("Compiling: "+pathToUse);
-         LOGGER.out(compileFile(pathToUse, false).toString());
-      }
+      LOGGER.out("Compiling:  "+inPath);
+      String output = compileFile(inPath, false).toString(); 
       LOGGER.out("Time taken: "+Long.toString(new Date().getTime() - before));
+
+      LOGGER.out("Outputting: "+outPath);
+      try {
+         MainUtil.putString(new File(outPath), output);
+      } catch(IOException ex) {
+         LOGGER.out("Something happened while attempting to wrtie to: "+outPath);
+         LOGGER.out(ex.getMessage());
+      }
+
    }
 
    public static Output compileFile(String path, boolean imported) {
@@ -91,5 +97,15 @@ public class XforJ implements Characters {
          message+="\n"+wrapper.getErrorLocation();
       }
       LOGGER.out(message);
+   }
+
+   private static String getPathToUse(String path){
+      String pathToUse;
+      if(path.startsWith("/")){
+         pathToUse = path;
+      } else {
+         pathToUse = PWD+"/"+path;
+      }
+      return pathToUse;
    }
 }

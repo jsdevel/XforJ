@@ -60,7 +60,7 @@ public class MainUtil {
 
       return str.toCharArray();
    }
-   public static void putString(File file, String contents ) throws Exception {
+   public static void putString(File file, String contents ) throws IOException {
       FileWriter output = new FileWriter( file );
       output.write( contents, 0, contents.length() );
       output.close();
