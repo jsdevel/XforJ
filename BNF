@@ -203,7 +203,7 @@ ForeachStatement:
 ForeachBody:
       SortStatement@"Optional" +
       VariableDeclarations@"Optional" + 
-      TemplateBody + 
+      TemplateBody 
 
 SortStatement:
    '{sort ' + ContextSelector + SortAlgorithm + '}'
