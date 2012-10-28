@@ -159,10 +159,10 @@ ContextExpressionParenthesized:
    '(' + ContextExpression + ')'
 
 TemplateBody:
-   TemplateBodyStatement
-   TemplateBodyStatement + TemplateBody
+   TemplateBodyStatements
+   TemplateBodyStatements + TemplateBody
 
-TemplateBodyStatement:
+TemplateBodyStatements:
    InputTokens
    TextStatement
    PrintStatement
@@ -203,7 +203,7 @@ ForeachStatement:
 ForeachBody:
       SortStatement@"Optional" +
       VariableDeclarations@"Optional" + 
-      TemplateBody 
+      TemplateBodyStatements 
 
 SortStatement:
    '{sort ' + ContextSelector + SortAlgorithm + '}'
