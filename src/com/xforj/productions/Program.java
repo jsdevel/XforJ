@@ -36,11 +36,29 @@ public class Program extends Production {
       globalStatementsOutput=new Output();
 
       output.
-         prepend("(function("+js_StringBuffer+","+js_CountElements+","+js_foreach+"){").
+         prepend(
+         "(function("+
+            js_StringBuffer+","+
+            js_CountElements+","+
+            js_foreach+
+         "){").
             prepend(programNamespaceOutput).
             prepend(importOutput).
-            prepend(variableOutput).
-            prepend(globalStatementsOutput);
+            prepend(
+         "(function("+
+            js_StringBuffer+","+
+            js_CountElements+","+
+            js_foreach+"){").
+               prepend(variableOutput).
+               prepend(globalStatementsOutput).
+            prepend(
+         "})("+
+            js_StringBuffer+
+            ","+
+            js_CountElements+
+            ","+
+            js_foreach+
+         ");");
 
       if(imported){
          output.prepend("})("+
