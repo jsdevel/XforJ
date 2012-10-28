@@ -49,6 +49,7 @@ public interface Characters {
    Pattern OTHERWISE = Pattern.compile("^(\\{otherwise\\}).*+");
    Pattern OTHERWISE_CLOSING = Pattern.compile("^(\\{/otherwise\\}).*+");
    Pattern POSITION = Pattern.compile("^(position\\(\\)).*+");
+   Pattern SORT = Pattern.compile("^(\\{sort\\s++).*+");
    Pattern TEMPLATE = Pattern.compile("^(template)(?=\\s|\\}).*+");
    Pattern TEMPLATE_CLOSING = Pattern.compile("^(\\{/template\\})(?=\\s|\\}).*+");
    Pattern TEXT = Pattern.compile("^(\\{text\\}).*+");
@@ -81,7 +82,9 @@ public interface Characters {
    final String js_data="data";
    final String js__data="_data";
    final String js_foreach="Foreach";
+   final String js_GetSortArray="GetSortArray";
    final String js_last="last";
+   final String js_name="name";
    final String js_params="params";
    final String js__params="_params";
    final String js_position="position";
@@ -91,17 +94,19 @@ public interface Characters {
    /*MUNGED*/
    final String js_append="a";
    final String js_bld="b";
-   final String js_context="ct";
+   final String js_context="x";
    final String js_count="c";
    final String js_CountElements="C";
-   final String js_currentNS="n";
+   final String js_currentNS="N";
    final String js_data="d";
-   final String js__data="_d";
+   final String js__data="D";
    final String js_foreach="f";
+   final String js_GetSortArray="g";
    final String js_last="l";
+   final String js_name="n";
    final String js_params="p";
-   final String js__params="_p";
-   final String js_position="po";
+   final String js__params="P";
+   final String js_position="o";
    final String js_StringBuffer="S";
    /**/
 }

@@ -24,14 +24,29 @@ import java.util.regex.*;
  * @author Joseph Spencer
  */
 public class ForeachStatement extends AbstractConditionBlock {
+   Output sortFunctionOutput=new Output();
+   Output sortContextOutput=new Output();
    public ForeachStatement(Output output) {
       super(output);
       output.
          prepend(js_foreach+"(").
-            prepend(expressionOutput).
-            prepend(",function("+js_context+","+js_position+","+js_last+"){").
-         prepend(bodyOutput).
-         prepend("});");
+               prepend(js_GetSortArray+"(").
+                  prepend(expressionOutput).
+                  prepend(sortContextOutput).
+                  prepend(")").
+            prepend(",").
+               prepend(//callback
+                  "function("+
+                     js_context+","+
+                     js_position+","+
+                     js_last+","+
+                     js_name+
+                  "){"
+               ).
+               prepend(bodyOutput).
+            prepend("}").//sortFunction if any
+               prepend(sortFunctionOutput).
+            prepend(");");
    }
 
    @Override
@@ -41,7 +56,7 @@ public class ForeachStatement extends AbstractConditionBlock {
 
    @Override
    protected Production getBodyStatements(Output output) {
-      return new TemplateBodyStatements(output);
+      return new ForeachBody(output, sortContextOutput, sortFunctionOutput);
    }
 
    @Override

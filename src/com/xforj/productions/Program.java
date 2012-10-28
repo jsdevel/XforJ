@@ -40,7 +40,8 @@ public class Program extends Production {
          "(function("+
             js_StringBuffer+","+
             js_CountElements+","+
-            js_foreach+
+            js_foreach+","+
+            js_GetSortArray+
          "){").
             prepend(programNamespaceOutput).
             prepend(importOutput).
@@ -48,23 +49,25 @@ public class Program extends Production {
          "(function("+
             js_StringBuffer+","+
             js_CountElements+","+
-            js_foreach+"){").
+            js_foreach+","+
+            js_GetSortArray+
+         "){").
                prepend(variableOutput).
                prepend(globalStatementsOutput).
             prepend(
          "})("+
-            js_StringBuffer+
-            ","+
-            js_CountElements+
-            ","+
-            js_foreach+
+            js_StringBuffer+","+
+            js_CountElements+","+
+            js_foreach+","+
+            js_GetSortArray+
          ");");
 
       if(imported){
          output.prepend("})("+
             js_StringBuffer+","+
             js_CountElements+","+
-            js_foreach+
+            js_foreach+","+
+            js_GetSortArray+
          ");");
       } else {
          output.prepend("})(").
@@ -101,36 +104,55 @@ public class Program extends Production {
                "}"
             ).
          prepend(",").
+
             //Foreach
             /*
-             * function(context, position, last){
+             * Foreach assumes that context is the output of GetSortArray.
+             * The Function itself accepts the following params:
+             * obj, callback, [sort function].
+             * 
+             * The callback is called with the following params:
+             * function(context, position, last, name){
              * 
              * }
              */
             prepend(
                "function(o,c,s){"+
-                  "var l=0,i=0,k=[];"+
+                  "var i=0,l,m;"+
                   "if(!!o&&typeof(o)==='object'&&typeof(c)==='function'){"+
-                     //Arrays
-                     "if(o.push&&o.slice&&o.join){"+
-                        "l=o.length;"+
-                        "for(;i<l;i++){"+
-                           "c(o[i],i+1,l)"+
-                        "}"+
-                     //Objects
-                     "}else{"+
-                        "for(i in o){"+
-                           "k[k.length]=i;"+
-                           "l++"+
-                        "}"+
-                        "if(!!s){"+
-                        //sorting of the array happens here
-                        "}"+
-                        "for(i=0;i<l;i++){"+
-                           "c(o[k[i]],i,l)"+
+                     "l=o.length;"+
+                     "if(typeof(s)==='function')o.sort(s);"+
+                     "for(;i<l;i++){"+
+                        "m=o[i];"+
+                        "c(m.c, i+1, o.length, m.n)"+
+                     "}"+
+                  "}"+
+               "}"
+            ).
+         prepend(",").
+
+            prepend(
+               //GetSortArray
+               "function(o, s){"+
+                  "var r=[],a;"+
+                  "if(!!o&&typeof(o)==='object'){"+
+                     "for(a in o){"+
+                        "try{"+
+                           "r.push({"+
+                              "n:a,"+//name
+                              "c:o[a],"+//context
+                              "k:s(o[a])"+//key.  Used by the sort algorithm
+                           "});"+
+                        "} catch(e){"+
+                           "r.push({"+
+                              "n:a,"+
+                              "c:o[a],"+
+                              "k:\"\""+
+                           "});"+
                         "}"+
                      "}"+
                   "}"+
+                  "return r"+
                "}"
             ).
 
