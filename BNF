@@ -124,11 +124,12 @@ VariableExpressionParenthesized:
    '(' + VariableExpression + ')'
 
 VariableValue:
-   GlobalVariableValue
    'count(' + ContextSelector + ')'
-   'position()'
    'last()'
+   'name()'
+   'position()'
    ContextSelector
+   GlobalVariableValue
 
 ContextSelector:
    Namespace

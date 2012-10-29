@@ -62,7 +62,7 @@ public class VariableValue extends GlobalVariableValue {
          super.execute(characters, context);
          return;
       case 'p':
-         match=characters.match(POSITION);
+         match=characters.match(POSITION_FN);
          if(match.find()){
             characters.shift(match.group(1).length());
             output.prepend(js_position);
@@ -71,7 +71,7 @@ public class VariableValue extends GlobalVariableValue {
          }
          break;
       case 'c':
-         match=characters.match(COUNT);
+         match=characters.match(COUNT_FN);
          if(match.find()){
             hasOpenParen=true;
             Output contextSelectorOutput = new Output();
@@ -85,7 +85,7 @@ public class VariableValue extends GlobalVariableValue {
          }
          break;
       case 'l':
-         match=characters.match(LAST);
+         match=characters.match(LAST_FN);
          if(match.find()){
             characters.shift(match.group(1).length());
             output.prepend(js_last);
@@ -97,6 +97,13 @@ public class VariableValue extends GlobalVariableValue {
          match = characters.match(NULL);
          if(match.find()){
             super.execute(characters, context);
+            return;
+         }
+         match = characters.match(NAME_FN);
+         if(match.find()){
+            characters.shift(match.group(1).length());
+            output.prepend(js_name);
+            context.removeProduction();
             return;
          }
          break;

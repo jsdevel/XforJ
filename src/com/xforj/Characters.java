@@ -36,19 +36,20 @@ public interface Characters {
    //RESERVED WORDS
    Pattern CHOOSE = Pattern.compile("^(\\{choose\\}).*+");
    Pattern CHOOSE_CLOSING = Pattern.compile("^(\\{/choose\\}).*+");
-   Pattern COUNT = Pattern.compile("^(count\\().*+");
+   Pattern COUNT_FN = Pattern.compile("^(count\\().*+");
    Pattern CURRENT = Pattern.compile("^(current\\(\\)).*+");
    Pattern FOREACH = Pattern.compile("^(\\{foreach\\s++).*+");
    Pattern FOREACH_CLOSING = Pattern.compile("^(\\{/foreach\\}).*+");
    Pattern IF = Pattern.compile("^(\\{if\\s++).*+");
    Pattern IF_CLOSING = Pattern.compile("^(\\{/if\\}).*+");
    Pattern IMPORT = Pattern.compile("^(import)(?=\\s).*+");
-   Pattern LAST = Pattern.compile("^(last\\(\\)).*+");
+   Pattern LAST_FN = Pattern.compile("^(last\\(\\)).*+");
+   Pattern NAME_FN = Pattern.compile("^(name\\(\\)).*+");
    Pattern NAME = Pattern.compile("^([a-zA-Z$_][a-zA-Z0-9$_]*+).*+");
    Pattern NAMESPACE = Pattern.compile("^(namespace)(?=\\s).*+");
    Pattern OTHERWISE = Pattern.compile("^(\\{otherwise\\}).*+");
    Pattern OTHERWISE_CLOSING = Pattern.compile("^(\\{/otherwise\\}).*+");
-   Pattern POSITION = Pattern.compile("^(position\\(\\)).*+");
+   Pattern POSITION_FN = Pattern.compile("^(position\\(\\)).*+");
    Pattern SORT = Pattern.compile("^(\\{sort\\s++).*+");
    Pattern TEMPLATE = Pattern.compile("^(template)(?=\\s|\\}).*+");
    Pattern TEMPLATE_CLOSING = Pattern.compile("^(\\{/template\\})(?=\\s|\\}).*+");

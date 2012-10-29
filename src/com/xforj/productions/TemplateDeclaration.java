@@ -63,6 +63,7 @@ public class TemplateDeclaration extends Production {
                                  js_params+"="+js__params+"||{},"+
                                  js_bld+"="+js_StringBuffer+"(),"+
                                  js_last+"=''/0,"+
+                                 js_name+"='',"+
                                  js_position+"="+js_last+";"
                         ).
                         prepend(context.getCurrentVariableOutput()).
