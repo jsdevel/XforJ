@@ -107,7 +107,13 @@ public class VariableValue extends GlobalVariableValue {
             return;
          }
          break;
-      default:
+      case 't':
+      case 'f':
+         match = characters.match(BOOLEAN);
+         if(match.find()){
+            super.execute(characters, context);
+            return;
+         }
       }
       context.removeProduction();
       context.addProduction(new ContextSelector(output, isNestedInContextSelector));

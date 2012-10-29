@@ -76,7 +76,9 @@ GlobalVariableValue:
    /[0-9]*/
    '@' + Name
    /^((['"])((?:(?!\2)(?!\r?\n)(?:\\|\\\r?\n|\\\2|[^\r\n]))*+)\2).*+/@"String"
-   null
+   'null'
+   'true'
+   'false'
 
 Operator:
    '=='

@@ -96,6 +96,17 @@ public class GlobalVariableValue extends Production {
             context.removeProduction();
             return;
          }
+         break;
+      case 't':
+      case 'f':
+         Matcher booleanMatch = characters.match(BOOLEAN);
+         if(booleanMatch.find()){
+            String value = booleanMatch.group(1);
+            characters.shift(value.length());
+            output.prepend(value);
+            context.removeProduction();
+            return;
+         }
       }
       throw new Exception("Invalid value found while evaluating GlobalVariableValue.");
    }
