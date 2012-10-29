@@ -74,15 +74,15 @@ public class Program extends Production {
          prepend(
                //StringBuffer
                "function(){"+
-                  "var v=[],i=0;"+
-                  "return{"+
-                     js_append+":function(s){"+
-                        "v[i++]=s||''"+
-                     "},"+
-                     "toString:function(){"+
-                        "return v.join('');"+
-                     "}"+
-                  "};"+
+                  "var v=[],i=0,t='number string boolean',f="+
+                     "function(s){"+
+                        "var y=typeof(s);"+
+                        "v[i++]=(t.indexOf(y)>-1)?s:''"+
+                     "};"+
+                     "f.s=function(){"+
+                        "return v.join('')"+
+                     "};"+
+                  "return f"+
                "}"
             ).
          prepend(",").

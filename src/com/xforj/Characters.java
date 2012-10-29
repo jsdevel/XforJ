@@ -73,7 +73,6 @@ public interface Characters {
 
    //JAVASCRIPT
    /*DEVELOPMENT
-   final String js_append="append";
    final String js_bld="bld";
    final String js_context="context";
    final String js_count="count";
@@ -92,7 +91,6 @@ public interface Characters {
    */
 
    /*MUNGED*/
-   final String js_append="a";
    final String js_bld="b";
    final String js_context="x";
    final String js_count="c";

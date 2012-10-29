@@ -67,7 +67,7 @@ public class TemplateDeclaration extends Production {
                         ).
                         prepend(context.getCurrentVariableOutput()).
                         prepend(templateBodyOutput).
-                        prepend("return "+js_bld+".toString()};");
+                        prepend("return "+js_bld+".s()};");
 
                      if(characters.charAt(0) == '}'){
                         characters.shift(1);

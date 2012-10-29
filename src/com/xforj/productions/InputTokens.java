@@ -45,7 +45,7 @@ public class InputTokens extends Production {
          }
          newTokens = newTokens.replaceAll("\"", "\\\\\"").replaceAll("'", "\\\\'");
          characters.shift(oldTokens.length());
-         output.prepend(js_bld+"."+js_append+"('"+newTokens+"');");
+         output.prepend(js_bld+"('"+newTokens+"');");
          return;
       }
       context.removeProduction();
