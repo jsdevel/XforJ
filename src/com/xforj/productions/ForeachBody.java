@@ -24,12 +24,14 @@ import java.util.regex.Matcher;
  * @author Joseph Spencer
  */
 public class ForeachBody extends Production {
+   final Output sortCaseSensitivityOutput;
    final Output sortContextOutput;
-   final Output sortFunctionOutput;
-   public ForeachBody(Output output, Output sortContextOutput, Output sortFunctionOutput) {
+   final Output sortParamOutput;
+   public ForeachBody(Output output, Output sortContextOutput, Output sortFunctionOutput, Output sortCaseSensitivityOutput) {
       super(output);
+      this.sortCaseSensitivityOutput=sortCaseSensitivityOutput;
       this.sortContextOutput=sortContextOutput;
-      this.sortFunctionOutput=sortFunctionOutput;
+      this.sortParamOutput=sortFunctionOutput;
    }
 
    private boolean hasSort;
@@ -56,7 +58,7 @@ public class ForeachBody extends Production {
                match = characters.match(SORT);
                if(match.find()){
                   characters.shift(match.group(1).length());
-                  context.addProduction(new SortStatement(sortContextOutput, sortFunctionOutput));
+                  context.addProduction(new SortStatement(sortContextOutput, sortParamOutput, sortCaseSensitivityOutput));
                   return;
                }
             }

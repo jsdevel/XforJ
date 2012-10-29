@@ -109,7 +109,7 @@ public class Program extends Production {
             /*
              * Foreach assumes that context is the output of GetSortArray.
              * The Function itself accepts the following params:
-             * obj, callback, [sort function].
+             * obj, callback, [sort order], [sort promoteNumbers].
              * 
              * The callback is called with the following params:
              * function(context, position, last, name){
@@ -117,11 +117,18 @@ public class Program extends Production {
              * }
              */
             prepend(
-               "function(o,c,s){"+
+               "function(o,c,so,n){"+
                   "var i=0,l,m;"+
                   "if(!!o&&typeof(o)==='object'&&typeof(c)==='function'){"+
                      "l=o.length;"+
-                     "if(typeof(s)==='function')o.sort(s);"+
+                     "if(so!==void(0))o.sort("+
+                        "function(c,d){"+
+                           "var a=c.k,b=d.k,at=typeof(a),bt=typeof(b);"+
+                           "if(a===b)return 0;"+
+                           "if(at===bt)return (!!so?a<b:a>b)?-1:1;"+
+                           "return (!!n?at<bt:at>bt)?-1:1"+
+                        "}"+
+                     ");"+
                      "for(;i<l;i++){"+
                         "m=o[i];"+
                         "c(m.c, i+1, o.length, m.n)"+
@@ -133,15 +140,16 @@ public class Program extends Production {
 
             prepend(
                //GetSortArray
-               "function(o, s){"+
-                  "var r=[],a;"+
+               "function(o,s,i){"+
+                  "var r=[],a,v;"+
                   "if(!!o&&typeof(o)==='object'){"+
                      "for(a in o){"+
                         "try{"+
+                           "v=s(o[a]);"+
                            "r.push({"+
                               "n:a,"+//name
                               "c:o[a],"+//context
-                              "k:s(o[a])"+//key.  Used by the sort algorithm
+                              "k:typeof(v)==='string'&&i?v.toLowerCase():v"+//key.  Used by the sort algorithm
                            "});"+
                         "} catch(e){"+
                            "r.push({"+

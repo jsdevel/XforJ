@@ -17,23 +17,27 @@
 package com.xforj.productions;
 
 import com.xforj.*;
+import java.util.regex.Matcher;
 
 /**
  *
  * @author Joseph Spencer
  */
 public class SortStatement extends Production {
+   final private Output sortCaseSensitivityOutput;
    final private Output sortContextOutput;
-   final private Output sortFunctionOutput;
+   final private Output sortParamOutput;
 
-   public SortStatement(Output sortContextOutput, Output sortFunctionOutput) {
+   public SortStatement(Output sortContextOutput, Output sortFunctionOutput, Output sortCaseSensitivityOutput) {
       super(sortContextOutput);
+      this.sortCaseSensitivityOutput=sortCaseSensitivityOutput;
       this.sortContextOutput=sortContextOutput;
-      this.sortFunctionOutput=sortFunctionOutput;
+      this.sortParamOutput=sortFunctionOutput;
    }
 
    private boolean hasContextSelector;
    private boolean hasSortFunction;
+   private boolean hasSortDirection;
    @Override
    void execute(CharWrapper characters, ProductionContext context) throws Exception {
 
@@ -50,13 +54,40 @@ public class SortStatement extends Production {
          return;
       } else {
          if(characters.charAt(0) == '}'){
-            if(!hasSortFunction){
-               sortFunctionOutput.
-                  prepend(",function(a,b){return a.k>b.k;}");
+            if(!hasSortFunction && !hasSortDirection){
+               sortParamOutput.
+                  prepend(",1,0");
             }
             characters.shift(1);
             context.removeProduction();
             return;
+         }
+         if(!hasSortDirection && !hasSortFunction){
+            Matcher sortDirection = characters.match(SORT_DIRECTION);
+            if(sortDirection.find()){
+               hasSortDirection=true;
+               hasSortFunction=true;
+
+               String direction = sortDirection.group(1);
+               characters.shift(direction.length());
+
+               boolean asc = direction.startsWith("a");
+               boolean promoteNum = false;
+
+               Matcher sortModifiers = characters.match(SORT_MODIFIERS);
+               if(sortModifiers.find()){
+                  String modifiers = sortModifiers.group(1);
+                  characters.shift(1);//pipe
+                  characters.shift(modifiers.length());//pipe
+
+                  if(modifiers.contains("i")){
+                     sortCaseSensitivityOutput.prepend(",1");//added to the params for GetSortArray
+                  }
+                  promoteNum=modifiers.contains("n");
+               }
+               sortParamOutput.prepend(","+(asc?1:0)+","+(promoteNum?1:0));
+               return;
+            }
          }
       }
       exc();

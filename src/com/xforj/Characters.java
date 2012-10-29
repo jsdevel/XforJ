@@ -23,15 +23,17 @@ import java.util.regex.Pattern;
  */
 public interface Characters {
    //SEQUENCES
+   Pattern ABSOLUTE_PATH = Pattern.compile("^(/(?:[^/\\}]++/)*+).*+");
+   Pattern CLOSE_BLOCK = Pattern.compile("^(\\}).*+");
+   Pattern CONTEXT_STATIC_REFINEMENT_NAMESPACE = Pattern.compile("^(\\s*+(?:[a-zA-Z$_][a-zA-Z0-9$_]*+\\s*+\\.)*+\\s*+[a-zA-Z$_][a-zA-Z0-9$_]*+\\s*).*+");
+   Pattern IMPORT_PATH = Pattern.compile("^((?:/?(?:\\.\\./)?(?:[^/\\}]++/)*+)?[^/\\}]++).*+");
+   Pattern INPUT_TOKENS = Pattern.compile("^([^\\{]++).*+");
+   Pattern NS = Pattern.compile("^((?:[a-zA-Z$_][a-zA-Z0-9$_]*+\\.)*+[a-zA-Z$_][a-zA-Z0-9$_]*+).*+");
+   Pattern OPEN_BLOCK = Pattern.compile("^(\\{).*+");
+   Pattern SORT_DIRECTION = Pattern.compile("^(asc|desc)(?![a-zA-Z0-9$_]).*+");
+   Pattern SORT_MODIFIERS = Pattern.compile("^\\|([in]{1,2})(?![a-zA-Z0-9$_]).*+");
    Pattern SPACE = Pattern.compile("^(\\s++).*+");
    Pattern SPACE_PRECEDING_CURLY = Pattern.compile("^(\\s++)(?=\\{).*+");
-   Pattern OPEN_BLOCK = Pattern.compile("^(\\{).*+");
-   Pattern CLOSE_BLOCK = Pattern.compile("^(\\}).*+");
-   Pattern INPUT_TOKENS = Pattern.compile("^([^\\{]++).*+");
-   Pattern IMPORT_PATH = Pattern.compile("^((?:/?(?:\\.\\./)?(?:[^/\\}]++/)*+)?[^/\\}]++).*+");
-   Pattern ABSOLUTE_PATH = Pattern.compile("^(/(?:[^/\\}]++/)*+).*+");
-   Pattern NS = Pattern.compile("^((?:[a-zA-Z$_][a-zA-Z0-9$_]*+\\.)*+[a-zA-Z$_][a-zA-Z0-9$_]*+).*+");
-   Pattern CONTEXT_STATIC_REFINEMENT_NAMESPACE = Pattern.compile("^(\\s*+(?:[a-zA-Z$_][a-zA-Z0-9$_]*+\\s*+\\.)*+\\s*+[a-zA-Z$_][a-zA-Z0-9$_]*+\\s*).*+");
 
    //RESERVED WORDS
    Pattern CHOOSE = Pattern.compile("^(\\{choose\\}).*+");

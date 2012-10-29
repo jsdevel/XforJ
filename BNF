@@ -214,6 +214,10 @@ SortStatement:
 SortAlgorithm:
    ' asc'
    ' desc'
+   SortAlgorithm + SortModifier
+
+SortModifer:
+   '|' + /[in]{1,2}/
 
 ApplyStatement:
    '{apply ' + ContextSelector + '}' + ApplyParams@"Optional" + '{/apply}'

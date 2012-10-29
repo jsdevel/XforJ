@@ -24,8 +24,9 @@ import java.util.regex.*;
  * @author Joseph Spencer
  */
 public class ForeachStatement extends AbstractConditionBlock {
-   Output sortFunctionOutput=new Output();
+   Output sortParamOutput=new Output();
    Output sortContextOutput=new Output();
+   Output sortCaseSensitivityOutput=new Output();
    public ForeachStatement(Output output) {
       super(output);
       output.
@@ -33,6 +34,7 @@ public class ForeachStatement extends AbstractConditionBlock {
                prepend(js_GetSortArray+"(").
                   prepend(expressionOutput).
                   prepend(sortContextOutput).
+                  prepend(sortCaseSensitivityOutput).
                   prepend(")").
             prepend(",").
                prepend(//callback
@@ -45,7 +47,7 @@ public class ForeachStatement extends AbstractConditionBlock {
                ).
                prepend(bodyOutput).
             prepend("}").//sortFunction if any
-               prepend(sortFunctionOutput).
+               prepend(sortParamOutput).
             prepend(");");
    }
 
@@ -56,7 +58,7 @@ public class ForeachStatement extends AbstractConditionBlock {
 
    @Override
    protected Production getBodyStatements(Output output) {
-      return new ForeachBody(output, sortContextOutput, sortFunctionOutput);
+      return new ForeachBody(output, sortContextOutput, sortParamOutput, sortCaseSensitivityOutput);
    }
 
    @Override
