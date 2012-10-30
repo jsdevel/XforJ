@@ -15,9 +15,7 @@
  */
 package com.xforj.productions;
 
-import com.xforj.Output;
-import com.xforj.CharWrapper;
-import com.xforj.VariableOutput;
+import com.xforj.*;
 
 /**
  *
@@ -28,152 +26,60 @@ public class Program extends Production {
    Output importOutput;
    Output variableOutput;
    Output globalStatementsOutput;
-   public Program(Output output, VariableOutput currentVariableOutput, boolean imported){
+   /**
+    * Program is the entry point for all productions in the grammar.  When importing 
+    * another file, Program is nested within other programs.
+    * @param output
+    * @param currentVariableOutput
+    * @param previousContext May be null;
+    */
+   public Program(
+      Output output, 
+      VariableOutput currentVariableOutput, 
+      ProductionContext context, 
+      boolean imported
+   ){
       super(output);
       programNamespaceOutput=new Output();
       importOutput=new Output();
       variableOutput=currentVariableOutput;
       globalStatementsOutput=new Output();
+      JSParameters globalParams = context.getParams();
+      JSParametersWrapper globalParamNames = context.getJSParametersWrapper();
 
       output.
-         prepend(
-         "(function("+
-            js_StringBuffer+","+
-            js_CountElements+","+
-            js_foreach+","+
-            js_GetSortArray+
-         "){").
+         prepend( "(function(").prepend(globalParamNames).prepend("){").
             prepend(programNamespaceOutput).
             prepend(importOutput).
-            prepend(
-         "(function("+
-            js_StringBuffer+","+
-            js_CountElements+","+
-            js_foreach+","+
-            js_GetSortArray+
-         "){").
+         prepend("(function(").prepend(globalParamNames).prepend("){").
                prepend(variableOutput).
                prepend(globalStatementsOutput).
-            prepend(
-         "})("+
-            js_StringBuffer+","+
-            js_CountElements+","+
-            js_foreach+","+
-            js_GetSortArray+
-         ");");
+            prepend("})(").prepend(globalParamNames).prepend(");");
 
       if(imported){
-         output.prepend("})("+
-            js_StringBuffer+","+
-            js_CountElements+","+
-            js_foreach+","+
-            js_GetSortArray+
-         ");");
+         output.prepend("})(").prepend(globalParamNames).prepend(");");
       } else {
-         output.prepend("})(").
-         prepend(
-               //StringBuffer
-               "function(){"+
-                  "var v=[],i=0,t='number string boolean',f="+
-                     "function(s){"+
-                        "var y,value;"+
-                        "try{"+
-                           "value=s();"+
-                        "}catch(e){"+
-                           "value=s;"+
-                        "}"+
-                        "y=typeof(value);"+
-                        "v[i++]=(t.indexOf(y)>-1)?value:''"+
-                     "};"+
-                     "f.s=function(){"+
-                        "return v.join('')"+
-                     "};"+
-                  "return f"+
-               "}"
-            ).
-         prepend(",").
-            prepend(
-               //CountElements
-               "function(f){"+
-                  "var o,"+
-                  "c=0,"+
-                  "n;"+
-                  "try{o=f()}catch(e){}"+
-                  "if(!!o && typeof(o)==='object'){"+
-                     "if(o.slice&&o.join&&o.pop){"+
-                        "return o.length>>>0;"+
-                     "}else{"+
-                        "for(n in o){"+
-                           "c++;"+
-                        "}"+
+         output.prepend("})(").prepend(context.getArgumentsWrapper()).prepend(");");
+         globalParams.put(js_StringBuffer, 
+            //StringBuffer
+            "function(){"+
+               "var r=[],i=0,t='number string boolean',f="+
+                  "function(s){"+
+                     "var y,v;"+
+                     "try{"+
+                        "v=s();"+
+                     "}catch(e){"+
+                        "v=s;"+
                      "}"+
-                  "}"+
-                  "return c"+
-               "}"
-            ).
-         prepend(",").
-
-            //Foreach
-            /*
-             * Foreach assumes that context is the output of GetSortArray.
-             * The Function itself accepts the following params:
-             * obj, callback, [sort order], [sort promoteNumbers].
-             * 
-             * The callback is called with the following params:
-             * function(context, position, last, name){
-             * 
-             * }
-             */
-            prepend(
-               "function(o,c,so,n){"+
-                  "var i=0,l,m;"+
-                  "if(!!o&&typeof(o)==='object'&&typeof(c)==='function'){"+
-                     "l=o.length;"+
-                     "if(so!==void(0))o.sort("+
-                        "function(c,d){"+
-                           "var a=c.k,b=d.k,at=typeof(a),bt=typeof(b);"+
-                           "if(a===b)return 0;"+
-                           "if(at===bt)return (!!so?a<b:a>b)?-1:1;"+
-                           "return (!!n?at<bt:at>bt)?-1:1"+
-                        "}"+
-                     ");"+
-                     "for(;i<l;i++){"+
-                        "m=o[i];"+
-                        "c(m.c, i+1, o.length, m.n)"+
-                     "}"+
-                  "}"+
-               "}"
-            ).
-         prepend(",").
-
-            prepend(
-               //GetSortArray
-               "function(l,s,i){"+
-                  "var r=[],a,v,o;"+
-                  "try{o=l()}catch(e){o=l}"+
-                  "if(!!o&&typeof(o)==='object'){"+
-                     "for(a in o){"+
-                        "try{"+
-                           "v=s(o[a]);"+
-                           "r.push({"+
-                              "n:a,"+//name
-                              "c:o[a],"+//context
-                              "k:typeof(v)==='string'&&i?v.toLowerCase():v"+//key.  Used by the sort algorithm
-                           "});"+
-                        "} catch(e){"+
-                           "r.push({"+
-                              "n:a,"+
-                              "c:o[a],"+
-                              "k:\"\""+
-                           "});"+
-                        "}"+
-                     "}"+
-                  "}"+
-                  "return r"+
-               "}"
-            ).
-
-         prepend(");");
+                     "y=typeof(v);"+
+                     "r[i++]=(t.indexOf(y)>-1)?v:''"+
+                  "};"+
+                  "f.s=function(){"+
+                     "return r.join('')"+
+                  "};"+
+               "return f"+
+            "}"
+         );
       }
    }
 

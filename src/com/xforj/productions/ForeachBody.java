@@ -58,7 +58,7 @@ public class ForeachBody extends Production {
                match = characters.match(SORT);
                if(match.find()){
                   characters.shift(match.group(1).length());
-                  context.addProduction(new SortStatement(sortContextOutput, sortParamOutput, sortCaseSensitivityOutput));
+                  context.addProduction(new SortStatement(sortContextOutput, sortParamOutput, sortCaseSensitivityOutput, context));
                   return;
                }
             }

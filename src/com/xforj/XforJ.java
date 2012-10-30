@@ -49,7 +49,7 @@ public class XforJ implements Characters {
 
       long before = new Date().getTime();
       LOGGER.out("Compiling:  "+inPath);
-      String output = compileFile(inPath, false).toString(); 
+      String output = compileFile(inPath, null).toString(); 
       LOGGER.out("Time taken: "+Long.toString(new Date().getTime() - before));
 
       LOGGER.out("Outputting: "+outPath);
@@ -62,13 +62,13 @@ public class XforJ implements Characters {
 
    }
 
-   public static Output compileFile(String path, boolean imported) {
+   public static Output compileFile(String path, ProductionContext previousContext) {
       File testFile = new File(path);
       CharWrapper wrapper=null;
 
       try{
          String absoluteFilePath = testFile.getCanonicalPath();
-         ProductionContext context = new ProductionContext(absoluteFilePath, imported);
+         ProductionContext context = new ProductionContext(absoluteFilePath, previousContext);
          char[] chars=MainUtil.getChars(testFile);
 
          CharWrapper characters = new CharWrapper(chars);

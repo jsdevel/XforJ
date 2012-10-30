@@ -84,7 +84,7 @@ public class TemplateBodyStatements extends Production {
             if(match.find()){
                characters.shift(match.group(1).length());
                statementOutput= new Output();
-               context.addProduction(new ForeachStatement(statementOutput));
+               context.addProduction(new ForeachStatement(statementOutput, context));
                output.prepend(statementOutput);
                return;
             }

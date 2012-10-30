@@ -16,10 +16,12 @@
 package com.xforj.productions;
 
 import com.xforj.CharWrapper;
+import com.xforj.JSArgumentsWrapper;
+import com.xforj.JSParameters;
+import com.xforj.JSParametersWrapper;
 import com.xforj.XforJ;
 import com.xforj.VariableOutput;
 import java.io.File;
-import java.util.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -32,24 +34,58 @@ import com.xforj.Output;
 public class ProductionContext {
    private Production currentProduction;
    private ArrayList<Production> productionStack = new ArrayList<>();
+   private VariableOutput currentVariableOutput = new VariableOutput();
 
-   public final Output output = new Output();
-
-   public final boolean stripNewLines;
-   public final boolean minifyHTML;
-
-   private static Map<String, Boolean> declaredNamespaces = new HashMap<String, Boolean>();
    private String programNamespace="";
 
-   public final String filePath;
+   final public Output output = new Output();
+   final public boolean stripNewLines;
+   final public boolean minifyHTML;
+   final private Map<String, Boolean> declaredNamespaces;
+   final public String filePath;
+   final private Map<String, Boolean> importedFiles;
+   final private JSParametersWrapper paramsWrapper;
+   final private JSArgumentsWrapper argsWrapper;
+   final private JSParameters params;
 
-   public ProductionContext(String absoluteFilePath, boolean imported) {
+   public ProductionContext(
+      String absoluteFilePath, 
+      ProductionContext previousContext
+   ){
       //at some point these need to be configurable.
       stripNewLines=true;
       minifyHTML=true;
-      currentProduction= new Program(output, currentVariableOutput, imported);
+      if(previousContext!=null){
+         declaredNamespaces=previousContext.declaredNamespaces;
+         importedFiles=previousContext.importedFiles;
+
+         //parameters
+         params=previousContext.params;
+         paramsWrapper=previousContext.paramsWrapper;
+         argsWrapper=previousContext.argsWrapper;
+      } else {
+         declaredNamespaces = new HashMap<String, Boolean>();
+         importedFiles = new HashMap<String, Boolean>();
+
+         //parameters
+         params=new JSParameters();
+         paramsWrapper=new JSParametersWrapper(params);
+         argsWrapper=new JSArgumentsWrapper(params);
+      }
+      currentProduction= new Program(output, currentVariableOutput, this, previousContext!=null);
       productionStack.add(currentProduction);
       filePath=absoluteFilePath;
+   }
+
+   //Parameters
+   public JSParameters getParams(){
+      return params;
+   }
+   public JSParametersWrapper getJSParametersWrapper(){
+      return paramsWrapper;
+   }
+   public JSArgumentsWrapper getArgumentsWrapper(){
+      return argsWrapper;
    }
 
    //NAMESPACE
@@ -60,10 +96,11 @@ public class ProductionContext {
       programNamespace=ns;
       declaredNamespaces.put(ns, true);
    }
-   public String getNS(){return programNamespace;}
+   public String getNS(){
+      return programNamespace;
+   }
 
    //IMPORTS
-   private static Map<String, Boolean> importedFiles = new HashMap<String, Boolean>();
    public Output importFile(String path, boolean imported) throws Exception {
 
       File targetFile = new File(path);
@@ -73,7 +110,7 @@ public class ProductionContext {
          return new Output();
       }
       importedFiles.put(absolutePath, true);
-      return XforJ.compileFile(path, imported);
+      return XforJ.compileFile(path, this);
    }
 
    //PRODUCTIONS
@@ -87,13 +124,12 @@ public class ProductionContext {
       currentProduction=productionStack.get(productionStack.size()-1);
       return this;
    }
-   public ProductionContext executeCurrent(CharWrapper wrap) throws Exception{
+   public ProductionContext executeCurrent(CharWrapper wrap) throws Exception {
       currentProduction.execute(wrap, this);
       return this;
    }
 
    //VARIABLES
-   private VariableOutput currentVariableOutput = new VariableOutput();
    private ArrayList<VariableOutput> variableOutputStack = new ArrayList<>();
    {
       variableOutputStack.add(currentVariableOutput);

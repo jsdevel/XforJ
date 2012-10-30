@@ -81,6 +81,7 @@ public class VariableValue extends GlobalVariableValue {
                prepend("(").
                prepend(contextSelectorOutput);
             context.addProduction(new ContextSelector(contextSelectorOutput, isNestedInContextSelector));
+            addCountFunctionToGlobalParams(context);
             return;//we need to come back for the close paren.
          }
          break;
@@ -117,5 +118,27 @@ public class VariableValue extends GlobalVariableValue {
       }
       context.removeProduction();
       context.addProduction(new ContextSelector(output, isNestedInContextSelector));
+   }
+
+   private void addCountFunctionToGlobalParams(ProductionContext context){
+      context.getParams().
+      put(js_CountElements,               
+         //CountElements
+         "function(f){"+
+            "var o,"+
+            "c=0,"+
+            "n;"+
+            "try{o=f()}catch(e){}"+
+            "if(!!o && typeof(o)==='object'){"+
+               "if(o.slice&&o.join&&o.pop){"+
+                  "return o.length>>>0;"+
+               "}else{"+
+                  "for(n in o){"+
+                     "c++;"+
+                  "}"+
+               "}"+
+            "}"+
+            "return c"+
+         "}");   
    }
 }
