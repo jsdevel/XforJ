@@ -76,8 +76,14 @@ public class Program extends Production {
                "function(){"+
                   "var v=[],i=0,t='number string boolean',f="+
                      "function(s){"+
-                        "var y=typeof(s);"+
-                        "v[i++]=(t.indexOf(y)>-1)?s:''"+
+                        "var y,value;"+
+                        "try{"+
+                           "value=s();"+
+                        "}catch(e){"+
+                           "value=s;"+
+                        "}"+
+                        "y=typeof(value);"+
+                        "v[i++]=(t.indexOf(y)>-1)?value:''"+
                      "};"+
                      "f.s=function(){"+
                         "return v.join('')"+
@@ -88,9 +94,11 @@ public class Program extends Production {
          prepend(",").
             prepend(
                //CountElements
-               "function(o){"+
-                  "var c=0;"+
-                  "var n;"+
+               "function(f){"+
+                  "var o,"+
+                  "c=0,"+
+                  "n;"+
+                  "try{o=f()}catch(e){}"+
                   "if(!!o && typeof(o)==='object'){"+
                      "if(o.slice&&o.join&&o.pop){"+
                         "return o.length>>>0;"+
@@ -140,8 +148,9 @@ public class Program extends Production {
 
             prepend(
                //GetSortArray
-               "function(o,s,i){"+
-                  "var r=[],a,v;"+
+               "function(l,s,i){"+
+                  "var r=[],a,v,o;"+
+                  "try{o=l()}catch(e){o=l}"+
                   "if(!!o&&typeof(o)==='object'){"+
                      "for(a in o){"+
                         "try{"+
