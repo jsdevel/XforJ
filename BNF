@@ -172,7 +172,7 @@ TemplateBodyStatements:
    IfStatement
    ChooseStatement
    ForeachStatement
-   ApplyStatement
+   CallStatement
    TemplateBody
 
 InputTokens:
@@ -219,12 +219,12 @@ SortAlgorithm:
 SortModifer:
    '|' + /[in]{1,2}/
 
-ApplyStatement:
-   '{apply ' + ContextSelector + '}' + ApplyParams@"Optional" + '{/apply}'
+CallStatement:
+   '{call ' + ContextSelector + '}' + CallParams@"Optional" + '{/call}'
 
-ApplyParams:
-   ApplyParam
-   ApplyParam + ApplyParams
+CallParams:
+   CallParam
+   CallParam + CallParams
 
-ApplyParam:
+CallParam:
    '{param ' + Name + Value + '}'
