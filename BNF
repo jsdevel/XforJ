@@ -42,10 +42,10 @@ ProgramNamespace:
 
 Namespace:
    Name
-   '.' + Namespace
+   Name + '.' + Namespace
 
 Name:
-   /[a-zA-Z][a-zA-Z_0-9]*/
+   /[a-zA-Z$_][a-zA-Z$_0-9]*/
 
 ImportStatements:
    ImportStatement
@@ -220,7 +220,13 @@ SortModifer:
    '|' + /[in]{1,2}/
 
 CallStatement:
-   '{call ' + ContextSelector + '}' + CallParams@"Optional" + '{/call}'
+   '{call ' + CallExpression + '}' + CallParams@"Optional" + '{/call}'
+
+CallExpression:
+   Namespace + CallContext@"Optional
+
+CallContext:
+   ' ' + ContextSelector
 
 CallParams:
    CallParam
