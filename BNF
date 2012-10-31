@@ -59,7 +59,7 @@ GlobalVariableDeclarations:
    GlobalVariableDeclarations + GlobalVariableDeclaration
 
 GlobalVariableDeclaration:
-   '{variable ' + Name + GlobalVariableAssignment@"Optional" + '}'
+   '{var ' + Name + GlobalVariableAssignment@"Optional" + '}'
 
 GlobalVariableAssignment:
    ' ' + GlobalExpression
@@ -112,7 +112,7 @@ VariableDeclarations:
    VaribleDeclarations + VariableDeclaration
 
 VariableDeclaration:
-   '{variable ' + Name + VariableAssignment@"Optional" + '}'
+   '{var ' + Name + VariableAssignment@"Optional" + '}'
 
 VariableAssignment:
    ' ' + VariableExpression
