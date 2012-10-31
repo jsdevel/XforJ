@@ -28,7 +28,7 @@ public interface Characters {
    Pattern CONTEXT_STATIC_REFINEMENT_NAMESPACE = Pattern.compile("^(\\s*+(?:[a-zA-Z$_][a-zA-Z0-9$_]*+\\s*+\\.)*+\\s*+[a-zA-Z$_][a-zA-Z0-9$_]*+\\s*).*+");
    Pattern IMPORT_PATH = Pattern.compile("^((?:/?(?:\\.\\./)?(?:[^/\\}]++/)*+)?[^/\\}]++).*+");
    Pattern INPUT_TOKENS = Pattern.compile("^([^\\{]++).*+");
-   Pattern NS = Pattern.compile("^((?:[a-zA-Z$_][a-zA-Z0-9$_]*+\\.)*+[a-zA-Z$_][a-zA-Z0-9$_]*+).*+");
+   Pattern NS = Pattern.compile("^([a-z][a-zA-Z0-9$_]*+(?:\\.[a-zA-Z$_][a-zA-Z0-9$_]*+)*+).*+");
    Pattern OPEN_BLOCK = Pattern.compile("^(\\{).*+");
    Pattern SORT_DIRECTION = Pattern.compile("^(asc|desc)(?![a-zA-Z0-9$_]).*+");
    Pattern SORT_MODIFIERS = Pattern.compile("^\\|([in]{1,2})(?![a-zA-Z0-9$_]).*+");
@@ -95,20 +95,20 @@ public interface Characters {
    */
 
    /*MUNGED*/
-   final String js_bld="b";
-   final String js_context="x";
-   final String js_count="c";
+   final String js_bld="B";
+   final String js_context="X";
+   final String js_count="T";
    final String js_CountElements="C";
    final String js_currentNS="N";
-   final String js_data="d";
-   final String js__data="D";
-   final String js_foreach="f";
-   final String js_GetSortArray="g";
-   final String js_last="l";
-   final String js_name="n";
-   final String js_params="p";
-   final String js__params="P";
-   final String js_position="o";
+   final String js_data="D";
+   final String js__data="A";
+   final String js_foreach="F";
+   final String js_GetSortArray="G";
+   final String js_last="L";
+   final String js_name="N";
+   final String js_params="P";
+   final String js__params="M";
+   final String js_position="O";
    final String js_StringBuffer="S";
    /**/
 }

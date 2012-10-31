@@ -75,7 +75,7 @@ public class ProgramNamespace extends Production {
 
          }
       }
-      throw new Exception("Invalid Namespace declaration.");
+      throw new Exception("Invalid Namespace declaration.  Namespaces must begin with a lower case letter, and appear first.");
    }
          //throw new Exception("Namespace already declared for this template");
 
