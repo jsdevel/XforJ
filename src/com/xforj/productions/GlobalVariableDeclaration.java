@@ -31,7 +31,7 @@ public class GlobalVariableDeclaration extends AbstractVariableDeclaration {
 
    @Override
    protected Pattern getPattern() {
-      return VARIABLE;
+      return VAR;
    }
 
    @Override

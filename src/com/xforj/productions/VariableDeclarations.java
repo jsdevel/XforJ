@@ -35,7 +35,7 @@ public class VariableDeclarations extends Production {
    public void execute(CharWrapper characters, ProductionContext context) throws Exception {
       characters.removeSpace();
       if(characters.charAt(0) == '{' && characters.charAt(1) == 'v'){
-         Matcher param = characters.match(VARIABLE);
+         Matcher param = characters.match(VAR);
          if(param.find()){
             context.addProduction(new VariableDeclaration(variableOutput));
             return;

@@ -30,7 +30,7 @@ public class VariableDeclaration extends AbstractVariableDeclaration {
    
    @Override
    protected Pattern getPattern() {
-      return VARIABLE;
+      return VAR;
    }
 
    @Override

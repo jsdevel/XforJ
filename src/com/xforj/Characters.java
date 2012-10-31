@@ -64,7 +64,7 @@ public interface Characters {
    //change in the future, but for now it allows the other keywords to test
    //directly on char rather than instantiating a Matcher.
    Pattern PARAM = Pattern.compile("^(\\{param\\s++).*+");
-   Pattern VARIABLE = Pattern.compile("^(\\{variable\\s++).*+");
+   Pattern VAR = Pattern.compile("^(\\{var\\s++).*+");
 
 
    //PRIMITIVES

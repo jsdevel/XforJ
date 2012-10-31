@@ -47,7 +47,7 @@ public class TemplateBodyStatements extends Production {
             context.removeProduction();
             return;
          case 'v':
-            match = characters.match(VARIABLE);
+            match = characters.match(VAR);
             if(match.find()){
                throw new Exception("VariableDeclarations are not allowed in this context.");
             }

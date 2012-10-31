@@ -66,7 +66,7 @@ public class ForeachBody extends Production {
          case 'v':
             if(!hasVar && !hasTemplateBody){
                hasVar=true;
-               match = characters.match(VARIABLE);
+               match = characters.match(VAR);
                if(match.find()){
                   output.prepend(context.getCurrentVariableOutput());
                   context.addProduction(new VariableDeclarations(context.getCurrentVariableOutput()));
