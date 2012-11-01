@@ -63,8 +63,9 @@ public class CallExpression extends Production {
             char firstChar = characters.charAt(0);
             if( firstChar != '/' && firstChar != '}'){
                Output selectorOutput = new Output();
-               contextOutput.prepend("(function(){try{return ").prepend(selectorOutput).prepend("}catch(e){}})()");
-               context.addProduction(new ContextSelector(selectorOutput, true));   
+               context.getParams().put(js_ReturnSafeContextValue, "function(fn){try{return fn()}catch(e){}}");
+               contextOutput.prepend(js_ReturnSafeContextValue+"(").prepend(selectorOutput).prepend(")");
+               context.addProduction(new ContextSelector(selectorOutput, false));   
             }
             return;
          }

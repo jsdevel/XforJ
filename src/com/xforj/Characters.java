@@ -112,5 +112,6 @@ public interface Characters {
    final String js_position="O";
    final String js_StringBuffer="S";
    final String js_TemplateBasket="B";
+   final String js_ReturnSafeContextValue="s";
    /**/
 }
