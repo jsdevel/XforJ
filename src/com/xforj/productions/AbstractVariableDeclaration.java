@@ -16,6 +16,7 @@
 
 package com.xforj.productions;
 
+import com.xforj.AbstractVariableOutput;
 import com.xforj.Output;
 import com.xforj.CharWrapper;
 import java.util.regex.Matcher;
@@ -26,8 +27,10 @@ import java.util.regex.Pattern;
  * @author Joseph Spencer
  */
 public abstract class AbstractVariableDeclaration extends Production {
-   public AbstractVariableDeclaration(Output output) {
+   private final AbstractVariableOutput varOutput;
+   public AbstractVariableDeclaration(AbstractVariableOutput output) {
       super(output);
+      varOutput=output;
    }
 
    private boolean hasValue;
@@ -51,7 +54,7 @@ public abstract class AbstractVariableDeclaration extends Production {
                   
                   Output assignmentOutput = new Output();
                   doAssignment(name, assignmentOutput);
-                  context.getCurrentVariableOutput().add(name, assignmentOutput);
+                  varOutput.add(name, assignmentOutput);
                   context.addProduction(getProduction(assignmentOutput));
                } else {
                   doNoAssignment(name, context);

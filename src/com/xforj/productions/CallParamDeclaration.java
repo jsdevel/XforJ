@@ -25,9 +25,9 @@ import java.util.regex.*;
  *
  * @author Joseph Spencer
  */
-public class ParamDeclaration extends AbstractVariableDeclaration {
+public class CallParamDeclaration extends AbstractVariableDeclaration {
    AbstractVariableOutput variableOutput;
-   public ParamDeclaration(AbstractVariableOutput variableOutput) {
+   public CallParamDeclaration(AbstractVariableOutput variableOutput) {
       super(variableOutput);
       this.variableOutput=variableOutput;
    }
@@ -44,11 +44,9 @@ public class ParamDeclaration extends AbstractVariableDeclaration {
 
    @Override
    protected void doAssignment(String name, Output output) {
-      output.prepend(js_params+"."+name+"||");
    }
 
    @Override
    protected void doNoAssignment(String name, ProductionContext context) throws Exception {
-      variableOutput.add(name, js_params+"."+name);;
    }
 }

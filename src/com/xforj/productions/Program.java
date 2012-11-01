@@ -36,8 +36,7 @@ public class Program extends Production {
    public Program(
       Output output, 
       VariableOutput currentVariableOutput, 
-      ProductionContext context, 
-      boolean imported
+      ProductionContext context
    ){
       super(output);
       programNamespaceOutput=new Output();
@@ -56,10 +55,10 @@ public class Program extends Production {
                prepend(globalStatementsOutput).
             prepend("})(").prepend(globalParamNames).prepend(");");
 
-      if(imported){
+      if(context.isNested){
          output.prepend("})(").prepend(globalParamNames).prepend(");");
       } else {
-         output.prepend("})(").prepend(context.getArgumentsWrapper()).prepend(");");
+         output.prepend("return "+js_TemplateBasket+"})(").prepend(context.getArgumentsWrapper()).prepend(");");
          globalParams.put(js_StringBuffer, 
             //StringBuffer
             "function(){"+
@@ -79,6 +78,13 @@ public class Program extends Production {
                   "};"+
                "return f"+
             "}"
+         ).put(
+            js_TemplateBasket, 
+            (
+               context.assignTemplatesGlobally?
+                  "(function(){return this})()":
+                  "{}"
+            )
          );
       }
    }
@@ -101,9 +107,7 @@ public class Program extends Production {
                if(!hasGlobalVariableDeclarations){
                   Output importStatementsOutput = new Output();
                   importOutput.
-                     prepend("(function(){").
-                     prepend(importStatementsOutput).
-                     prepend("})();");
+                     prepend(importStatementsOutput);
                   context.addProduction(new ImportStatements(importStatementsOutput));
                   return;
                } else {

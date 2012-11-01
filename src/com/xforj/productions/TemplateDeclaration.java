@@ -43,43 +43,47 @@ public class TemplateDeclaration extends Production {
       if(characters.charAt(0) == '{'){
          if(!isOpened){
             isOpened=true;
-            characters.shift(1);
             context.addVaribleOutput();
 
             Matcher template = characters.match(TEMPLATE);
             if(template.find()){
                characters.shift(template.group(1).length());
 
-               if(characters.removeSpace()){
-                  Matcher name = characters.match(NAME);
-                  if(name.find()){
-                     String nm = name.group(1);
+               Matcher name = characters.match(NAME);
+               if(name.find()){
+                  String nm = name.group(1);
+                  characters.shift(nm.length());
 
-                     characters.shift(nm.length());
-                     output.
-                        prepend(
-                           js_currentNS+"."+nm+"=function("+js__data+", "+js__params+"){"+
-                              "var "+js_context+"="+js__data+"||{},"+
-                                 js_params+"="+js__params+"||{},"+
-                                 js_bld+"="+js_StringBuffer+"(),"+
-                                 js_last+"=''/0,"+
-                                 js_name+"='',"+
-                                 js_position+"="+js_last+";"
-                        ).
-                        prepend(context.getCurrentVariableOutput()).
-                        prepend(templateBodyOutput).
-                        prepend("return "+js_bld+".s()};");
+                  context.callManager.addDeclaredTemplate(context.getNS()+"."+nm);
+                  output.
+                     prepend(
+                        js_currentNS+"."+nm+"=function("+js__data+", "+js__params+"){"+
+                           "var "+js_context+"="+js__data+"||{},"+
+                              js_params+"="+js__params+"||{},"+
+                              js_bld+"="+js_StringBuffer+"(),"+
+                              js_last+"=''/0,"+
+                              js_name+"='',"+
+                              js_position+"="+js_last+";"
+                     ).
+                     prepend(context.getCurrentVariableOutput()).
+                     prepend(templateBodyOutput).
+                     prepend("return "+js_bld+".s()};");
 
-                     if(characters.charAt(0) == '}'){
-                        characters.shift(1);
-                        context.addProduction(new ParamDeclarations(context.getCurrentVariableOutput()));                           
+                  if(characters.charAt(0) == '}'){
+                     characters.shift(1);
+                     context.addProduction(new ParamDeclarations(context.getCurrentVariableOutput()));                           
 
-                        allowVariableDeclarations=true;
-                        expectingTemplateBody=true;
-                        return;
-                     }
+                     allowVariableDeclarations=true;
+                     expectingTemplateBody=true;
+                     return;
+                  } else {
+                     extraExcMsg="  A closing curly must immediately follow a template name.";
                   }
+               } else {
+                  extraExcMsg="  Templates must have a name";
                }
+            } else {
+               extraExcMsg="   Only Templates are allowed in this context.";
             }
          } else if(allowVariableDeclarations && characters.charAt(1) == 'v'){
             context.addProduction(new VariableDeclarations(context.getCurrentVariableOutput()));

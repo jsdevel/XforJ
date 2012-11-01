@@ -26,11 +26,17 @@ import java.util.regex.*;
 public abstract class AbstractConditionBlock extends Production {
    Output expressionOutput;
    Output bodyOutput;
+   boolean canSelfClose;
 
    public AbstractConditionBlock(Output output) {
       super(output);
       expressionOutput=new Output();
       bodyOutput=new Output();
+   }
+
+   public AbstractConditionBlock(Output output, boolean canSelfClose){
+      this(output);
+      this.canSelfClose=canSelfClose;
    }
 
    private boolean expectingVariableExpression=true;
@@ -47,6 +53,15 @@ public abstract class AbstractConditionBlock extends Production {
       characters.removeSpace();
 
       switch(characters.charAt(0)){
+      case '/':
+         if(expectingBodyStatements && canSelfClose && characters.charAt(1) == '}'){
+            characters.shift(2);
+            context.removeProduction();
+            return;
+         } else {
+            exc("Unexpected '/'");
+         }
+         break; 
       case '}':
          if(expectingBodyStatements){
             characters.shift(1);

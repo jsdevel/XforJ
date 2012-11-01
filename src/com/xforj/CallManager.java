@@ -17,20 +17,29 @@
 package com.xforj;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
- *
+ * CallManager provides a means to ensure that all called
+ * templates within a file have actually been declared.
  * @author Joseph Spencer
  */
-public class VariableOutput extends AbstractVariableOutput {
+public class CallManager {
+   private ArrayList<String> declaredTemplates = new ArrayList<>();
+   private ArrayList<String> calledTemplates = new ArrayList<>();
 
-   public VariableOutput() {
-      this(null);
+   public void addDeclaredTemplate(String declared){
+      declaredTemplates.add(declared);
    }
 
-   public VariableOutput(VariableOutput parentScope) {
-      super("var ", "__", "=", ";", parentScope); 
+   public void addCalledTemplate(String called){
+      calledTemplates.add(called);
+   }
+
+   public void validateCalls() throws Exception {
+      for(String call : calledTemplates){
+         if(!declaredTemplates.contains(call)){
+            throw new Exception(call+" has not been declared.");
+         }
+      }
    }
 }

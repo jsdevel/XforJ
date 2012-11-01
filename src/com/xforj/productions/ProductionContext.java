@@ -15,17 +15,18 @@
  */
 package com.xforj.productions;
 
+import com.xforj.CallManager;
 import com.xforj.CharWrapper;
 import com.xforj.JSArgumentsWrapper;
 import com.xforj.JSParameters;
 import com.xforj.JSParametersWrapper;
-import com.xforj.XforJ;
+import com.xforj.Output;
 import com.xforj.VariableOutput;
+import com.xforj.XforJ;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-import com.xforj.Output;
 
 /**
  *
@@ -38,15 +39,20 @@ public class ProductionContext {
 
    private String programNamespace="";
 
-   final public Output output = new Output();
+   //configuration
    final public boolean stripNewLines;
    final public boolean minifyHTML;
+   final public boolean assignTemplatesGlobally;
+
+   final public Output output = new Output();
    final private Map<String, Boolean> declaredNamespaces;
    final public String filePath;
    final private Map<String, Boolean> importedFiles;
    final private JSParametersWrapper paramsWrapper;
    final private JSArgumentsWrapper argsWrapper;
    final private JSParameters params;
+   final public CallManager callManager;
+   final public boolean isNested;
 
    public ProductionContext(
       String absoluteFilePath, 
@@ -55,24 +61,30 @@ public class ProductionContext {
       //at some point these need to be configurable.
       stripNewLines=true;
       minifyHTML=true;
-      if(previousContext!=null){
+      assignTemplatesGlobally=true;
+
+      isNested=previousContext!=null;
+
+      if(previousContext!=null){//imported context
          declaredNamespaces=previousContext.declaredNamespaces;
          importedFiles=previousContext.importedFiles;
-
+         
+         callManager=previousContext.callManager;
          //parameters
          params=previousContext.params;
          paramsWrapper=previousContext.paramsWrapper;
          argsWrapper=previousContext.argsWrapper;
       } else {
-         declaredNamespaces = new HashMap<String, Boolean>();
-         importedFiles = new HashMap<String, Boolean>();
+         declaredNamespaces = new HashMap();
+         importedFiles = new HashMap();
 
+         callManager = new CallManager();
          //parameters
          params=new JSParameters();
          paramsWrapper=new JSParametersWrapper(params);
          argsWrapper=new JSArgumentsWrapper(params);
       }
-      currentProduction= new Program(output, currentVariableOutput, this, previousContext!=null);
+      currentProduction= new Program(output, currentVariableOutput, this);
       productionStack.add(currentProduction);
       filePath=absoluteFilePath;
    }
@@ -89,10 +101,10 @@ public class ProductionContext {
    }
 
    //NAMESPACE
+   /*
+    * @param ns The namespace to set.
+    */
    public void setNS(String ns) throws Exception {
-      if(declaredNamespaces.containsKey(ns)){
-         throw new Exception("Namespace \""+ns+"\" has already been declared.");
-      }
       programNamespace=ns;
       declaredNamespaces.put(ns, true);
    }
@@ -155,6 +167,7 @@ public class ProductionContext {
 
    //CLOSING
    public void close() throws Exception {
+      callManager.validateCalls();
       int size = productionStack.size();
       for(int i = size-1;i>-1;i--){
          productionStack.get(i).close(this);

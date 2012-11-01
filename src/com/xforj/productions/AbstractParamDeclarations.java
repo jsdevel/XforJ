@@ -16,35 +16,32 @@
 
 package com.xforj.productions;
 
-import com.xforj.AbstractVariableOutput;
+import com.xforj.CharWrapper;
 import com.xforj.Output;
-import java.util.regex.*;
+import java.util.regex.Matcher;
 
 /**
  *
  * @author Joseph Spencer
  */
-public class GlobalVariableDeclaration extends AbstractVariableDeclaration {
-   public GlobalVariableDeclaration(AbstractVariableOutput output) {
+public abstract class AbstractParamDeclarations extends Production {
+   public AbstractParamDeclarations(Output output) {
       super(output);
    }
 
    @Override
-   protected Pattern getPattern() {
-      return VAR;
+   final public void execute(CharWrapper characters, ProductionContext context) throws Exception {
+      characters.removeSpace();
+      if(characters.charAt(0) == '{' && characters.charAt(1) == 'p'){
+         Matcher param = characters.match(PARAM);
+         if(param.find()){
+            context.addProduction(getParam());
+            return;
+         }
+      }
+      context.removeProduction();
    }
 
-   @Override
-   protected Production getProduction(Output output) {
-      return new GlobalVariableAssignment(output);
-   }
-
-   @Override
-   protected void doAssignment(String name, Output output) throws Exception {}
-
-   @Override
-   protected void doNoAssignment(String name, ProductionContext context) throws Exception {
-      context.getCurrentVariableOutput().add(name, "");
-   }
+   abstract protected Production getParam();
 
 }

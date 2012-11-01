@@ -14,23 +14,29 @@
  * limitations under the License.
  */
 
-package com.xforj;
+package com.xforj.productions;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
+import com.xforj.*;
 
 /**
  *
  * @author Joseph Spencer
  */
-public class VariableOutput extends AbstractVariableOutput {
-
-   public VariableOutput() {
-      this(null);
+public class CallParams extends AbstractParamDeclarations {
+   private final AbstractVariableOutput paramOutput;
+   public CallParams(Output output) {
+      super(output);
+      paramOutput = new AbstractVariableOutput(",{", "", ":", "}", null);
    }
 
-   public VariableOutput(VariableOutput parentScope) {
-      super("var ", "__", "=", ";", parentScope); 
+   private boolean expectingParam = true;
+
+   @Override
+   protected Production getParam() {
+      if(expectingParam){
+         expectingParam=false;
+         output.prepend(paramOutput);
+      }
+      return new CallParamDeclaration(paramOutput);
    }
 }

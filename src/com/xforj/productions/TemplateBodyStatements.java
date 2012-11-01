@@ -78,6 +78,15 @@ public class TemplateBodyStatements extends Production {
                output.prepend(statementOutput);
                return;
             }
+            match = characters.match(CALL);
+            if(match.find()){
+               characters.shift(match.group(1).length());
+               statementOutput= new Output();
+               context.addProduction(new CallStatement(statementOutput));
+               output.prepend(statementOutput);
+               return;
+            }
+
             break;
          case 'f':
             match = characters.match(FOREACH);

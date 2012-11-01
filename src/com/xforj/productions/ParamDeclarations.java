@@ -16,32 +16,23 @@
 
 package com.xforj.productions;
 
-import com.xforj.CharWrapper;
+import com.xforj.AbstractVariableOutput;
 import com.xforj.VariableOutput;
-import java.util.regex.Matcher;
 
 /**
  *
  * @author Joseph Spencer
  */
-public class ParamDeclarations extends Production {
-   VariableOutput variableOutput;
-   public ParamDeclarations(VariableOutput variableOutput) {
+public class ParamDeclarations extends AbstractParamDeclarations {
+   AbstractVariableOutput variableOutput;
+   public ParamDeclarations(AbstractVariableOutput variableOutput) {
       super(variableOutput);
       this.variableOutput=variableOutput;
    }
 
    @Override
-   public void execute(CharWrapper characters, ProductionContext context) throws Exception {
-      characters.removeSpace();
-      if(characters.charAt(0) == '{' && characters.charAt(1) == 'p'){
-         Matcher param = characters.match(PARAM);
-         if(param.find()){
-            context.addProduction(new ParamDeclaration(variableOutput));
-            return;
-         }
-      }
-      context.removeProduction();
+   protected Production getParam() {
+      return new ParamDeclaration(variableOutput);
    }
 
 }

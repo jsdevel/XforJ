@@ -32,50 +32,61 @@ public class ProgramNamespace extends Production {
 
    @Override
    public void execute(CharWrapper characters, ProductionContext context) throws Exception {
+      String extraExcMsg="";
       String chunk;
       if(characters.charAt(0) == '{'){
-         characters.shift(1);
+
          Matcher namespace = characters.match(NAMESPACE);
-
          if(namespace.find()){
-            characters.shift(9);
+            characters.shift(namespace.group(1).length());
 
-            if(characters.removeSpace()){
-               Matcher declaredNS = characters.match(NS);
+            Matcher declaredNS = characters.match(NS);
 
-               if(declaredNS.find()){
-                  chunk = declaredNS.group(1);
-                  characters.shift(chunk.length());
+            if(declaredNS.find()){
+               chunk = declaredNS.group(1);
+               characters.shift(chunk.length());
 
-                  String[] split = chunk.split("\\.");
-                  String builtNS="";
-                  int len = split.length;
+               context.setNS(chunk);
 
+               //only build the namespace if it hasn't been declared 
+               //already.
+               String[] split = chunk.split("\\.");
+               String nextNS="";
+               String currentNS=null;
 
-                  for(int i=0;i<len;i++){
-                     if(i==0){
-                        builtNS = split[i];
-                        output.prepend("var "+js_currentNS+";try{"+builtNS+"}catch(e){"+builtNS+"={}}");
-                     } else {
-                        builtNS+="."+split[i];
-                        output.prepend("if(!"+builtNS+")"+
-                           builtNS+"={};"
-                        );
-                     }
+               output.prepend("var "+js_currentNS+"="+js_TemplateBasket+";");
+
+               int len = split.length;
+               for(int i=0;i<len;i++){
+                  nextNS=split[i];
+
+                  if(currentNS == null){
+                     currentNS=nextNS;
+                  } else {
+                     currentNS+="."+nextNS;
                   }
-                  output.prepend(js_currentNS+"="+builtNS+";");
+                  context.setNS(currentNS);
 
-                  if(characters.charAt(0) == '}'){
-                     characters.shift(1);
-                     context.removeProduction();
-                     return;
-                  }
+                  output.prepend(
+                     js_currentNS+"="+js_currentNS+"."+nextNS+"||("+
+                     js_currentNS+"."+nextNS+"={});");
+
                }
-            }
 
+
+               if(characters.charAt(0) == '}'){
+                  characters.shift(1);
+                  context.removeProduction();
+                  return;
+               } else {
+                  extraExcMsg="  Invalid character found after namespace value.";
+               }
+            } else {
+               extraExcMsg="  Namespaces must appear first.";
+            }
          }
       }
-      throw new Exception("Invalid Namespace declaration.  Namespaces must begin with a lower case letter, and appear first.");
+      throw new Exception("Invalid Namespace declaration."+extraExcMsg);
    }
          //throw new Exception("Namespace already declared for this template");
 

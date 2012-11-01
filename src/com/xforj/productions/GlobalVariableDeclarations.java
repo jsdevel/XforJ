@@ -32,7 +32,7 @@ public class GlobalVariableDeclarations extends Production{
    void execute(CharWrapper characters, ProductionContext context) throws Exception {
       characters.removeSpace();
       if(characters.charAt(0) == '{' && characters.charAt(1) == 'v'){
-         context.addProduction(new GlobalVariableDeclaration(output));
+         context.addProduction(new GlobalVariableDeclaration(context.getCurrentVariableOutput()));
          return;
       }
       context.removeProduction();

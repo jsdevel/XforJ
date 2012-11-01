@@ -28,7 +28,9 @@ public interface Characters {
    Pattern CONTEXT_STATIC_REFINEMENT_NAMESPACE = Pattern.compile("^(\\s*+(?:[a-zA-Z$_][a-zA-Z0-9$_]*+\\s*+\\.)*+\\s*+[a-zA-Z$_][a-zA-Z0-9$_]*+\\s*).*+");
    Pattern IMPORT_PATH = Pattern.compile("^((?:/?(?:\\.\\./)?(?:[^/\\}]++/)*+)?[^/\\}]++).*+");
    Pattern INPUT_TOKENS = Pattern.compile("^([^\\{]++).*+");
-   Pattern NS = Pattern.compile("^([a-z][a-zA-Z0-9$_]*+(?:\\.[a-zA-Z$_][a-zA-Z0-9$_]*+)*+).*+");
+   Pattern NAME = Pattern.compile("^([a-zA-Z$_][a-zA-Z0-9$_]*+).*+");
+   Pattern NS = Pattern.compile("^([a-zA-Z0-9$_][a-zA-Z0-9$_]*+(?:\\.[a-zA-Z$_][a-zA-Z0-9$_]*+)*+).*+");
+   Pattern NS_FORCED = Pattern.compile("^([a-zA-Z0-9$_][a-zA-Z0-9$_]*+(?:\\.[a-zA-Z$_][a-zA-Z0-9$_]*+)++).*+");
    Pattern OPEN_BLOCK = Pattern.compile("^(\\{).*+");
    Pattern SORT_DIRECTION = Pattern.compile("^(asc|desc)(?![a-zA-Z0-9$_]).*+");
    Pattern SORT_MODIFIERS = Pattern.compile("^\\|([in]{1,2})(?![a-zA-Z0-9$_]).*+");
@@ -36,6 +38,8 @@ public interface Characters {
    Pattern SPACE_PRECEDING_CURLY = Pattern.compile("^(\\s++)(?=\\{).*+");
 
    //RESERVED WORDS
+   Pattern CALL = Pattern.compile("^(\\{call\\s++).*+");
+   Pattern CALL_CLOSING = Pattern.compile("^(\\{/call\\}).*+");
    Pattern CHOOSE = Pattern.compile("^(\\{choose\\}).*+");
    Pattern CHOOSE_CLOSING = Pattern.compile("^(\\{/choose\\}).*+");
    Pattern COUNT_FN = Pattern.compile("^(count\\().*+");
@@ -47,24 +51,20 @@ public interface Characters {
    Pattern IMPORT = Pattern.compile("^(import)(?=\\s).*+");
    Pattern LAST_FN = Pattern.compile("^(last\\(\\)).*+");
    Pattern NAME_FN = Pattern.compile("^(name\\(\\)).*+");
-   Pattern NAME = Pattern.compile("^([a-zA-Z$_][a-zA-Z0-9$_]*+).*+");
-   Pattern NAMESPACE = Pattern.compile("^(namespace)(?=\\s).*+");
+   Pattern NAMESPACE = Pattern.compile("^(\\{namespace\\s++).*+");
    Pattern OTHERWISE = Pattern.compile("^(\\{otherwise\\}).*+");
    Pattern OTHERWISE_CLOSING = Pattern.compile("^(\\{/otherwise\\}).*+");
+   Pattern PARAM = Pattern.compile("^(\\{param\\s++).*+");
    Pattern POSITION_FN = Pattern.compile("^(position\\(\\)).*+");
    Pattern SORT = Pattern.compile("^(\\{sort\\s++).*+");
-   Pattern TEMPLATE = Pattern.compile("^(template)(?=\\s|\\}).*+");
+   Pattern TEMPLATE = Pattern.compile("^(\\{template\\s++).*+");
    Pattern TEMPLATE_CLOSING = Pattern.compile("^(\\{/template\\})(?=\\s|\\}).*+");
    Pattern TEXT = Pattern.compile("^(\\{text\\}).*+");
    Pattern TEXT_CLOSING = Pattern.compile("^(\\{/text\\}).*+");
+   Pattern VAR = Pattern.compile("^(\\{var\\s++).*+");
    Pattern WHEN = Pattern.compile("^(\\{when\\s++).*+");
    Pattern WHEN_CLOSING = Pattern.compile("^(\\{/when\\}).*+");
 
-   //For now these two have the { at the beginning.  This probably needs to 
-   //change in the future, but for now it allows the other keywords to test
-   //directly on char rather than instantiating a Matcher.
-   Pattern PARAM = Pattern.compile("^(\\{param\\s++).*+");
-   Pattern VAR = Pattern.compile("^(\\{var\\s++).*+");
 
 
    //PRIMITIVES
@@ -92,10 +92,11 @@ public interface Characters {
    final String js__params="_params";
    final String js_position="position";
    final String js_StringBuffer="StringBuffer";
+   final String js_TemplateBasket="TemplateBasket";
    */
 
    /*MUNGED*/
-   final String js_bld="B";
+   final String js_bld="b";
    final String js_context="X";
    final String js_count="T";
    final String js_CountElements="C";
@@ -105,10 +106,11 @@ public interface Characters {
    final String js_foreach="F";
    final String js_GetSortArray="G";
    final String js_last="L";
-   final String js_name="N";
+   final String js_name="n";
    final String js_params="P";
    final String js__params="M";
    final String js_position="O";
    final String js_StringBuffer="S";
+   final String js_TemplateBasket="B";
    /**/
 }

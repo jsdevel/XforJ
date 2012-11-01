@@ -16,6 +16,7 @@
 
 package com.xforj.productions;
 
+import com.xforj.*;
 import com.xforj.Output;
 import java.util.regex.*;
 
@@ -24,7 +25,7 @@ import java.util.regex.*;
  * @author Joseph Spencer
  */
 public class VariableDeclaration extends AbstractVariableDeclaration {
-   public VariableDeclaration(Output output) {
+   public VariableDeclaration(AbstractVariableOutput output) {
       super(output);
    }
    
