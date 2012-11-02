@@ -29,7 +29,6 @@ public class XforJ implements Characters {
    //Exit codes
    public static final int UNABLE_TO_PARSE_FILE=1;
    public static final int IO_Error=2;
-   public static final String PWD = System.getProperty("user.dir");
 
    /**
     * @param args the command line arguments
@@ -43,8 +42,8 @@ public class XforJ implements Characters {
          return;
       }
 
-      String inPath = getPathToUse(args[0]);
-      String outPath = getPathToUse(args[1]);
+      String inPath = MainUtil.getPathToUse(args[0]);
+      String outPath = MainUtil.getPathToUse(args[1]);
 
 
       long before = new Date().getTime();
@@ -97,15 +96,5 @@ public class XforJ implements Characters {
          message+="\n"+wrapper.getErrorLocation();
       }
       LOGGER.out(message);
-   }
-
-   private static String getPathToUse(String path){
-      String pathToUse;
-      if(path.startsWith("/")){
-         pathToUse = path;
-      } else {
-         pathToUse = PWD+"/"+path;
-      }
-      return pathToUse;
    }
 }

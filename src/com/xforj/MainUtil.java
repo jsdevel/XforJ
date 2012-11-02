@@ -148,4 +148,22 @@ public class MainUtil {
 
       return files;
    }
+
+   /**
+    * Useful for handling user supplied paths to resources, which can be both
+    * relative and absolute.
+    * 
+    * @param path
+    * @return An absolute path.  The resulting path is not normalized, so ../ 
+    * ./ is maintained.
+    */
+   public static String getPathToUse(String path){
+      String pathToUse;
+      if(path.startsWith("/")){
+         pathToUse = path;
+      } else {
+         pathToUse = System.getProperty("user.dir")+"/"+path;
+      }
+      return pathToUse;
+   }
 }
