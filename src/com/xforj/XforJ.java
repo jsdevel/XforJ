@@ -15,6 +15,7 @@
  */
 package com.xforj;
 
+import com.xforj.arguments.*;
 import com.xforj.productions.ProductionContext;
 import java.io.*;
 import java.util.ArrayList;
@@ -42,20 +43,24 @@ public class XforJ implements Characters {
          return;
       }
 
-      String inPath = MainUtil.getPathToUse(args[0]);
-      String outPath = MainUtil.getPathToUse(args[1]);
-
-
-      long before = new Date().getTime();
-      LOGGER.out("Compiling:  "+inPath);
-      String output = compileFile(inPath, null).toString(); 
-      LOGGER.out("Time taken: "+Long.toString(new Date().getTime() - before));
-
-      LOGGER.out("Outputting: "+outPath);
       try {
+         XforJTerminal arguments = new XforJTerminal(args);
+
+         File input = arguments.getInputfile();
+         String inPath = input.getAbsolutePath();
+
+         File out = arguments.getOutputfile();
+         String outPath = out.getAbsolutePath();
+
+         long before = new Date().getTime();
+         LOGGER.out("Compiling:  "+input.getAbsolutePath());
+         String output = compileFile(inPath, null).toString(); 
+         LOGGER.out("Time taken: "+Long.toString(new Date().getTime() - before));
+
+         LOGGER.out("Outputting: "+outPath);
          MainUtil.putString(new File(outPath), output);
-      } catch(IOException ex) {
-         LOGGER.out("Something happened while attempting to wrtie to: "+outPath);
+      } catch(Exception ex) {
+         LOGGER.out("FAILED FOR THE FOLLOWING REASON:\n");
          LOGGER.out(ex.getMessage());
       }
 
