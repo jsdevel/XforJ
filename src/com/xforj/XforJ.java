@@ -35,14 +35,6 @@ public class XforJ implements Characters {
     * @param args the command line arguments
     */
    public static void main(String[] args) {
-      if(args.length < 2){
-         LOGGER.out("\n\u00A9 Joseph Spencer.  Licensed under the Apache 2.0 License.\n"+
-                     "Visit http://www.xforj.com for more info.");
-         LOGGER.out("Usage:    java -jar XforJ.x.x.x.jar template output");
-         LOGGER.out("Example:  java -jar XforJ.x.x.x.jar /my/template/file.html /my/template/output.js");
-         return;
-      }
-
       try {
          XforJTerminal arguments = new XforJTerminal(args);
 

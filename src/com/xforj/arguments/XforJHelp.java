@@ -1,0 +1,6 @@
+package com.xforj.arguments;
+
+public class XforJHelp {
+   public static String getHelpMenu(){
+return "TITLE\n   XforJ A Javascript Template Compiler \n\nCOPYRIGHT\n   © 2012 Joseph Spencer \n\nLICENSE\n   http://www.apache.org/licenses/LICENSE-2.0 \n\nDESCRIPTION\n   XforJ combines the elegance of javascript and the power of XSL elements to \n   produce compiled javascript templates. You compose templates in a hybird \n   grammar and compile that down to javascript. \n\n   Visit http://www.xforj.com for more info. \n\nEXAMPLE\n   java -jar XforJ.x.x.x.jar --input-file /my/template/file.html \n   --output-directory /my/template/output.js \n\nARGUMENTS\n   REQUIRED\n      --input-file\n         A pre-compiled XforJ template file. \n\n   OPTIONAL\n      --output-file\n         The file where the compiled template will be placed. \n\n      --minify-html\n         When enabled, space is removed before and after all '<>'. \n\n      --assign-to-global\n         When enabled, all templates are assigned to the global object. When disabled, a \n         new object if returned from the entire XforJ program. In this scenario, a \n         mechanism such as eval must be used to capture the returned object to gain \n         access to the defined templates. \n\n      --strip-new-lines\n         Replace all new line characters with ''. \n\n";   }
+}
