@@ -81,12 +81,16 @@ GlobalVariableValue:
    'false'
 
 Operator:
+   '<='
+   '>='
    '=='
    '==='
    '!='
    '!=='
    '||'
    '&&'
+   '<'
+   '>'
    '+'
    '-'
    '%'
