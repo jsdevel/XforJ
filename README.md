@@ -1,8 +1,6 @@
 XforJ
 ===
 
-Porting XSL to Javascript
+A Template to Javascript Compiler, that borrows from XSL.
 
-The goal of XforJ is to provide the powerful templating language capabilities
-of XSL without all that 'verboseness' that usually comes with XML related 
-technologies.
+For more information, visit http://www.xforj.com.
