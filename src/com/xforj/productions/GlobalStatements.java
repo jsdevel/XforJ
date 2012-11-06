@@ -44,10 +44,9 @@ public class GlobalStatements extends Production {
    }
 
    @Override
-   public void close(ProductionContext context){
+   public void close(ProductionContext context) throws Exception {
       if(!hasStatements){
-         LOGGER.warn("No Statements found in: \""+context.filePath+"\".");
+         context.handleFileWarning("No Statements found in: ");
       }
    }
-
 }

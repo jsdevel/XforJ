@@ -39,23 +39,28 @@ public class ImportStatement extends Production {
             characters.removeSpace();
             Matcher path = characters.match(IMPORT_PATH);
             if(path.find()){
-               String pth = path.group(1);
-               //handle importing new Programs
-               characters.shift(pth.length());
+               String importedPath = path.group(1);
+               characters.shift(importedPath.length());
+
+               //we do this to ensure that we aren't building on the file to import, but
+               //rather the file to import's directory.
+               String newPath;
+               if(importedPath.charAt(0) == '/'){
+                  newPath = importedPath;
+               } else {
+                  Matcher absPath = ABSOLUTE_PATH.matcher(context.currentFile.getCanonicalPath());
+                  if(absPath.find()){
+                     newPath = absPath.group(1)+importedPath;
+                  } else {
+                     throw new Exception("Invalid Path given in: "+importedPath);
+                  }
+               }
+
                if(characters.charAt(0) == '}'){
                   characters.shift(1);
-                  String newPath;
-                  if(pth.charAt(0) == '/'){
-                     newPath = pth;
-                  } else {
-                     Matcher absPath = ABSOLUTE_PATH.matcher(context.filePath);
-                     if(absPath.find()){
-                        newPath = absPath.group(1)+pth;
-                     } else {
-                        throw new Exception("Invalid Absolute Path given in: "+pth);
-                     }
-                  }
-                  output.prepend(context.importFile(newPath, true));
+
+
+                  output.prepend(context.importFile(newPath));
                   return;
                }
             }

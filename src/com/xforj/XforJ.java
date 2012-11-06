@@ -36,36 +36,50 @@ public class XforJ implements Characters {
     */
    public static void main(String[] args) {
       try {
-         XforJArguments arguments = XforJTerminal.getArguments(args);
+         startCompiling(XforJTerminal.getArguments(args));
+      } catch(Exception exc) {
+         handleGeneralError(exc);
+      }
 
+   }
+
+   private static void handleGeneralError(Exception exc){
+      LOGGER.out("FAILED FOR THE FOLLOWING REASON:\n");
+      LOGGER.out(exc.getMessage());
+      System.exit(UNABLE_TO_PARSE_FILE);
+   }
+
+   public static void startCompiling(XforJArguments arguments) throws Exception {
+      try {
          File input = arguments.getInputfile();
-         String inPath = input.getAbsolutePath();
 
          File out = arguments.getOutputfile();
          String outPath = out.getAbsolutePath();
 
          long before = new Date().getTime();
          LOGGER.out("Compiling:  "+input.getAbsolutePath());
-         String output = compileFile(inPath, null).toString(); 
+         String output = compileFile(input, new ProductionContext(input, arguments)).toString(); 
          LOGGER.out("Time taken: "+Long.toString(new Date().getTime() - before));
 
          LOGGER.out("Outputting: "+outPath);
          MainUtil.putString(new File(outPath), output);
-      } catch(Exception ex) {
-         LOGGER.out("FAILED FOR THE FOLLOWING REASON:\n");
-         LOGGER.out(ex.getMessage());
+      } catch(Exception exc) {
+         handleGeneralError(exc);
       }
-
    }
 
-   public static Output compileFile(String path, ProductionContext previousContext) {
-      File testFile = new File(path);
+   /**
+    * This is for internal use by the compiler.
+    * 
+    * @param path Passed by import statements
+    * @param previousContext
+    * @return
+    */
+   public static Output compileFile(File fileToCompile, ProductionContext context) {
       CharWrapper wrapper=null;
 
       try{
-         String absoluteFilePath = testFile.getCanonicalPath();
-         ProductionContext context = new ProductionContext(absoluteFilePath, previousContext);
-         char[] chars=MainUtil.getChars(testFile);
+         char[] chars=MainUtil.getChars(fileToCompile);
 
          CharWrapper characters = new CharWrapper(chars);
          wrapper=characters;
@@ -75,10 +89,10 @@ public class XforJ implements Characters {
          context.close();
          return context.output;
       } catch(IOException exc){
-         logException(testFile, exc, null);
+         logException(fileToCompile, exc, null);
          System.exit(IO_Error);
       } catch(Exception exc){
-         logException(testFile, exc, wrapper);
+         logException(fileToCompile, exc, wrapper);
          System.exit(UNABLE_TO_PARSE_FILE);
       }
       return null;

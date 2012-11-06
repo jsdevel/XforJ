@@ -20,9 +20,11 @@ import com.xforj.CharWrapper;
 import com.xforj.JSArgumentsWrapper;
 import com.xforj.JSParameters;
 import com.xforj.JSParametersWrapper;
+import com.xforj.LOGGER;
 import com.xforj.Output;
 import com.xforj.VariableOutput;
 import com.xforj.XforJ;
+import com.xforj.arguments.*;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -46,47 +48,55 @@ public class ProductionContext {
 
    final public Output output = new Output();
    final private Map<String, Boolean> declaredNamespaces;
-   final public String filePath;
+   final public File currentFile;
    final private Map<String, Boolean> importedFiles;
    final private JSParametersWrapper paramsWrapper;
    final private JSArgumentsWrapper argsWrapper;
    final private JSParameters params;
    final public CallManager callManager;
-   final public boolean isNested;
 
    public ProductionContext(
-      String absoluteFilePath, 
+      File currentFile, 
+      XforJArguments arguments
+   ){
+      stripNewLines=arguments.getStripnewlines();
+      minifyHTML=arguments.getMinifyhtml();
+      assignTemplatesGlobally=arguments.getAssigntoglobal();
+
+      declaredNamespaces = new HashMap();
+      importedFiles = new HashMap();
+
+      callManager = new CallManager();
+      //parameters
+      params=new JSParameters();
+      paramsWrapper=new JSParametersWrapper(params);
+      argsWrapper=new JSArgumentsWrapper(params);
+
+      currentProduction= new Program(output, currentVariableOutput, this, false);
+      productionStack.add(currentProduction);
+      this.currentFile = currentFile;
+   }
+
+   public ProductionContext(
+      File currentFile, 
       ProductionContext previousContext
    ){
-      //at some point these need to be configurable.
-      stripNewLines=true;
-      minifyHTML=true;
-      assignTemplatesGlobally=true;
+      stripNewLines=previousContext.stripNewLines;
+      minifyHTML=previousContext.minifyHTML;
+      assignTemplatesGlobally=previousContext.assignTemplatesGlobally;
 
-      isNested=previousContext!=null;
+      declaredNamespaces=previousContext.declaredNamespaces;
+      importedFiles=previousContext.importedFiles;
+      
+      callManager=previousContext.callManager;
+      //parameters
+      params=previousContext.params;
+      paramsWrapper=previousContext.paramsWrapper;
+      argsWrapper=previousContext.argsWrapper;
 
-      if(previousContext!=null){//imported context
-         declaredNamespaces=previousContext.declaredNamespaces;
-         importedFiles=previousContext.importedFiles;
-         
-         callManager=previousContext.callManager;
-         //parameters
-         params=previousContext.params;
-         paramsWrapper=previousContext.paramsWrapper;
-         argsWrapper=previousContext.argsWrapper;
-      } else {
-         declaredNamespaces = new HashMap();
-         importedFiles = new HashMap();
-
-         callManager = new CallManager();
-         //parameters
-         params=new JSParameters();
-         paramsWrapper=new JSParametersWrapper(params);
-         argsWrapper=new JSArgumentsWrapper(params);
-      }
-      currentProduction= new Program(output, currentVariableOutput, this);
+      this.currentFile=currentFile;
+      currentProduction= new Program(output, currentVariableOutput, this, true);
       productionStack.add(currentProduction);
-      filePath=absoluteFilePath;
    }
 
    //Parameters
@@ -113,8 +123,7 @@ public class ProductionContext {
    }
 
    //IMPORTS
-   public Output importFile(String path, boolean imported) throws Exception {
-
+   public Output importFile(String path) throws Exception {
       File targetFile = new File(path);
       String absolutePath = targetFile.getCanonicalPath();
 
@@ -122,7 +131,7 @@ public class ProductionContext {
          return new Output();
       }
       importedFiles.put(absolutePath, true);
-      return XforJ.compileFile(path, this);
+      return XforJ.compileFile(targetFile, new ProductionContext(targetFile, this));
    }
 
    //PRODUCTIONS
@@ -172,5 +181,12 @@ public class ProductionContext {
       for(int i = size-1;i>-1;i--){
          productionStack.get(i).close(this);
       }
+   }
+
+   //ERRORS AND WARNINGS
+   public void handleFileError(String msg) throws Exception {
+   }
+   public void handleFileWarning(String msg) throws Exception {
+      LOGGER.warn(msg+currentFile.getCanonicalPath()+"\".");
    }
 }

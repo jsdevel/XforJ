@@ -36,7 +36,8 @@ public class Program extends Production {
    public Program(
       Output output, 
       VariableOutput currentVariableOutput, 
-      ProductionContext context
+      ProductionContext context,
+      boolean isNested
    ){
       super(output);
       programNamespaceOutput=new Output();
@@ -55,7 +56,7 @@ public class Program extends Production {
                prepend(globalStatementsOutput).
             prepend("})(").prepend(globalParamNames).prepend(");");
 
-      if(context.isNested){
+      if(isNested){
          output.prepend("})(").prepend(globalParamNames).prepend(");");
       } else {
          output.prepend("return "+js_TemplateBasket+"})(").prepend(context.getArgumentsWrapper()).prepend(");");
@@ -128,7 +129,7 @@ public class Program extends Production {
    @Override
    public void close(ProductionContext context) throws Exception {
       if(!hasProgramNamespace){
-         throw new Exception("No ProgramNamespace was declared in: \""+context.filePath+"\"");
+         context.handleFileError("No ProgramNamespace was declared in: ");
       }
    }
 }
