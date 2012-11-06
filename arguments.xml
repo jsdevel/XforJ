@@ -58,7 +58,7 @@ Visit http://www.xforj.com for more info.
    
    <argument
       name="--assign-to-global"
-      description="When enabled, all templates are assigned to the global object.  When disabled, a new object if returned from the entire XforJ program.  In this scenario, a mechanism such as eval must be used to capture the returned object to gain access to the defined templates."
+      description="When enabled, all templates are assigned to the global object.  When disabled, a new object is returned from the entire XforJ program.  In this scenario, a mechanism such as eval must be used to capture the returned object to gain access to the defined templates."
       default="true"
       type="boolean"
       />
