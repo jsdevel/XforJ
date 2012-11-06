@@ -11,15 +11,23 @@ public class XforJTask extends Task {
    private boolean minifyhtml=true;
    private boolean assigntoglobal=true;
    private boolean stripnewlines=true;
+   private boolean debug=false;
+   private boolean warn=false;
    @Override
    public void execute() throws BuildException {
-      com.xforj.XforJ.startCompiling(new XforJArguments(
-         inputfile,
-         outputfile,
-         minifyhtml,
-         assigntoglobal,
-         stripnewlines
-      ));
+      try {
+         com.xforj.XforJ.startCompiling(new XforJArguments(
+            inputfile,
+            outputfile,
+            minifyhtml,
+            assigntoglobal,
+            stripnewlines,
+            debug,
+            warn
+         ));
+      } catch (Exception exc) {
+         throw new BuildException(exc.getMessage());
+      }
    }
 
    public void setInputfile(File inputfile){
@@ -36,5 +44,11 @@ public class XforJTask extends Task {
    }
    public void setStripnewlines(boolean stripnewlines){
       this.stripnewlines=stripnewlines;
+   }
+   public void setDebug(boolean debug){
+      this.debug=debug;
+   }
+   public void setWarn(boolean warn){
+      this.warn=warn;
    }
 }

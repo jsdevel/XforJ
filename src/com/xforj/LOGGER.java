@@ -20,9 +20,8 @@ package com.xforj;
  * @author Joseph Spencer
  */
 public class LOGGER {
-   //TODO make this configurable
-   public static boolean debug = true;
-   public static boolean warn = true;
+   public static boolean debug;
+   public static boolean warn;
 
    public static void out(Object message){
       System.out.println(message);
@@ -31,13 +30,12 @@ public class LOGGER {
 
    public static void debug(Object message){
       if(debug){
-         System.out.println(message);
-         System.out.println("");
+         System.out.println("Debug: "+message);
       }
    }
    public static void warn(Object message){
       if(warn){
-         out(message);
+         out(" Warn: "+message);
       }
    }
 }

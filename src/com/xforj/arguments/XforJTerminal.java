@@ -11,6 +11,8 @@ public class XforJTerminal {
       boolean minifyhtml=true;
       boolean assigntoglobal=true;
       boolean stripnewlines=true;
+      boolean debug=false;
+      boolean warn=false;
       if(__showHelpOnNoArgs && args.length == 0){
          System.out.print(XforJHelp.getHelpMenu());
          System.exit(0);
@@ -42,6 +44,14 @@ public class XforJTerminal {
             stripnewlines = getBoolean(val);
             continue;
          }
+         if("--debug".equals(key)){
+            debug = getBoolean(val);
+            continue;
+         }
+         if("--warn".equals(key)){
+            warn = getBoolean(val);
+            continue;
+         }
       }
       if(i - len != 0){
          throw new IllegalArgumentException("An even number of arguments must be given.");
@@ -51,7 +61,9 @@ public class XforJTerminal {
             outputfile,
             minifyhtml,
             assigntoglobal,
-            stripnewlines
+            stripnewlines,
+            debug,
+            warn
          );
       }
    public static final String getPath(String path){

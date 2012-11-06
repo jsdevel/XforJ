@@ -46,6 +46,7 @@ Visit http://www.xforj.com for more info.
       name="--output-file"
       description="The file where the compiled template will be placed."
       overwrite="true"
+      required="true"
       type="file"
       />
 
@@ -70,4 +71,15 @@ Visit http://www.xforj.com for more info.
       type="boolean"
       />
 
+   <argument
+      name="--debug"
+      description="Turns on debugging."
+      type="boolean"
+      />
+
+   <argument
+      name="--warn"
+      description="Turns on run time warnings."
+      type="boolean"
+      />
 </arguments>

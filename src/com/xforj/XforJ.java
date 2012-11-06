@@ -51,10 +51,23 @@ public class XforJ implements Characters {
 
    public static void startCompiling(XforJArguments arguments) {
       try {
+         if(arguments.getDebug()){
+            LOGGER.debug = true;
+         }
+
+         if(arguments.getWarn()){
+            LOGGER.warn = true;
+         }
+
+
+         LOGGER.debug("startCompiling called.");
+
          File input = arguments.getInputfile();
 
          File out = arguments.getOutputfile();
          String outPath = out.getAbsolutePath();
+
+         LOGGER.debug("startCompiling: outPath="+outPath);
 
          long before = new Date().getTime();
          LOGGER.out("Compiling:  "+input.getAbsolutePath());
