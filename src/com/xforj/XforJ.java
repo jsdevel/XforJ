@@ -36,7 +36,7 @@ public class XforJ implements Characters {
     */
    public static void main(String[] args) {
       try {
-         XforJTerminal arguments = new XforJTerminal(args);
+         XforJArguments arguments = XforJTerminal.getArguments(args);
 
          File input = arguments.getInputfile();
          String inPath = input.getAbsolutePath();
