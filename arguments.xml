@@ -17,6 +17,7 @@ limitations under the License.
 
 
 <arguments 
+   antcallback="com.xforj.XforJ.startCompiling"
    class="XforJ" 
    copyright="2012 Joseph Spencer"
    description="

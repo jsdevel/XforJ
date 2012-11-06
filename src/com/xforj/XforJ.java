@@ -49,7 +49,7 @@ public class XforJ implements Characters {
       System.exit(UNABLE_TO_PARSE_FILE);
    }
 
-   public static void startCompiling(XforJArguments arguments) throws Exception {
+   public static void startCompiling(XforJArguments arguments) {
       try {
          File input = arguments.getInputfile();
 
