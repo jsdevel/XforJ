@@ -18,9 +18,9 @@ package com.xforj;
 import com.xforj.arguments.*;
 import com.xforj.productions.ProductionContext;
 import java.io.*;
-import java.util.ArrayList;
+import java.util.*;
 import java.util.Date;
-import java.util.logging.*;
+import java.util.Iterator;
 
 /**
  *
@@ -36,7 +36,15 @@ public class XforJ implements Characters {
     */
    public static void main(String[] args) {
       try {
-         startCompiling(XforJTerminal.getArguments(args));
+         XforJArguments arguments = XforJTerminal.getArguments(args);
+
+         if(!arguments.hasInputfile() && !arguments.hasOutputfile()){
+            throw new Exception("Both an input file and an output file must be given.");
+         }
+
+         long before = new Date().getTime();
+         startCompiling(arguments);
+         LOGGER.out("Time taken: "+Long.toString(new Date().getTime() - before));
       } catch(Exception exc) {
          handleGeneralError(exc);
       }
@@ -49,12 +57,17 @@ public class XforJ implements Characters {
       System.exit(UNABLE_TO_PARSE_FILE);
    }
 
+
+   /**
+    * This is the main entry point to XforJ from the ant task.
+    * 
+    * @param arguments
+    */
    public static void startCompiling(XforJArguments arguments) {
       try {
          if(arguments.getDebug()){
             LOGGER.debug = true;
          }
-
          if(arguments.getWarn()){
             LOGGER.warn = true;
          }
@@ -62,22 +75,83 @@ public class XforJ implements Characters {
 
          LOGGER.debug("startCompiling called.");
 
-         File input = arguments.getInputfile();
+         if(//make sure there is input to process before proceeding.
+            arguments.hasInputfile()
+            || arguments.hasInputfiles()
+         ){
+            if(arguments.hasInputfile()){
+               File input = arguments.getInputfile();
+               if(arguments.hasOutputfile()){
+                  compileNewFile(input, arguments.getOutputfile(), arguments);
+               } else if(arguments.hasOutputdirectory()){
+                  String outputDir = arguments.getOutputdirectory().getCanonicalPath();
+                  if(!outputDir.endsWith(File.separator)){
+                     outputDir+=File.separator;
+                  }
+                  String outputFilePath = outputDir+input.getName();
+                  File outputFile = new File(outputFilePath);
 
-         File out = arguments.getOutputfile();
-         String outPath = out.getAbsolutePath();
+                  compileNewFile(input, outputFile, arguments);
+               } else {
+                  throw new IllegalArgumentException("No target given for input file.");
+               }
 
-         LOGGER.debug("startCompiling: outPath="+outPath);
+            }
 
-         long before = new Date().getTime();
-         LOGGER.out("Compiling:  "+input.getAbsolutePath());
-         String output = compileFile(input, new ProductionContext(input, arguments)).toString(); 
-         LOGGER.out("Time taken: "+Long.toString(new Date().getTime() - before));
+            if(arguments.hasInputfiles()){
+               if(arguments.hasOutputdirectory() && arguments.hasInputdirectory()){
+                  String inputDirectoryPath = arguments.getInputdirectory().getCanonicalPath();
+                  String outputDirectoryPath = arguments.getOutputdirectory().getCanonicalPath();
 
-         LOGGER.out("Outputting: "+outPath);
-         MainUtil.putString(new File(outPath), output);
+                  if(!inputDirectoryPath.endsWith(File.separator)){
+                     inputDirectoryPath+=File.separator;
+                  }
+                  if(!outputDirectoryPath.endsWith(File.separator)){
+                     outputDirectoryPath+=File.separator;
+                  }
+
+                  LOGGER.debug("inputDirectoryPath: "+inputDirectoryPath);
+                  LOGGER.debug("outputDirectoryPath: "+outputDirectoryPath);
+
+                  Iterator<File> files = arguments.getInputfiles().iterator(); 
+                  while(files.hasNext()){
+                     File next = files.next();
+                     String fileName = next.getName();
+                     String compiledFilePath = next.getCanonicalPath();
+
+                     LOGGER.debug("fileName: "+fileName);
+                     LOGGER.debug("outputPath: "+compiledFilePath);
+
+
+                     compiledFilePath = compiledFilePath.replace(inputDirectoryPath, outputDirectoryPath);
+
+                     LOGGER.debug("new outputPath: "+compiledFilePath);
+
+                     compileNewFile(next, new File(compiledFilePath), arguments);
+                  }
+               } else {
+                  throw new IllegalArgumentException("Both outputdirectory and inputdirectory must be given as attributes when using filesets.");
+               }
+            }
+         } else {
+            LOGGER.out("No input file[s] were given.  Exiting early.");
+         }
       } catch(Exception exc) {
          handleGeneralError(exc);
+      }
+   }
+
+   private static Set<File> compiledNewFiles = new HashSet(Arrays.asList(new File[]{}));
+   private static void compileNewFile(File input, File outFile, XforJArguments arguments) throws Exception {
+      if(compiledNewFiles.contains(input)){
+         LOGGER.out("Ignoring: "+input.getCanonicalPath()+".  It has already been built.");
+      } else {
+         compiledNewFiles.add(input);
+         String output = compileFile(input, new ProductionContext(input, arguments)).toString();
+         MainUtil.putString(outFile, output);
+
+         LOGGER.out("Compiled: "+input.getCanonicalPath());
+         LOGGER.out("To: "+outFile.getCanonicalPath());
       }
    }
 

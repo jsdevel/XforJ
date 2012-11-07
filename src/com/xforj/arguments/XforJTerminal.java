@@ -1,13 +1,17 @@
 package com.xforj.arguments;
 
 import java.io.File;
-
+import java.util.List;
 public class XforJTerminal {
    private static final boolean __showHelpOnNoArgs=true;
 
    public static XforJArguments getArguments(String[] args) throws IllegalArgumentException {
       File inputfile=null;
       File outputfile=null;
+      File outputdirectory=null;
+      File inputdirectory=null;
+      List<File> inputfiles=null;
+      boolean overwrite=false;
       boolean minifyhtml=true;
       boolean assigntoglobal=true;
       boolean stripnewlines=true;
@@ -32,6 +36,20 @@ public class XforJTerminal {
             outputfile = new File(newPath);
             continue;
          }
+         if("--output-directory".equals(key)){
+            String newPath = getPath(val);
+            outputdirectory = new File(newPath);
+            continue;
+         }
+         if("--input-directory".equals(key)){
+            String newPath = getPath(val);
+            inputdirectory = new File(newPath);
+            continue;
+         }
+         if("--overwrite".equals(key)){
+            overwrite = getBoolean(val);
+            continue;
+         }
          if("--minify-html".equals(key)){
             minifyhtml = getBoolean(val);
             continue;
@@ -52,6 +70,7 @@ public class XforJTerminal {
             warn = getBoolean(val);
             continue;
          }
+         throw new IllegalArgumentException("Unknown argument: "+key);
       }
       if(i - len != 0){
          throw new IllegalArgumentException("An even number of arguments must be given.");
@@ -59,13 +78,17 @@ public class XforJTerminal {
       return new XforJArguments(
             inputfile,
             outputfile,
+            outputdirectory,
+            inputdirectory,
+            inputfiles,
+            overwrite,
             minifyhtml,
             assigntoglobal,
             stripnewlines,
             debug,
             warn
-         );
-      }
+      );
+   }
    public static final String getPath(String path){
       String pathToUse;
       if(path.startsWith("/")){
@@ -84,4 +107,4 @@ public class XforJTerminal {
       }
       return false;
    }
-   }
+}

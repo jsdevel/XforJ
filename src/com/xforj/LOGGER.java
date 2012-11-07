@@ -25,7 +25,6 @@ public class LOGGER {
 
    public static void out(Object message){
       System.out.println(message);
-      System.out.println("");
    }
 
    public static void debug(Object message){
