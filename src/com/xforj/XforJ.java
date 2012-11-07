@@ -141,10 +141,12 @@ public class XforJ implements Characters {
       }
    }
 
-   private static Set<File> compiledNewFiles = new HashSet(Arrays.asList(new File[]{}));
+   private static Set<String> compiledNewFiles = new HashSet(Arrays.asList(new String[]{}));
    private static void compileNewFile(File input, File outFile, XforJArguments arguments) throws Exception {
       String inputFilePath = input.getCanonicalPath();
       String outputFilePath = outFile.getCanonicalPath();
+      
+      String compiledKey = inputFilePath+":"+outputFilePath;//used to avoid redundant building
 
       if(!arguments.getOverwrite() && outFile.exists()){
          LOGGER.out("Can't overwrite the following file: "+outputFilePath);
@@ -152,10 +154,10 @@ public class XforJ implements Characters {
          return;
       }
 
-      if(compiledNewFiles.contains(input)){
-         LOGGER.out("Ignoring: "+inputFilePath+".  It has already been built.");
+      if(compiledNewFiles.contains(compiledKey)){
+         LOGGER.out("Ignoring: "+compiledKey+".\n   It has already been built.");
       } else {
-         compiledNewFiles.add(input);
+         compiledNewFiles.add(compiledKey);
          String output = compileFile(input, new ProductionContext(input, arguments)).toString();
          MainUtil.putString(outFile, output);
 
