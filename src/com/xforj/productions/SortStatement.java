@@ -57,7 +57,7 @@ public class SortStatement extends Production {
                      "r.push({"+
                         "n:a,"+
                         "c:o[a],"+
-                        "k:\"\""+
+                        "k:''"+
                      "});"+
                   "}"+
                "}"+

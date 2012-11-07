@@ -59,7 +59,14 @@ public class Program extends Production {
       if(isNested){
          output.prepend("})(").prepend(globalParamNames).prepend(");");
       } else {
-         output.prepend("return "+js_TemplateBasket+"})(").prepend(context.getArgumentsWrapper()).prepend(");");
+         if(!context.assignTemplatesGlobally){
+            output.prepend("return "+js_TemplateBasket);
+         }
+
+         output.
+         prepend("})(").
+            prepend(context.getArgumentsWrapper()).
+         prepend(");");
          globalParams.put(js_StringBuffer, 
             //StringBuffer
             "function(){"+
