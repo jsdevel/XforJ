@@ -44,7 +44,7 @@ public class XforJ implements Characters {
 
          long before = new Date().getTime();
          startCompiling(arguments);
-         LOGGER.out("Time taken: "+Long.toString(new Date().getTime() - before));
+         LOGGER.out("Time taken: "+Long.toString(new Date().getTime() - before) + "ms");
       } catch(Exception exc) {
          handleGeneralError(exc);
       }
@@ -143,15 +143,24 @@ public class XforJ implements Characters {
 
    private static Set<File> compiledNewFiles = new HashSet(Arrays.asList(new File[]{}));
    private static void compileNewFile(File input, File outFile, XforJArguments arguments) throws Exception {
+      String inputFilePath = input.getCanonicalPath();
+      String outputFilePath = outFile.getCanonicalPath();
+
+      if(!arguments.getOverwrite() && outFile.exists()){
+         LOGGER.out("Can't overwrite the following file: "+outputFilePath);
+         LOGGER.out("Specify overwrite in the arguments to change this.");
+         return;
+      }
+
       if(compiledNewFiles.contains(input)){
-         LOGGER.out("Ignoring: "+input.getCanonicalPath()+".  It has already been built.");
+         LOGGER.out("Ignoring: "+inputFilePath+".  It has already been built.");
       } else {
          compiledNewFiles.add(input);
          String output = compileFile(input, new ProductionContext(input, arguments)).toString();
          MainUtil.putString(outFile, output);
 
-         LOGGER.out("Compiled: "+input.getCanonicalPath());
-         LOGGER.out("To: "+outFile.getCanonicalPath());
+         LOGGER.out("Compiled: "+inputFilePath);
+         LOGGER.out("To: "+outputFilePath);
       }
    }
 

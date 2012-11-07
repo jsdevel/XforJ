@@ -26,7 +26,7 @@ public interface Characters {
    Pattern ABSOLUTE_PATH = Pattern.compile("^(/(?:[^/\\}]++/)*+).*+");
    Pattern CLOSE_BLOCK = Pattern.compile("^(\\}).*+");
    Pattern CONTEXT_STATIC_REFINEMENT_NAMESPACE = Pattern.compile("^(\\s*+(?:[a-zA-Z$_][a-zA-Z0-9$_]*+\\s*+\\.)*+\\s*+[a-zA-Z$_][a-zA-Z0-9$_]*+\\s*).*+");
-   Pattern IMPORT_PATH = Pattern.compile("^((?:/?(?:\\.\\./)?(?:[^/\\}]++/)*+)?[^/\\}]++).*+");
+   Pattern IMPORT_PATH = Pattern.compile("([^\\}]++).*+");
    Pattern INPUT_TOKENS = Pattern.compile("^([^\\{]++).*+");
    Pattern NAME = Pattern.compile("^([a-zA-Z$_][a-zA-Z0-9$_]*+).*+");
    Pattern NS = Pattern.compile("^([a-zA-Z0-9$_][a-zA-Z0-9$_]*+(?:\\.[a-zA-Z$_][a-zA-Z0-9$_]*+)*+).*+");
@@ -48,7 +48,7 @@ public interface Characters {
    Pattern FOREACH_CLOSING = Pattern.compile("^(\\{/foreach\\}).*+");
    Pattern IF = Pattern.compile("^(\\{if\\s++).*+");
    Pattern IF_CLOSING = Pattern.compile("^(\\{/if\\}).*+");
-   Pattern IMPORT = Pattern.compile("^(import)(?=\\s).*+");
+   Pattern IMPORT = Pattern.compile("^(\\{import\\s++).*+");
    Pattern LAST_FN = Pattern.compile("^(last\\(\\)).*+");
    Pattern NAME_FN = Pattern.compile("^(name\\(\\)).*+");
    Pattern NAMESPACE = Pattern.compile("^(\\{namespace\\s++).*+");

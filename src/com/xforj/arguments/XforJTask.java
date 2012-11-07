@@ -17,8 +17,8 @@ public class XforJTask extends Task {
    private List<File> inputfiles=null;
    private boolean overwrite=false;
    private boolean minifyhtml=true;
-   private boolean assigntoglobal=true;
-   private boolean stripnewlines=true;
+   private boolean global=true;
+   private boolean normalizespace=true;
    private boolean debug=false;
    private boolean warn=false;
    @Override
@@ -32,8 +32,8 @@ public class XforJTask extends Task {
             inputfiles,
             overwrite,
             minifyhtml,
-            assigntoglobal,
-            stripnewlines,
+            global,
+            normalizespace,
             debug,
             warn
          ));
@@ -70,11 +70,11 @@ public class XforJTask extends Task {
    public void setMinifyhtml(boolean minifyhtml){
       this.minifyhtml=minifyhtml;
    }
-   public void setAssigntoglobal(boolean assigntoglobal){
-      this.assigntoglobal=assigntoglobal;
+   public void setGlobal(boolean global){
+      this.global=global;
    }
-   public void setStripnewlines(boolean stripnewlines){
-      this.stripnewlines=stripnewlines;
+   public void setNormalizespace(boolean normalizespace){
+      this.normalizespace=normalizespace;
    }
    public void setDebug(boolean debug){
       this.debug=debug;

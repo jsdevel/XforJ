@@ -59,9 +59,9 @@ public class ProductionContext {
       File currentFile, 
       XforJArguments arguments
    ){
-      stripNewLines=arguments.getStripnewlines();
+      stripNewLines=arguments.getNormalizespace();
       minifyHTML=arguments.getMinifyhtml();
-      assignTemplatesGlobally=arguments.getAssigntoglobal();
+      assignTemplatesGlobally=arguments.getGlobal();
 
       declaredNamespaces = new HashMap();
       importedFiles = new HashMap();
@@ -126,6 +126,9 @@ public class ProductionContext {
    public Output importFile(String path) throws Exception {
       File targetFile = new File(path);
       String absolutePath = targetFile.getCanonicalPath();
+
+      LOGGER.debug("Import request: "+path);
+      LOGGER.debug("Actual file path: "+absolutePath);
 
       if(importedFiles.containsKey(absolutePath)){
          return new Output();

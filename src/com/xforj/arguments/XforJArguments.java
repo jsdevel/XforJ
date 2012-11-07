@@ -11,8 +11,8 @@ public class XforJArguments {
    private List<File> inputfiles=null;
    private boolean overwrite=false;
    private boolean minifyhtml=true;
-   private boolean assigntoglobal=true;
-   private boolean stripnewlines=true;
+   private boolean global=true;
+   private boolean normalizespace=true;
    private boolean debug=false;
    private boolean warn=false;
 
@@ -24,8 +24,8 @@ public class XforJArguments {
       final List<File> inputfiles,
       final boolean overwrite,
       final boolean minifyhtml,
-      final boolean assigntoglobal,
-      final boolean stripnewlines,
+      final boolean global,
+      final boolean normalizespace,
       final boolean debug,
       final boolean warn
    ){
@@ -48,8 +48,8 @@ public class XforJArguments {
       this.inputfiles=inputfiles;
       this.overwrite=overwrite;
       this.minifyhtml=minifyhtml;
-      this.assigntoglobal=assigntoglobal;
-      this.stripnewlines=stripnewlines;
+      this.global=global;
+      this.normalizespace=normalizespace;
       this.debug=debug;
       this.warn=warn;
    }
@@ -96,17 +96,17 @@ public class XforJArguments {
    public boolean hasMinifyhtml(){
       return minifyhtml;
    }
-   public boolean getAssigntoglobal(){
-      return assigntoglobal;
+   public boolean getGlobal(){
+      return global;
    }
-   public boolean hasAssigntoglobal(){
-      return assigntoglobal;
+   public boolean hasGlobal(){
+      return global;
    }
-   public boolean getStripnewlines(){
-      return stripnewlines;
+   public boolean getNormalizespace(){
+      return normalizespace;
    }
-   public boolean hasStripnewlines(){
-      return stripnewlines;
+   public boolean hasNormalizespace(){
+      return normalizespace;
    }
    public boolean getDebug(){
       return debug;

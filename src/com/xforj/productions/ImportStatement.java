@@ -16,9 +16,9 @@
 
 package com.xforj.productions;
 
-import com.xforj.CharWrapper;
+import com.xforj.*;
 import java.util.regex.Matcher;
-import com.xforj.Output;
+import java.io.*;
 
 /**
  *
@@ -31,42 +31,56 @@ public class ImportStatement extends Production {
 
    @Override
    public void execute(CharWrapper characters, ProductionContext context) throws Exception {
-      if(characters.charAt(0) == '{' && characters.charAt(1) == 'i'){
-         characters.shift(1);
-         Matcher _import = characters.match(IMPORT);       
-         if(_import.find()){
-            characters.shift(_import.group(1).length());
-            characters.removeSpace();
-            Matcher path = characters.match(IMPORT_PATH);
-            if(path.find()){
-               String importedPath = path.group(1);
-               characters.shift(importedPath.length());
+      Matcher _import = characters.match(IMPORT);       
+      if(_import.find()){
+         String matchedImportTag = _import.group(1);
+         characters.shift(matchedImportTag.length());
 
-               //we do this to ensure that we aren't building on the file to import, but
-               //rather the file to import's directory.
-               String newPath;
-               if(importedPath.charAt(0) == '/'){
-                  newPath = importedPath;
-               } else {
-                  Matcher absPath = ABSOLUTE_PATH.matcher(context.currentFile.getCanonicalPath());
-                  if(absPath.find()){
-                     newPath = absPath.group(1)+importedPath;
-                  } else {
-                     throw new Exception("Invalid Path given in: "+importedPath);
-                  }
+         LOGGER.debug("Matching import tag: '"+matchedImportTag+"'.");
+
+         Matcher path = characters.match(IMPORT_PATH);
+         if(path.find()){
+            String importedPath = path.group(1);
+            characters.shift(importedPath.length());
+
+            importedPath = importedPath.trim();//Remove leading / trailing whitespace.
+
+            LOGGER.debug("Using given import path: '"+importedPath+"'.");
+
+            String pathToUseForImport;
+            File testAbsolutePathFile = new File(importedPath);
+
+            if(testAbsolutePathFile.exists()){//it's an absolute path
+               LOGGER.debug("Absolute path given.");
+
+               pathToUseForImport = testAbsolutePathFile.getCanonicalPath();
+            } else {//it must be relative
+               LOGGER.debug("Attempting relative path.");
+
+               pathToUseForImport = context.currentFile.getParent();
+
+               LOGGER.debug("Using parent path: "+pathToUseForImport);
+
+               if(!pathToUseForImport.endsWith(File.separator)){
+                  pathToUseForImport+=File.separator;
                }
+               pathToUseForImport+=importedPath;
+            }
 
-               if(characters.charAt(0) == '}'){
-                  characters.shift(1);
+            LOGGER.debug("Preparing to import: "+pathToUseForImport);
+            if(!new File(pathToUseForImport).exists()){
+               throw new Exception("The following file could not be found: "+pathToUseForImport);
+            }
 
-
-                  output.prepend(context.importFile(newPath));
-                  return;
-               }
+            if(characters.charAt(0) == '}'){
+               characters.shift(1);
+               Output importFile = context.importFile(pathToUseForImport);
+               output.prepend(importFile);
+               context.removeProduction();
+               return;
             }
          }
-         throw new Exception("Invalid Statement found while parsing ImportStatement.");
       }
-      context.removeProduction();
+      throw new Exception("Invalid Statement found while parsing ImportStatement.");
    }
 }

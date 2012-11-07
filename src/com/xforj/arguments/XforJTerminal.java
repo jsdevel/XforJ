@@ -13,8 +13,8 @@ public class XforJTerminal {
       List<File> inputfiles=null;
       boolean overwrite=false;
       boolean minifyhtml=true;
-      boolean assigntoglobal=true;
-      boolean stripnewlines=true;
+      boolean global=true;
+      boolean normalizespace=true;
       boolean debug=false;
       boolean warn=false;
       if(__showHelpOnNoArgs && args.length == 0){
@@ -54,12 +54,12 @@ public class XforJTerminal {
             minifyhtml = getBoolean(val);
             continue;
          }
-         if("--assign-to-global".equals(key)){
-            assigntoglobal = getBoolean(val);
+         if("--global".equals(key)){
+            global = getBoolean(val);
             continue;
          }
-         if("--strip-new-lines".equals(key)){
-            stripnewlines = getBoolean(val);
+         if("--normalize-space".equals(key)){
+            normalizespace = getBoolean(val);
             continue;
          }
          if("--debug".equals(key)){
@@ -83,8 +83,8 @@ public class XforJTerminal {
             inputfiles,
             overwrite,
             minifyhtml,
-            assigntoglobal,
-            stripnewlines,
+            global,
+            normalizespace,
             debug,
             warn
       );

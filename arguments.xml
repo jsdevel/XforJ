@@ -31,7 +31,7 @@ Visit http://www.xforj.com for more info.
    indent="   " 
    license="http://www.apache.org/licenses/LICENSE-2.0"
    package="com.xforj.arguments" 
-   menulength="80"
+   menulength="40"
    terminal="true"
    title="XforJ A Javascript Template Compiler"
 >
@@ -86,7 +86,7 @@ option, you must provide both the --output-directory and --input-directory argum
       name="--overwrite"
       description="
 Whether or not files should be overriden.  If not specified, any 
-attempt to overwrite an existing file will be rejected, an a message displayed to
+attempt to overwrite an existing file will be rejected, and a message displayed to
 the output.
 "
       type="boolean"
@@ -100,15 +100,15 @@ the output.
       />
    
    <argument
-      name="--assign-to-global"
+      name="--global"
       description="When enabled, all templates are assigned to the global object.  When disabled, a new object is returned from the entire XforJ program.  In this scenario, a mechanism such as eval must be used to capture the returned object to gain access to the defined templates."
       default="true"
       type="boolean"
       />
 
    <argument
-      name="--strip-new-lines"
-      description="Replace all new line characters with ''."
+      name="--normalize-space"
+      description="Replace all white space with a single space ' '."
       default="true"
       type="boolean"
       />
