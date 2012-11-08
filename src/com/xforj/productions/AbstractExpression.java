@@ -18,6 +18,8 @@ package com.xforj.productions;
 
 import com.xforj.Output;
 import com.xforj.CharWrapper;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  *
@@ -31,14 +33,31 @@ public abstract class AbstractExpression extends Production {
    private boolean hasOperator=false;
    private boolean hasValue=false;
    private String excMsg="  Empty Expression.";
+   private static Pattern logicalNot = Pattern.compile("^([!~]*+).*+");
    
    @Override
    public final void execute(CharWrapper characters, ProductionContext context) throws Exception {
       characters.removeSpace();
+
       if(characters.charAt(0) != '}'){
          if(hasValue == false || hasOperator){//Go to Value
             hasOperator=false;
             hasValue=true;
+            Matcher match;
+            String negation;
+
+            //reserve this block for unary operators only
+            switch(characters.charAt(0)){
+            case '!':
+            case '~':
+               match = characters.match(logicalNot);
+               match.find();               
+               negation = match.group(1);
+               characters.shift(negation.length());
+               characters.removeSpace();
+               output.prepend(negation);
+            }
+
             if(characters.charAt(0) == '('){
                characters.shift(1);
                Output parenthesizedExpressionOutput = new Output();
