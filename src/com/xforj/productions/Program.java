@@ -94,7 +94,7 @@ public class Program extends Production {
                   "{}"
             )
          ).put(js_SafeValue, 
-            "function(val){try{return val()}catch(e){return val}}"
+            "function(v){try{return v()}catch(e){return typeof(v)==='function'?void(0):v}}"
          );
       }
    }
