@@ -33,18 +33,19 @@ public class InputTokens extends Production {
       Matcher inputTokens = characters.match(INPUT_TOKENS);
       if(inputTokens.find()){
          String oldTokens = inputTokens.group(1);
-         String newTokens;
-         if(context.stripNewLines){
-            newTokens = oldTokens.replaceAll("\\s++", " ");
-         } else {
-            newTokens = oldTokens.replaceAll("\\n|\\r", "\\\\\n");
+         characters.shift(oldTokens.length());
 
+         String newTokens = oldTokens;
+
+         if(context.stripNewLines){
+            newTokens = newTokens.replaceAll("\\s++", " ");
          }
+
          if(context.minifyHTML){
             newTokens = newTokens.replaceAll("(>|<)\\s++|\\s++(>|<)", "$1$2");
          }
-         newTokens = newTokens.replaceAll("\"", "\\\\\"").replaceAll("'", "\\\\'");
-         characters.shift(oldTokens.length());
+
+         newTokens = context.escapeOutput(newTokens);
          output.prepend(js_bld+"('"+newTokens+"');");
          return;
       }

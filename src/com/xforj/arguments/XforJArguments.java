@@ -28,18 +28,28 @@ public class XforJArguments {
       final boolean normalizespace,
       final boolean debug,
       final boolean warn
-   ){
+   ) throws Throwable {
       if(inputfile!=null && inputfile.exists() && !inputfile.canWrite()) {
          throw new IllegalArgumentException("The following file may not be overwritten to: 'inputfile'.");
       }
       if(outputfile!=null && outputfile.exists() && !outputfile.canWrite()) {
          throw new IllegalArgumentException("The following file may not be overwritten to: 'outputfile'.");
       }
-      if(destdir != null && !destdir.isDirectory()) {
-         throw new IllegalArgumentException("Directory doesn't exist :'"+destdir+"'.  Given by argument 'destdir'.");
+      if(destdir != null){
+         if(!destdir.exists() || !destdir.isDirectory()){
+            destdir.mkdirs();
+         }
+         if(!(destdir.exists() && destdir.isDirectory())){
+            throw new IllegalArgumentException("Directory doesn't exist :'"+destdir+"'.  Given by argument 'destdir'.");
+         }
       }
-      if(srcdir != null && !srcdir.isDirectory()) {
-         throw new IllegalArgumentException("Directory doesn't exist :'"+srcdir+"'.  Given by argument 'srcdir'.");
+      if(srcdir != null){
+         if(!srcdir.exists() || !srcdir.isDirectory()){
+            srcdir.mkdirs();
+         }
+         if(!(srcdir.exists() && srcdir.isDirectory())){
+            throw new IllegalArgumentException("Directory doesn't exist :'"+srcdir+"'.  Given by argument 'srcdir'.");
+         }
       }
       this.inputfile=inputfile;
       this.outputfile=outputfile;

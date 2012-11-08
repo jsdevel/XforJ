@@ -137,6 +137,11 @@ public class ProductionContext {
       return XforJ.compileFile(targetFile, new ProductionContext(targetFile, this));
    }
 
+   //OUTPUT
+   public String escapeOutput(String input){
+      return input.replaceAll("\"", "\\\\\"").replaceAll("'", "\\\\'").replaceAll("\\n|\\r", "\\\\\n");
+   }
+
    //PRODUCTIONS
    public ProductionContext addProduction(Production add){
       productionStack.add(add);

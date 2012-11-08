@@ -37,7 +37,7 @@ public class XforJTask extends Task {
             debug,
             warn
          ));
-      } catch (Exception exc) {
+      } catch (Throwable exc) {
          throw new BuildException(exc.getMessage());
       }
    }

@@ -61,6 +61,7 @@ public interface Characters {
    Pattern TEMPLATE_CLOSING = Pattern.compile("^(\\{/template\\})(?=\\s|\\}).*+");
    Pattern TEXT = Pattern.compile("^(\\{text\\}).*+");
    Pattern TEXT_CLOSING = Pattern.compile("^(\\{/text\\}).*+");
+   Pattern TEXT_INPUT = Pattern.compile("^((?:(?!\\{/text\\})[\\s\\S])*+[\\s\\S]?)\\{/text\\}.*+");
    Pattern VAR = Pattern.compile("^(\\{var\\s++).*+");
    Pattern WHEN = Pattern.compile("^(\\{when\\s++).*+");
    Pattern WHEN_CLOSING = Pattern.compile("^(\\{/when\\}).*+");

@@ -5,7 +5,7 @@ import java.util.List;
 public class XforJTerminal {
    private static final boolean __showHelpOnNoArgs=true;
 
-   public static XforJArguments getArguments(String[] args) throws IllegalArgumentException {
+   public static XforJArguments getArguments(String[] args) throws Throwable {
       File inputfile=null;
       File outputfile=null;
       File destdir=null;

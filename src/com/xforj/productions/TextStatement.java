@@ -28,30 +28,26 @@ public class TextStatement extends Production {
       super(output);
    }
 
-   private boolean hasInputTokens;
    @Override
    void execute(CharWrapper characters, ProductionContext context) throws Exception {
       Matcher match;
-      Output inputTokenOutput;
-      switch(characters.charAt(0)){
-      case '{':
-         if(!hasInputTokens){
-            break;
-         }
-         match = characters.match(TEXT_CLOSING);
-         if(match.find()){
-            characters.shift(match.group(1).length());
-            context.removeProduction();
-            return;
-         }
-         break;
-      default:
-         hasInputTokens=true;
-         inputTokenOutput=new Output();
-         context.addProduction(new InputTokens(inputTokenOutput));
-         output.prepend(inputTokenOutput);
+      
+      //Get the text input if it exists.
+      match = characters.match(TEXT_INPUT);
+      if(match.find()){
+         String input = match.group(1);
+         characters.shift(input.length());
+         output.prepend(js_bld+"('"+context.escapeOutput(input)+"');");
+      }
+
+      //Make sure there's a closing tag and exit.
+      match = characters.match(TEXT_CLOSING);
+      if(match.find()){
+         characters.shift(match.group(1).length());
+         context.removeProduction();
          return;
       }
+
       throw new Exception("Invalid TextStatement.");
    }
 }

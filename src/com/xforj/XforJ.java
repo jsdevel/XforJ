@@ -46,13 +46,13 @@ public class XforJ implements Characters {
          long before = new Date().getTime();
          startCompiling(arguments);
          LOGGER.out("Time taken: "+Long.toString(new Date().getTime() - before) + "ms");
-      } catch(Exception exc) {
+      } catch(Throwable exc) {
          handleGeneralError(exc);
       }
 
    }
 
-   private static void handleGeneralError(Exception exc){
+   private static void handleGeneralError(Throwable exc){
       LOGGER.out("FAILED FOR THE FOLLOWING REASON:\n");
       LOGGER.out(exc.getMessage());
       System.exit(UNABLE_TO_PARSE_FILE);
@@ -155,6 +155,9 @@ public class XforJ implements Characters {
          return;
       }
 
+      if(!outFile.getParentFile().exists()){
+         outFile.mkdirs();
+      }
       if(compiledNewFiles.contains(compiledKey)){
          LOGGER.out("Ignoring: "+compiledKey+".\n   It has already been built.");
       } else {
