@@ -68,7 +68,7 @@ public class ContextSelector extends Production {
          //ContextDynamicRefinement should handle this.
          break;
       case 'c':
-         match = characters.match(CURRENT);
+         match = characters.match(CURRENT_FN);
          if(match.find()){
             hasContextSelector=true;
             contextHasBeenPrependedToOutput=true;

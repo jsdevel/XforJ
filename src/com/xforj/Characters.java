@@ -43,7 +43,7 @@ public interface Characters {
    Pattern CHOOSE = Pattern.compile("^(\\{choose\\}).*+");
    Pattern CHOOSE_CLOSING = Pattern.compile("^(\\{/choose\\}).*+");
    Pattern COUNT_FN = Pattern.compile("^(count\\().*+");
-   Pattern CURRENT = Pattern.compile("^(current\\(\\)).*+");
+   Pattern CURRENT_FN = Pattern.compile("^(current\\(\\)).*+");
    Pattern FOREACH = Pattern.compile("^(\\{foreach\\s++).*+");
    Pattern FOREACH_CLOSING = Pattern.compile("^(\\{/foreach\\}).*+");
    Pattern IF = Pattern.compile("^(\\{if\\s++).*+");
@@ -94,7 +94,7 @@ public interface Characters {
    final String js_position="position";
    final String js_StringBuffer="StringBuffer";
    final String js_TemplateBasket="TemplateBasket";
-   */
+   final String js_ReturnSafeContextValue="safeReturnContext";*/
 
    /*MUNGED*/
    final String js_bld="b";
