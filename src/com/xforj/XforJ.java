@@ -143,6 +143,15 @@ public class XforJ implements Characters {
    }
 
    private static Set<String> compiledNewFiles = new HashSet(Arrays.asList(new String[]{}));
+   /**
+    * Compiles one file at a time.  This method relies on the compiledNewFiles set
+    * to avoid compiling a file more than once.
+    * 
+    * @param input
+    * @param outFile
+    * @param arguments
+    * @throws Exception 
+    */
    private static void compileNewFile(File input, File outFile, XforJArguments arguments) throws Exception {
       String inputFilePath = input.getCanonicalPath();
       String outputFilePath = outFile.getCanonicalPath();
@@ -158,6 +167,7 @@ public class XforJ implements Characters {
       if(!outFile.getParentFile().exists()){
          outFile.mkdirs();
       }
+
       if(compiledNewFiles.contains(compiledKey)){
          LOGGER.out("Ignoring: "+compiledKey+".\n   It has already been built.");
       } else {
