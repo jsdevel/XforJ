@@ -95,7 +95,6 @@ public interface Characters {
    final String js_position="position";
    final String js_StringBuffer="StringBuffer";
    final String js_TemplateBasket="TemplateBasket";
-   final String js_ReturnSafeContextValue="safeReturnContext";
    final String js_SafeValue="safeValue";*/
 
    /*MUNGED*/
@@ -115,7 +114,6 @@ public interface Characters {
    final String js_position="O";
    final String js_StringBuffer="S";
    final String js_TemplateBasket="B";
-   final String js_ReturnSafeContextValue="s";
    final String js_SafeValue="f";
    /**/
 }
