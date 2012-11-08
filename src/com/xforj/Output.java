@@ -23,7 +23,7 @@ import java.util.List;
  * @author Joseph Spencer
  */
 public class Output {
-   List<Object> nodes = new ArrayList();
+   private List<Object> nodes = new ArrayList();
    
    public Output prepend(Object obj){
       nodes.add(obj);
@@ -33,8 +33,8 @@ public class Output {
    @Override
    public String toString(){
       StringBuilder str = new StringBuilder();
-      while(!nodes.isEmpty()){
-         str.append(nodes.remove(0).toString());
+      for(Object node:nodes){
+         str.append(node.toString());
       }
       return str.toString();
    }
