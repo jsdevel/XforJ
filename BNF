@@ -171,6 +171,7 @@ TemplateBody:
 
 TemplateBodyStatements:
    InputTokens
+   LogStatement
    TextStatement
    PrintStatement
    IfStatement
@@ -181,6 +182,9 @@ TemplateBodyStatements:
 
 InputTokens:
    /[^{]*/
+
+LogStatement:
+   '{log ' + VariableExpression + '}'
 
 TextStatement:
    '{text}' + InputTokens + '{/text}'

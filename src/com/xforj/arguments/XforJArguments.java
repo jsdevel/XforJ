@@ -15,6 +15,7 @@ public class XforJArguments {
    private boolean normalizespace=true;
    private boolean debug=false;
    private boolean warn=false;
+   private boolean removelogs=true;
 
    public XforJArguments(
       final File inputfile,
@@ -27,7 +28,8 @@ public class XforJArguments {
       final boolean global,
       final boolean normalizespace,
       final boolean debug,
-      final boolean warn
+      final boolean warn,
+      final boolean removelogs
    ) throws Throwable {
       if(inputfile!=null && inputfile.exists() && !inputfile.canWrite()) {
          throw new IllegalArgumentException("The following file may not be overwritten to: 'inputfile'.");
@@ -62,6 +64,7 @@ public class XforJArguments {
       this.normalizespace=normalizespace;
       this.debug=debug;
       this.warn=warn;
+      this.removelogs=removelogs;
    }
 
    public File getInputfile(){
@@ -129,5 +132,11 @@ public class XforJArguments {
    }
    public boolean hasWarn(){
       return warn;
+   }
+   public boolean getRemovelogs(){
+      return removelogs;
+   }
+   public boolean hasRemovelogs(){
+      return removelogs;
    }
 }

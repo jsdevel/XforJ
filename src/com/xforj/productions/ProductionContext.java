@@ -45,6 +45,7 @@ public class ProductionContext {
    final public boolean stripNewLines;
    final public boolean minifyHTML;
    final public boolean assignTemplatesGlobally;
+   final public boolean removeLogs;
 
    final public Output output = new Output();
    final private Map<String, Boolean> declaredNamespaces;
@@ -62,6 +63,7 @@ public class ProductionContext {
       stripNewLines=arguments.getNormalizespace();
       minifyHTML=arguments.getMinifyhtml();
       assignTemplatesGlobally=arguments.getGlobal();
+      removeLogs=arguments.getRemovelogs();
 
       declaredNamespaces = new HashMap();
       importedFiles = new HashMap();
@@ -84,6 +86,7 @@ public class ProductionContext {
       stripNewLines=previousContext.stripNewLines;
       minifyHTML=previousContext.minifyHTML;
       assignTemplatesGlobally=previousContext.assignTemplatesGlobally;
+      removeLogs=previousContext.removeLogs;
 
       declaredNamespaces=previousContext.declaredNamespaces;
       importedFiles=previousContext.importedFiles;

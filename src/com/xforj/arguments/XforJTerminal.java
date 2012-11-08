@@ -17,6 +17,7 @@ public class XforJTerminal {
       boolean normalizespace=true;
       boolean debug=false;
       boolean warn=false;
+      boolean removelogs=true;
       if(__showHelpOnNoArgs && args.length == 0){
          System.out.print(XforJHelp.getHelpMenu());
          System.exit(0);
@@ -60,6 +61,10 @@ public class XforJTerminal {
             warn = getBoolean(val);
             continue;
          }
+         if("--remove-logs".equals(key)){
+            removelogs = getBoolean(val);
+            continue;
+         }
          throw new IllegalArgumentException("Unknown argument: "+key);
       }
       if(i - len != 0){
@@ -76,7 +81,8 @@ public class XforJTerminal {
             global,
             normalizespace,
             debug,
-            warn
+            warn,
+            removelogs
       );
    }
    public static final String getPath(String path){

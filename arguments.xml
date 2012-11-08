@@ -127,4 +127,11 @@ the output.
       description="Turns on run time warnings."
       type="boolean"
       />
+
+   <argument
+      name="--remove-logs"
+      default="true"
+      description="Removes any log elements from compilation."
+      type="boolean"
+      />
 </arguments>

@@ -50,6 +50,7 @@ public interface Characters {
    Pattern IF_CLOSING = Pattern.compile("^(\\{/if\\}).*+");
    Pattern IMPORT = Pattern.compile("^(\\{import\\s++).*+");
    Pattern LAST_FN = Pattern.compile("^(last\\(\\)).*+");
+   Pattern LOG = Pattern.compile("^(\\{log\\s++).*+");
    Pattern NAME_FN = Pattern.compile("^(name\\(\\)).*+");
    Pattern NAMESPACE = Pattern.compile("^(\\{namespace\\s++).*+");
    Pattern OTHERWISE = Pattern.compile("^(\\{otherwise\\}).*+");

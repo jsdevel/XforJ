@@ -21,6 +21,7 @@ public class XforJTask extends Task {
    private boolean normalizespace=true;
    private boolean debug=false;
    private boolean warn=false;
+   private boolean removelogs=true;
    @Override
    public void execute() throws BuildException {
       try {
@@ -35,7 +36,8 @@ public class XforJTask extends Task {
             global,
             normalizespace,
             debug,
-            warn
+            warn,
+            removelogs
          ));
       } catch (Throwable exc) {
          throw new BuildException(exc.getMessage());
@@ -81,5 +83,8 @@ public class XforJTask extends Task {
    }
    public void setWarn(boolean warn){
       this.warn=warn;
+   }
+   public void setRemovelogs(boolean removelogs){
+      this.removelogs=removelogs;
    }
 }
