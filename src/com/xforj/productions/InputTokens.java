@@ -35,7 +35,7 @@ public class InputTokens extends Production {
          String oldTokens = inputTokens.group(1);
          String newTokens;
          if(context.stripNewLines){
-            newTokens = oldTokens.replaceAll("\\n|\\r", "");
+            newTokens = oldTokens.replaceAll("\\s++", " ");
          } else {
             newTokens = oldTokens.replaceAll("\\n|\\r", "\\\\\n");
 

@@ -8,8 +8,8 @@ public class XforJTerminal {
    public static XforJArguments getArguments(String[] args) throws IllegalArgumentException {
       File inputfile=null;
       File outputfile=null;
-      File outputdirectory=null;
-      File inputdirectory=null;
+      File destdir=null;
+      File srcdir=null;
       List<File> inputfiles=null;
       boolean overwrite=false;
       boolean minifyhtml=true;
@@ -34,16 +34,6 @@ public class XforJTerminal {
          if("--output-file".equals(key)){
             String newPath = getPath(val);
             outputfile = new File(newPath);
-            continue;
-         }
-         if("--output-directory".equals(key)){
-            String newPath = getPath(val);
-            outputdirectory = new File(newPath);
-            continue;
-         }
-         if("--input-directory".equals(key)){
-            String newPath = getPath(val);
-            inputdirectory = new File(newPath);
             continue;
          }
          if("--overwrite".equals(key)){
@@ -78,8 +68,8 @@ public class XforJTerminal {
       return new XforJArguments(
             inputfile,
             outputfile,
-            outputdirectory,
-            inputdirectory,
+            destdir,
+            srcdir,
             inputfiles,
             overwrite,
             minifyhtml,

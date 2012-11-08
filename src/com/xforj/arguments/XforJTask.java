@@ -12,8 +12,8 @@ public class XforJTask extends Task {
 
    private File inputfile=null;
    private File outputfile=null;
-   private File outputdirectory=null;
-   private File inputdirectory=null;
+   private File destdir=null;
+   private File srcdir=null;
    private List<File> inputfiles=null;
    private boolean overwrite=false;
    private boolean minifyhtml=true;
@@ -27,8 +27,8 @@ public class XforJTask extends Task {
          com.xforj.XforJ.startCompiling(new XforJArguments(
             inputfile,
             outputfile,
-            outputdirectory,
-            inputdirectory,
+            destdir,
+            srcdir,
             inputfiles,
             overwrite,
             minifyhtml,
@@ -48,11 +48,11 @@ public class XforJTask extends Task {
    public void setOutputfile(File outputfile){
       this.outputfile=outputfile;
    }
-   public void setOutputdirectory(File outputdirectory){
-      this.outputdirectory=outputdirectory;
+   public void setDestdir(File destdir){
+      this.destdir=destdir;
    }
-   public void setInputdirectory(File inputdirectory){
-      this.inputdirectory=inputdirectory;
+   public void setSrcdir(File srcdir){
+      this.srcdir=srcdir;
    }
    public void addConfigured(FileSet files){
       Iterator<FileResource> iterator = files.iterator();

@@ -38,7 +38,8 @@ public class XforJ implements Characters {
       try {
          XforJArguments arguments = XforJTerminal.getArguments(args);
 
-         if(!arguments.hasInputfile() && !arguments.hasOutputfile()){
+         //If either are null throw an exception.
+         if(!arguments.hasInputfile() || !arguments.hasOutputfile()){
             throw new Exception("Both an input file and an output file must be given.");
          }
 
@@ -83,8 +84,8 @@ public class XforJ implements Characters {
                File input = arguments.getInputfile();
                if(arguments.hasOutputfile()){
                   compileNewFile(input, arguments.getOutputfile(), arguments);
-               } else if(arguments.hasOutputdirectory()){
-                  String outputDir = arguments.getOutputdirectory().getCanonicalPath();
+               } else if(arguments.hasDestdir()){
+                  String outputDir = arguments.getDestdir().getCanonicalPath();
                   if(!outputDir.endsWith(File.separator)){
                      outputDir+=File.separator;
                   }
@@ -99,9 +100,9 @@ public class XforJ implements Characters {
             }
 
             if(arguments.hasInputfiles()){
-               if(arguments.hasOutputdirectory() && arguments.hasInputdirectory()){
-                  String inputDirectoryPath = arguments.getInputdirectory().getCanonicalPath();
-                  String outputDirectoryPath = arguments.getOutputdirectory().getCanonicalPath();
+               if(arguments.hasDestdir() && arguments.hasSrcdir()){
+                  String inputDirectoryPath = arguments.getSrcdir().getCanonicalPath();
+                  String outputDirectoryPath = arguments.getDestdir().getCanonicalPath();
 
                   if(!inputDirectoryPath.endsWith(File.separator)){
                      inputDirectoryPath+=File.separator;
@@ -130,7 +131,7 @@ public class XforJ implements Characters {
                      compileNewFile(next, new File(compiledFilePath), arguments);
                   }
                } else {
-                  throw new IllegalArgumentException("Both outputdirectory and inputdirectory must be given as attributes when using filesets.");
+                  throw new IllegalArgumentException("Both destdir and srcdir must be given as attributes when using filesets.");
                }
             }
          } else {

@@ -40,52 +40,55 @@ Visit http://www.xforj.com for more info.
       description="
 A pre-compiled XforJ template file.\n
 
-This is used in conjunction with the --output-file argument, or the --output-directory
-argument.\n
-
 When --output-file is specified, this will be the target of your input file.\n
 
-When --output-directory is used without --output-file, the target file will have the
-same name as the input file, and will reside in the location specified by 
---output-directory." 
+When using ant, supplying destdir without outputfile as attributes will create a
+target file in the destination directory of the same name as the input file."
       overwrite="true"
       type="file"/>    
 
    <argument
       name="--output-file"
-      description="The file where the compiled template will be placed."
+      description="
+The file where the compiled template will be placed.\n
+This is ignored if --input-file isn't specified.
+"
       overwrite="true"
       type="file"
       />
 
-   <argument
-      name="--output-directory"
+   <antproperty
+      name="destdir"
       description="
 The output directory for files given by --input-file, or inputfiles(ant).  Directory
 structure is copied from inputfiles."
       type="directory"
       />
 
-   <argument
-      name="--input-directory"
+   <antproperty
+      name="srcdir"
       description="
-The input directory for files found using inputfiles(ant).  This argument is required
-when using inputfiles, in order to preserve directory structure.
+The source directory for files found using inputfiles(ant).  This argument is required
+when using nested filesets, in order to preserve directory structure.
 "
       type="directory"
       />
 
    <anttask
       name="inputfiles"
-      description="The input files to compile.  When using this
-option, you must provide both the --output-directory and --input-directory arguments, or this task has no effect."
+      description="
+The input files to compile.\n
+When using this option, you must provide both the destdir and srcdir attributes,
+or this task has no effect.\n
+Only FileSet elements are allowed.
+"
       type="files"
       />
 
    <argument
       name="--overwrite"
       description="
-Whether or not files should be overriden.  If not specified, any 
+Whether or not files should be over-written.  If not specified, any 
 attempt to overwrite an existing file will be rejected, and a message displayed to
 the output.
 "

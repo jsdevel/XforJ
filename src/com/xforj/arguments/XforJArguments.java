@@ -6,8 +6,8 @@ public class XforJArguments {
 
    private File inputfile=null;
    private File outputfile=null;
-   private File outputdirectory=null;
-   private File inputdirectory=null;
+   private File destdir=null;
+   private File srcdir=null;
    private List<File> inputfiles=null;
    private boolean overwrite=false;
    private boolean minifyhtml=true;
@@ -19,8 +19,8 @@ public class XforJArguments {
    public XforJArguments(
       final File inputfile,
       final File outputfile,
-      final File outputdirectory,
-      final File inputdirectory,
+      final File destdir,
+      final File srcdir,
       final List<File> inputfiles,
       final boolean overwrite,
       final boolean minifyhtml,
@@ -35,16 +35,16 @@ public class XforJArguments {
       if(outputfile!=null && outputfile.exists() && !outputfile.canWrite()) {
          throw new IllegalArgumentException("The following file may not be overwritten to: 'outputfile'.");
       }
-      if(outputdirectory != null && !outputdirectory.isDirectory()) {
-         throw new IllegalArgumentException("Directory doesn't exist :'"+outputdirectory+"'.  Given by argument 'outputdirectory'.");
+      if(destdir != null && !destdir.isDirectory()) {
+         throw new IllegalArgumentException("Directory doesn't exist :'"+destdir+"'.  Given by argument 'destdir'.");
       }
-      if(inputdirectory != null && !inputdirectory.isDirectory()) {
-         throw new IllegalArgumentException("Directory doesn't exist :'"+inputdirectory+"'.  Given by argument 'inputdirectory'.");
+      if(srcdir != null && !srcdir.isDirectory()) {
+         throw new IllegalArgumentException("Directory doesn't exist :'"+srcdir+"'.  Given by argument 'srcdir'.");
       }
       this.inputfile=inputfile;
       this.outputfile=outputfile;
-      this.outputdirectory=outputdirectory;
-      this.inputdirectory=inputdirectory;
+      this.destdir=destdir;
+      this.srcdir=srcdir;
       this.inputfiles=inputfiles;
       this.overwrite=overwrite;
       this.minifyhtml=minifyhtml;
@@ -66,17 +66,17 @@ public class XforJArguments {
    public boolean hasOutputfile(){
       return outputfile!=null;
    }
-   public File getOutputdirectory(){
-      return outputdirectory;
+   public File getDestdir(){
+      return destdir;
    }
-   public boolean hasOutputdirectory(){
-      return outputdirectory!=null;
+   public boolean hasDestdir(){
+      return destdir!=null;
    }
-   public File getInputdirectory(){
-      return inputdirectory;
+   public File getSrcdir(){
+      return srcdir;
    }
-   public boolean hasInputdirectory(){
-      return inputdirectory!=null;
+   public boolean hasSrcdir(){
+      return srcdir!=null;
    }
    public List<File> getInputfiles(){
       return inputfiles;
