@@ -93,6 +93,8 @@ public class Program extends Production {
                   "(function(){return this})()":
                   "{}"
             )
+         ).put(js_SafeValue, 
+            "function(val){try{return val()}catch(e){return val}}"
          );
       }
    }

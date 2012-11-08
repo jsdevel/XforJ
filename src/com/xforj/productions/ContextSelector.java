@@ -30,9 +30,9 @@ public class ContextSelector extends Production {
       super(output);
       if(!nested){
          contextSelectorOutput=new Output();
-         output.prepend("function(){return "). 
+         output.prepend(js_SafeValue+"(function(){return "). 
          prepend(contextSelectorOutput).
-         prepend("}");
+         prepend("})");
       } else {
          contextSelectorOutput=output;
       }
