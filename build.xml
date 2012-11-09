@@ -9,6 +9,15 @@
 <!-- in the project's Project Properties dialog box.-->
 <project name="XforJ" default="default" basedir=".">
     <description>Builds, tests, and runs the project XforJ.</description>
+
+   
+    <target description="Set the version number in the outputted jar file." name="-pre-init">
+       <loadproperties>
+          <file file="src/version.properties"/>
+       </loadproperties>
+      <property name="dist.jar" value="dist/${apps}.${apps.version}.jar" />
+    </target>
+
     <import file="nbproject/build-impl.xml"/>
     <!--
 
