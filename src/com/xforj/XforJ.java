@@ -26,7 +26,7 @@ import java.util.Iterator;
  *
  * @author Joseph Spencer
  */
-public class XforJ implements Characters {
+public class XforJ extends LOGGER implements Characters {
    //Exit codes
    public static final int UNABLE_TO_PARSE_FILE=1;
    public static final int IO_Error=2;
@@ -45,7 +45,7 @@ public class XforJ implements Characters {
 
          long before = new Date().getTime();
          startCompiling(arguments);
-         LOGGER.out("Time taken: "+Long.toString(new Date().getTime() - before) + "ms");
+         out("Time taken: "+Long.toString(new Date().getTime() - before) + "ms");
       } catch(Throwable exc) {
          handleGeneralError(exc);
       }
@@ -53,8 +53,8 @@ public class XforJ implements Characters {
    }
 
    private static void handleGeneralError(Throwable exc){
-      LOGGER.out("FAILED FOR THE FOLLOWING REASON:\n");
-      LOGGER.out(exc.getMessage());
+      out("FAILED FOR THE FOLLOWING REASON:\n");
+      out(exc.getMessage());
       System.exit(UNABLE_TO_PARSE_FILE);
    }
 
@@ -67,14 +67,14 @@ public class XforJ implements Characters {
    public static void startCompiling(XforJArguments arguments) {
       try {
          if(arguments.getDebug()){
-            LOGGER.debug = true;
+            debug = true;
          }
          if(arguments.getWarn()){
-            LOGGER.warn = true;
+            warn = true;
          }
 
 
-         LOGGER.debug("startCompiling called.");
+         debug("startCompiling called.");
 
          if(//make sure there is input to process before proceeding.
             arguments.hasInputfile()
@@ -111,31 +111,36 @@ public class XforJ implements Characters {
                      outputDirectoryPath+=File.separator;
                   }
 
-                  LOGGER.debug("inputDirectoryPath: "+inputDirectoryPath);
-                  LOGGER.debug("outputDirectoryPath: "+outputDirectoryPath);
+                  debug(" InputDirectoryPath: "+inputDirectoryPath);
+                  debug("OutputDirectoryPath: "+outputDirectoryPath);
 
                   Iterator<File> files = arguments.getInputfiles().iterator(); 
                   while(files.hasNext()){
                      File next = files.next();
-                     String fileName = next.getName();
-                     String compiledFilePath = next.getCanonicalPath();
+                     String pathOfFileToCompile = next.getCanonicalPath();
+                     String pathOfTargetFile = pathOfFileToCompile.replace(
+                           inputDirectoryPath, 
+                           outputDirectoryPath
+                     ).replaceFirst("\\.xforj$", ".js");
 
-                     LOGGER.debug("fileName: "+fileName);
-                     LOGGER.debug("outputPath: "+compiledFilePath);
+                     debug("File to compile:\n"+pathOfFileToCompile);
+                     debug("    Target File:\n"+pathOfTargetFile);
 
+                     if(!pathOfFileToCompile.startsWith(inputDirectoryPath)){
+                        throw new IOException(
+                           "The following file does not belong to the input path specified:\n"
+                           +pathOfFileToCompile
+                        );
+                     }
 
-                     compiledFilePath = compiledFilePath.replace(inputDirectoryPath, outputDirectoryPath);
-
-                     LOGGER.debug("new outputPath: "+compiledFilePath);
-
-                     compileNewFile(next, new File(compiledFilePath), arguments);
+                     compileNewFile(next, new File(pathOfTargetFile), arguments);
                   }
                } else {
                   throw new IllegalArgumentException("Both destdir and srcdir must be given as attributes when using filesets.");
                }
             }
          } else {
-            LOGGER.out("No input file[s] were given.  Exiting early.");
+            out("No input file[s] were given.  Exiting early.");
          }
       } catch(Exception exc) {
          handleGeneralError(exc);
@@ -158,25 +163,41 @@ public class XforJ implements Characters {
       
       String compiledKey = inputFilePath+":"+outputFilePath;//used to avoid redundant building
 
+
+      //Make sure the input file exists
+      if(!input.exists()){
+         throw new IOException("The following input file does not exist:\n"+inputFilePath);
+      }
+
       if(!arguments.getOverwrite() && outFile.exists()){
-         LOGGER.out("Can't overwrite the following file: "+outputFilePath);
-         LOGGER.out("Specify overwrite in the arguments to change this.");
+         out("Can't overwrite the following file: "+outputFilePath);
+         out("Specify overwrite in the arguments to change this.");
          return;
       }
 
-      if(!outFile.getParentFile().exists()){
-         outFile.mkdirs();
+      //Now check to make sure that the appropriate file extensions are used
+      if(!inputFilePath.endsWith(".xforj")){
+         throw new IOException("The following input file does not end with a .xforj extension:\n"+inputFilePath);
+      }
+      if(!outputFilePath.endsWith(".js")){
+         throw new IOException("The following target file does not end with a .js extension:\n"+outputFilePath);
+      }
+
+      //Create any directories leading up to the file.
+      File parentDir = outFile.getParentFile();
+      if(parentDir != null && !parentDir.exists()){
+         parentDir.mkdirs();
       }
 
       if(compiledNewFiles.contains(compiledKey)){
-         LOGGER.out("Ignoring: "+compiledKey+".\n   It has already been built.");
+         out("Ignoring: "+compiledKey+".\n   It has already been built.");
       } else {
          compiledNewFiles.add(compiledKey);
          String output = compileFile(input, new ProductionContext(input, arguments)).toString();
          MainUtil.putString(outFile, output);
 
-         LOGGER.out("Compiled: "+inputFilePath);
-         LOGGER.out("To: "+outputFilePath);
+         out("Compiled: "+inputFilePath);
+         out("      To: "+outputFilePath);
       }
    }
 
@@ -218,6 +239,6 @@ public class XforJ implements Characters {
       if(wrapper!=null){
          message+="\n"+wrapper.getErrorLocation();
       }
-      LOGGER.out(message);
+      out(message);
    }
 }
