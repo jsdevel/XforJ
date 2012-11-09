@@ -62,6 +62,7 @@ public class XforJ extends LOGGER implements Characters {
       out("FAILED FOR THE FOLLOWING REASON");
       out("===============================");
       out(exc.getMessage());
+      debug(exc.getClass().getSimpleName());
       System.exit(UNABLE_TO_PARSE_FILE);
    }
 
