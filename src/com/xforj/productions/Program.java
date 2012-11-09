@@ -83,6 +83,15 @@ public class Program extends Production {
                   "};"+
                   "f.s=function(){"+
                      "return r.join('')"+
+                     (context.escapexss?
+                        ".replace("+
+                           "/(on)(mouse(?:over|up|down|out|move)|focus|(?:dbl)?click|key(?:down|press|up)|abort|error|resize|scroll|(?:un)?load|blur|change|focus|reset|select|submit)/gi"+
+                        ",'$1-$2')"+
+                        ".replace("+
+                           "/(<\\s*?\\\\?\\s*?\\/?\\s*?)(script(?=[\\s>]))/ig"+
+                        ",'$1no$2')"
+                     :"")+
+            
                   "};"+
                "return f"+
             "}"

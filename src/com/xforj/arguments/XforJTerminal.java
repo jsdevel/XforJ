@@ -18,6 +18,7 @@ public class XforJTerminal {
       boolean debug=false;
       boolean warn=false;
       boolean removelogs=true;
+      boolean escapexss=true;
       if(__showHelpOnNoArgs && args.length == 0){
          System.out.print(XforJHelp.getHelpMenu());
          System.exit(0);
@@ -65,6 +66,10 @@ public class XforJTerminal {
             removelogs = getBoolean(val);
             continue;
          }
+         if("--escape-xss".equals(key)){
+            escapexss = getBoolean(val);
+            continue;
+         }
          throw new IllegalArgumentException("Unknown argument: "+key);
       }
       if(i - len != 0){
@@ -82,7 +87,8 @@ public class XforJTerminal {
             normalizespace,
             debug,
             warn,
-            removelogs
+            removelogs,
+            escapexss
       );
    }
    public static final String getPath(String path){
