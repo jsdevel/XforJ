@@ -67,8 +67,8 @@ public class ProductionContext {
       removeLogs=arguments.getRemovelogs();
       escapexss=arguments.getEscapexss();
 
-      declaredNamespaces = new HashMap();
-      importedFiles = new HashMap();
+      declaredNamespaces = new HashMap<String, Boolean>();
+      importedFiles = new HashMap<String, Boolean>();
 
       callManager = new CallManager();
       //parameters

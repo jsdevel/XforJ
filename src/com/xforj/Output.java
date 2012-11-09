@@ -23,7 +23,7 @@ import java.util.List;
  * @author Joseph Spencer
  */
 public class Output {
-   private List<Object> nodes = new ArrayList();
+   private List<Object> nodes = new ArrayList<Object>();
    
    public Output prepend(Object obj){
       nodes.add(obj);
