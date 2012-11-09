@@ -15,12 +15,17 @@
  */
 package com.xforj;
 
-import com.xforj.arguments.*;
+import com.xforj.arguments.XforJArguments;
+import com.xforj.arguments.XforJTerminal;
 import com.xforj.productions.ProductionContext;
-import java.io.*;
-import java.util.*;
+import java.io.File;
+import java.io.IOException;
+import java.util.Arrays;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Iterator;
+import java.util.Set;
+
 
 /**
  *
@@ -53,7 +58,9 @@ public class XforJ extends LOGGER implements Characters {
    }
 
    private static void handleGeneralError(Throwable exc){
-      out("FAILED FOR THE FOLLOWING REASON:\n");
+      out("===============================");
+      out("FAILED FOR THE FOLLOWING REASON");
+      out("===============================");
       out(exc.getMessage());
       System.exit(UNABLE_TO_PARSE_FILE);
    }
@@ -111,8 +118,8 @@ public class XforJ extends LOGGER implements Characters {
                      outputDirectoryPath+=File.separator;
                   }
 
-                  debug(" InputDirectoryPath: "+inputDirectoryPath);
-                  debug("OutputDirectoryPath: "+outputDirectoryPath);
+                  debug("InputDirectoryPath:\n   "+inputDirectoryPath);
+                  debug("OutputDirectoryPath:\n   "+outputDirectoryPath);
 
                   Iterator<File> files = arguments.getInputfiles().iterator(); 
                   while(files.hasNext()){
@@ -123,8 +130,8 @@ public class XforJ extends LOGGER implements Characters {
                            outputDirectoryPath
                      ).replaceFirst("\\.xforj$", ".js");
 
-                     debug("File to compile:\n"+pathOfFileToCompile);
-                     debug("    Target File:\n"+pathOfTargetFile);
+                     debug("File to compile:\n   "+pathOfFileToCompile);
+                     debug("Target File:\n   "+pathOfTargetFile);
 
                      if(!pathOfFileToCompile.startsWith(inputDirectoryPath)){
                         throw new IOException(
@@ -190,14 +197,14 @@ public class XforJ extends LOGGER implements Characters {
       }
 
       if(compiledNewFiles.contains(compiledKey)){
-         out("Ignoring: "+compiledKey+".\n   It has already been built.");
+         out("Ignoring:\n   "+compiledKey+"\n   It has already been built.");
       } else {
          compiledNewFiles.add(compiledKey);
          String output = compileFile(input, new ProductionContext(input, arguments)).toString();
          MainUtil.putString(outFile, output);
 
-         out("Compiled: "+inputFilePath);
-         out("      To: "+outputFilePath);
+         out("Compiled:\n   "+inputFilePath);
+         out("To:\n   "+outputFilePath);
       }
    }
 
@@ -232,9 +239,9 @@ public class XforJ extends LOGGER implements Characters {
    }
 
    private static void logException(File file, Exception exc, CharWrapper wrapper){
-      String message= "Unable to parse \""+
+      String message= "Unable to parse:\n"+
             file.getAbsolutePath()+
-            "\" for the following reason:\n"+
+            "\nFor the following reason:\n"+
             exc.getMessage();
       if(wrapper!=null){
          message+="\n"+wrapper.getErrorLocation();
