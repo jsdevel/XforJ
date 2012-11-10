@@ -25,7 +25,7 @@ public interface Characters {
    //SEQUENCES
    Pattern CONTEXT_STATIC_REFINEMENT_NAMESPACE = Pattern.compile("^(\\s*+(?:[a-zA-Z$_][a-zA-Z0-9$_]*+\\s*+\\.)*+\\s*+[a-zA-Z$_][a-zA-Z0-9$_]*+\\s*).*+");
    Pattern IMPORT_PATH = Pattern.compile("^((?:\\\\\\}|[^\\}])++).*+");
-   Pattern INPUT_TOKENS = Pattern.compile("^([^\\{]++).*+");
+   Pattern INPUT_TOKENS = Pattern.compile("^((?:\\\\\\{|[^\\{])++).*+");
    Pattern NAME = Pattern.compile("^([a-zA-Z$_][a-zA-Z0-9$_]*+).*+");
    Pattern NS = Pattern.compile("^([a-zA-Z0-9$_][a-zA-Z0-9$_]*+(?:\\.[a-zA-Z$_][a-zA-Z0-9$_]*+)*+).*+");
    Pattern NS_FORCED = Pattern.compile("^([a-zA-Z0-9$_][a-zA-Z0-9$_]*+(?:\\.[a-zA-Z$_][a-zA-Z0-9$_]*+)++).*+");
