@@ -16,6 +16,8 @@ public class XforJArguments {
    private boolean debug=false;
    private boolean warn=false;
    private boolean removelogs=true;
+   private boolean useexternal=false;
+   private File outputlibrary=null;
    private boolean escapexss=true;
 
    public XforJArguments(
@@ -31,6 +33,8 @@ public class XforJArguments {
       final boolean debug,
       final boolean warn,
       final boolean removelogs,
+      final boolean useexternal,
+      final File outputlibrary,
       final boolean escapexss
    ) throws Throwable {
       if(inputfile!=null && inputfile.exists() && !inputfile.canWrite()) {
@@ -67,6 +71,8 @@ public class XforJArguments {
       this.debug=debug;
       this.warn=warn;
       this.removelogs=removelogs;
+      this.useexternal=useexternal;
+      this.outputlibrary=outputlibrary;
       this.escapexss=escapexss;
    }
 
@@ -141,6 +147,18 @@ public class XforJArguments {
    }
    public boolean hasRemovelogs(){
       return removelogs;
+   }
+   public boolean getUseexternal(){
+      return useexternal;
+   }
+   public boolean hasUseexternal(){
+      return useexternal;
+   }
+   public File getOutputlibrary(){
+      return outputlibrary;
+   }
+   public boolean hasOutputlibrary(){
+      return outputlibrary!=null;
    }
    public boolean getEscapexss(){
       return escapexss;

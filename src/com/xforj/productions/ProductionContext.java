@@ -17,6 +17,7 @@ package com.xforj.productions;
 
 import com.xforj.*;
 import com.xforj.arguments.*;
+import com.xforj.javascript.*;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -48,16 +49,19 @@ public class ProductionContext {
    final private JSArgumentsWrapper argsWrapper;
    final private JSParameters params;
    final public CallManager callManager;
+   final public JavascriptBuilder jsCode;
 
    public ProductionContext(
       File currentFile, 
-      XforJArguments arguments
+      XforJArguments arguments,
+      JavascriptBuilder javascriptBuilder
    ){
       stripNewLines=arguments.getNormalizespace();
       minifyHTML=arguments.getMinifyhtml();
       assignTemplatesGlobally=arguments.getGlobal();
       removeLogs=arguments.getRemovelogs();
       escapexss=arguments.getEscapexss();
+      jsCode=javascriptBuilder;
 
       declaredNamespaces = new HashMap<String, Boolean>();
       importedFiles = new HashMap<String, Boolean>();
@@ -82,6 +86,7 @@ public class ProductionContext {
       assignTemplatesGlobally=previousContext.assignTemplatesGlobally;
       removeLogs=previousContext.removeLogs;
       escapexss=previousContext.escapexss;
+      jsCode=previousContext.jsCode;
 
       declaredNamespaces=previousContext.declaredNamespaces;
       importedFiles=previousContext.importedFiles;

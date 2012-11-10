@@ -17,6 +17,7 @@ package com.xforj;
 
 import com.xforj.arguments.XforJArguments;
 import com.xforj.arguments.XforJTerminal;
+import com.xforj.javascript.*;
 import com.xforj.productions.ProductionContext;
 import java.io.File;
 import java.io.IOException;
@@ -43,14 +44,22 @@ public class XforJ extends LOGGER implements Characters {
       try {
          XforJArguments arguments = XforJTerminal.getArguments(args);
 
-         //If either are null throw an exception.
-         if(!arguments.hasInputfile() || !arguments.hasOutputfile()){
-            throw new Exception("Both an input file and an output file must be given.");
-         }
+         //We don't compile if they want the lib.
+         if(arguments.hasOutputlibrary()){
+            JavascriptBuilder jsBuilder = JavascriptBuilder.getInstance(arguments);
+            File output = arguments.getOutputlibrary();
+            String jsBuilderContents = jsBuilder.getLibrary();
+            MainUtil.putString(output, jsBuilderContents);
 
-         long before = new Date().getTime();
-         startCompiling(arguments);
-         out("Time taken: "+Long.toString(new Date().getTime() - before) + "ms");
+         } else {
+            if((!arguments.hasInputfile() || !arguments.hasOutputfile())){
+               //If either are null throw an exception, unless they specify the output of external library.
+               throw new Exception("Both an input file and an output file must be given.");
+            }
+            long before = new Date().getTime();
+            startCompiling(arguments);
+            out("Time taken: "+Long.toString(new Date().getTime() - before) + "ms");
+         }
       } catch(Throwable exc) {
          handleGeneralError(exc);
       }
@@ -201,7 +210,13 @@ public class XforJ extends LOGGER implements Characters {
          out("Ignoring:\n   "+compiledKey+"\n   It has already been built.");
       } else {
          compiledNewFiles.add(compiledKey);
-         String output = compileFile(input, new ProductionContext(input, arguments)).toString();
+         JavascriptBuilder jsBuilder = JavascriptBuilder.getInstance(arguments);
+         ProductionContext context = new ProductionContext(input, arguments, jsBuilder);
+
+         String output = compileFile(
+            input, 
+            context
+         ).toString();
          MainUtil.putString(outFile, output);
 
          out("Compiled:\n   "+inputFilePath);

@@ -18,6 +18,8 @@ public class XforJTerminal {
       boolean debug=false;
       boolean warn=false;
       boolean removelogs=true;
+      boolean useexternal=false;
+      File outputlibrary=null;
       boolean escapexss=true;
       if(__showHelpOnNoArgs && args.length == 0){
          System.out.print(XforJHelp.getHelpMenu());
@@ -66,6 +68,15 @@ public class XforJTerminal {
             removelogs = getBoolean(val);
             continue;
          }
+         if("--use-external".equals(key)){
+            useexternal = getBoolean(val);
+            continue;
+         }
+         if("--output-library".equals(key)){
+            String newPath = getPath(val);
+            outputlibrary = new File(newPath);
+            continue;
+         }
          if("--escape-xss".equals(key)){
             escapexss = getBoolean(val);
             continue;
@@ -88,6 +99,8 @@ public class XforJTerminal {
             debug,
             warn,
             removelogs,
+            useexternal,
+            outputlibrary,
             escapexss
       );
    }

@@ -68,33 +68,7 @@ public class Program extends Production {
             prepend(context.getArgumentsWrapper()).
          prepend(");");
          globalParams.put(js_StringBuffer, 
-            //StringBuffer
-            "function(){"+
-               "var r=[],i=0,t='number string boolean',f="+
-                  "function(s){"+
-                     "var y,v;"+
-                     "try{"+
-                        "v=s();"+
-                     "}catch(e){"+
-                        "v=s;"+
-                     "}"+
-                     "y=typeof(v);"+
-                     "r[i++]=(t.indexOf(y)>-1)?v:''"+
-                  "};"+
-                  "f.s=function(){"+
-                     "return r.join('')"+
-                     (context.escapexss?
-                        ".replace("+
-                           "/(on)(mouse(?:over|up|down|out|move)|focus|(?:dbl)?click|key(?:down|press|up)|abort|error|resize|scroll|(?:un)?load|blur|change|focus|reset|select|submit)/gi"+
-                        ",'$1-$2')"+
-                        ".replace("+
-                           "/(<\\s*?\\\\?\\s*?\\/?\\s*?)(script(?=[\\s>]))/ig"+
-                        ",'$1no$2')"
-                     :"")+
-            
-                  "};"+
-               "return f"+
-            "}"
+            context.jsCode.getJSStringBuffer()
          ).put(
             js_TemplateBasket, 
             (
@@ -103,7 +77,7 @@ public class Program extends Production {
                   "{}"
             )
          ).put(js_SafeValue, 
-            "function(v){try{return v()}catch(e){return typeof(v)==='function'?void(0):v}}"
+            context.jsCode.getJSSafeValue()
          );
       }
    }

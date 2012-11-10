@@ -51,59 +51,10 @@ public class ForeachStatement extends AbstractConditionBlock {
             prepend(");");
       context.getParams().
       put(js_foreach, //Foreach
-        /*
-         * Foreach assumes that context is the output of GetSortArray.
-         * The Function itself accepts the following params:
-         * obj, callback, [sort order], [sort promoteNumbers].
-         * 
-         * The callback is called with the following params:
-         * function(context, position, last, name){
-         * 
-         * }
-         */
-         "function(o,c,so,n){"+
-            "var i=0,l,m;"+
-            "if(!!o&&typeof(o)==='object'&&typeof(c)==='function'){"+
-               "l=o.length;"+
-               "if(so!==void(0))o.sort("+
-                  "function(c,d){"+
-                     "var a=c.k,b=d.k,at=typeof(a),bt=typeof(b);"+
-                     "if(a===b)return 0;"+
-                     "if(at===bt)return (!!so?a<b:a>b)?-1:1;"+
-                     "return (!!n?at<bt:at>bt)?-1:1"+
-                  "}"+
-               ");"+
-               "for(;i<l;i++){"+
-                  "m=o[i];"+
-                  "c(m.c, i+1, o.length, m.n)"+
-               "}"+
-            "}"+
-         "}"
+         context.jsCode.getJSForeach()
       ).
       put(js_GetSortArray,
-         "function(l,s,i){"+
-            "var r=[],a,v,o;"+
-            "try{o=l()}catch(e){o=l}"+
-            "if(!!o&&typeof(o)==='object'){"+
-               "for(a in o){"+
-                  "try{"+
-                     "v=s(o[a]);"+
-                     "r.push({"+
-                        "n:a,"+//name
-                        "c:o[a],"+//context
-                        "k:typeof(v)==='string'&&i?v.toLowerCase():v"+//key.  Used by the sort algorithm in foreach.
-                     "});"+
-                  "} catch(e){"+
-                     "r.push({"+
-                        "n:a,"+
-                        "c:o[a],"+
-                        "k:\"\""+
-                     "});"+
-                  "}"+
-               "}"+
-            "}"+
-            "return r"+
-         "}"      
+         context.jsCode.getJSSortArray()    
       );      
    }
 

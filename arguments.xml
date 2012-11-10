@@ -134,6 +134,23 @@ the output.
       description="Removes any log elements from compilation."
       type="boolean"
       />
+   <argument
+      name="--use-external"
+      default="false"
+      description="When enabled, the internal functions used by xforj output will not be included.  It is then
+necessary to load a seperate js library.  The library can be generated from the terminal by specifying: --create-library true."
+      type="boolean"
+      />
+   <argument
+      name="--output-library"
+      default="false"
+      description="
+Use this option to create the external XforJ library that is needed when specifying --use-external true.\n
+When this is enabled, XforJ will not perform any compiling.
+"
+      overwrite="false"
+      type="file"
+      />
 
    <argument
       name="--escape-xss"

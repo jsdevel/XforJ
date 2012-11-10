@@ -41,29 +41,7 @@ public class SortStatement extends Production {
 
       context.getParams().
       put(js_GetSortArray,
-         "function(l,s,i){"+
-            "var r=[],a,v,o;"+
-            "try{o=l()}catch(e){o=l}"+
-            "if(!!o&&typeof(o)==='object'){"+
-               "for(a in o){"+
-                  "try{"+
-                     "v=s(o[a]);"+
-                     "r.push({"+
-                        "n:a,"+//name
-                        "c:o[a],"+//context
-                        "k:typeof(v)==='string'&&i?v.toLowerCase():v"+//key.  Used by the sort algorithm in foreach.
-                     "});"+
-                  "} catch(e){"+
-                     "r.push({"+
-                        "n:a,"+
-                        "c:o[a],"+
-                        "k:''"+
-                     "});"+
-                  "}"+
-               "}"+
-            "}"+
-            "return r"+
-         "}"      
+         context.jsCode.getJSSortArray()      
       );
    }
 

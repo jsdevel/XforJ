@@ -123,22 +123,7 @@ public class VariableValue extends GlobalVariableValue {
    private void addCountFunctionToGlobalParams(ProductionContext context){
       context.getParams().
       put(js_CountElements,               
-         //CountElements
-         "function(f){"+
-            "var o,"+
-            "c=0,"+
-            "n;"+
-            "try{o=f()}catch(e){o=f}"+
-            "if(!!o && typeof(o)==='object'){"+
-               "if(o.slice&&o.join&&o.pop){"+
-                  "return o.length>>>0;"+
-               "}else{"+
-                  "for(n in o){"+
-                     "c++;"+
-                  "}"+
-               "}"+
-            "}"+
-            "return c"+
-         "}");   
+         context.jsCode.getJSCount()
+      );   
    }
 }

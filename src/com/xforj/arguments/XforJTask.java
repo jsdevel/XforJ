@@ -22,6 +22,8 @@ public class XforJTask extends Task {
    private boolean debug=false;
    private boolean warn=false;
    private boolean removelogs=true;
+   private boolean useexternal=false;
+   private File outputlibrary=null;
    private boolean escapexss=true;
    @Override
    public void execute() throws BuildException {
@@ -39,6 +41,8 @@ public class XforJTask extends Task {
             debug,
             warn,
             removelogs,
+            useexternal,
+            outputlibrary,
             escapexss
          ));
       } catch (Throwable exc) {
@@ -88,6 +92,12 @@ public class XforJTask extends Task {
    }
    public void setRemovelogs(boolean removelogs){
       this.removelogs=removelogs;
+   }
+   public void setUseexternal(boolean useexternal){
+      this.useexternal=useexternal;
+   }
+   public void setOutputlibrary(File outputlibrary){
+      this.outputlibrary=outputlibrary;
    }
    public void setEscapexss(boolean escapexss){
       this.escapexss=escapexss;
