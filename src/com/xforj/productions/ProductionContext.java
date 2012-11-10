@@ -15,15 +15,7 @@
  */
 package com.xforj.productions;
 
-import com.xforj.CallManager;
-import com.xforj.CharWrapper;
-import com.xforj.JSArgumentsWrapper;
-import com.xforj.JSParameters;
-import com.xforj.JSParametersWrapper;
-import com.xforj.LOGGER;
-import com.xforj.Output;
-import com.xforj.VariableOutput;
-import com.xforj.XforJ;
+import com.xforj.*;
 import com.xforj.arguments.*;
 import java.io.File;
 import java.util.ArrayList;
@@ -132,6 +124,10 @@ public class ProductionContext {
    public Output importFile(String path) throws Exception {
       File targetFile = new File(path);
       String absolutePath = targetFile.getCanonicalPath();
+
+      if(!absolutePath.endsWith(Characters.extension_xforj)){
+         throw new IllegalArgumentException("Imported files must end with a .xforj extension.");
+      }
 
       LOGGER.debug("Import request: "+path);
       LOGGER.debug("Actual file path: "+absolutePath);
