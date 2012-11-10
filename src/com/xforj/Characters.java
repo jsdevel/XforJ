@@ -116,4 +116,9 @@ public interface Characters {
    final String js_TemplateBasket="B";
    final String js_SafeValue="f";
    /**/
+
+
+   /*FILE EXTENSIONS*/
+   final String extension_js = ".js";
+   final String extension_xforj = ".xforj";
 }

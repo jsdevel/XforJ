@@ -129,7 +129,7 @@ public class XforJ extends LOGGER implements Characters {
                      String pathOfTargetFile = pathOfFileToCompile.replace(
                            inputDirectoryPath, 
                            outputDirectoryPath
-                     ).replaceFirst("\\.xforj$", ".js");
+                     ).replaceFirst("\\.xforj$", extension_js);
 
                      debug("File to compile:\n   "+pathOfFileToCompile);
                      debug("Target File:\n   "+pathOfTargetFile);
@@ -184,10 +184,10 @@ public class XforJ extends LOGGER implements Characters {
       }
 
       //Now check to make sure that the appropriate file extensions are used
-      if(!inputFilePath.endsWith(".xforj")){
+      if(!inputFilePath.endsWith(extension_xforj)){
          throw new IOException("The following input file does not end with a .xforj extension:\n"+inputFilePath);
       }
-      if(!outputFilePath.endsWith(".js")){
+      if(!outputFilePath.endsWith(extension_js)){
          throw new IOException("The following target file does not end with a .js extension:\n"+outputFilePath);
       }
 
