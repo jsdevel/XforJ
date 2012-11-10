@@ -95,8 +95,17 @@ public class ContextSelector extends Production {
          if(match.find()){
             hasContextSelector=true;
             String namesp = match.group(1);
+
+            //Make sure it doesn't start with a reserved word.
+            Matcher potentialReservedWord = RESERVED_WORDS.matcher(namesp);
+            if(potentialReservedWord.find()){
+               throw new Exception("Unexpected Reserved Word: "+potentialReservedWord.group(1));
+            }
+
+            //now shift the selector from the input
             characters.shift(namesp.length());
-            //name
+
+            //we need to add the context variable to the beginning the first time
             if(!contextHasBeenPrependedToOutput){
                contextHasBeenPrependedToOutput=true;
                contextSelectorOutput.prepend(js_context);

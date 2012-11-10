@@ -36,6 +36,9 @@ public interface Characters {
    Pattern SPACE_PRECEDING_CURLY = Pattern.compile("^(\\s++)(?=\\{).*+");
 
    //RESERVED WORDS
+   Pattern RESERVED_WORDS = Pattern.compile("^(call|choose|foreach|if|import|log|namespace|otherwise|param|sort|template|text|var|when)"+notName+".*+");
+
+   //STATEMENT PATTERNS
    Pattern CALL = Pattern.compile("^(\\{call"+notName+").*+");
    Pattern CALL_CLOSING = Pattern.compile("^(\\{/call\\}).*+");
    Pattern CHOOSE = Pattern.compile("^(\\{choose\\}).*+");
