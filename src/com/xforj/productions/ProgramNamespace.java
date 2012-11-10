@@ -81,8 +81,6 @@ public class ProgramNamespace extends Production {
                } else {
                   extraExcMsg="  Invalid character found after namespace value.";
                }
-            } else {
-               extraExcMsg="  Namespaces must appear first.";
             }
          }
       }
