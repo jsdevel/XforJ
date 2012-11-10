@@ -52,7 +52,7 @@ ImportStatements:
    ImportStatements + ImportStatement
 
 ImportStatement:
-   '{import ' + @"NonProtocolFilePath" + '}'
+   '{import ' + /(?:\\\|[^}])+/@"NonProtocolFilePath" + '}'
 
 GlobalVariableDeclarations:
    GlobalVariableDeclaration
