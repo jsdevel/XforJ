@@ -45,14 +45,14 @@ public class JavascriptBuilder {
    private final String js_count;
 
    private JavascriptBuilder(XforJArguments arguments){ 
-      String stringBuilderFile = MainUtil.getResourceFileContents("/com/xforj/javascript/StringBuffer.js");
+      String stringBufferFile = MainUtil.getResourceFileContents("/com/xforj/javascript/StringBuffer.js");
       String XforJLibContents="";
       if(!arguments.getEscapexss()){
-         stringBuilderFile = stringBuilderFile.replaceFirst("/\\*escapexss\\*/(?:(?!/\\*/escapexss\\*/)[\\s\\S])*+/\\*/escapexss\\*/", "");
+         stringBufferFile = stringBufferFile.replaceFirst("/\\*escapexss\\*/(?:(?!/\\*/escapexss\\*/)[\\s\\S])*+/\\*/escapexss\\*/", "");
       }
 
       if(arguments.hasOutputlibrary() || !arguments.getUseexternal()){
-         js_stringBuffer_fn=clean(stringBuilderFile);
+         js_stringBuffer_fn=clean(stringBufferFile);
          js_safeValue_fn = clean(MainUtil.getResourceFileContents("/com/xforj/javascript/SafeValue.js"));
          js_sortArray_fn = clean(MainUtil.getResourceFileContents("/com/xforj/javascript/GetSortArray.js"));
          js_foreach_fn = clean(MainUtil.getResourceFileContents("/com/xforj/javascript/Foreach.js"));
