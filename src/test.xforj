@@ -1,0 +1,39 @@
+{namespace people.cousins}
+
+{template show}
+   {param tryMe false}
+   {var numberOfCousins count(cousins)}
+
+   <h1>Hello there!</h1>
+   <p>Try passing in some paramaters.  You can do so by giving an object map
+      as the second argument.</p>
+
+   {if @tryMe}
+      {text}It works!!!!.  You can pass params as an object via the 
+      second argument to the template.{/text}
+   {/if}
+
+   {choose}
+      {when @numberOfCousins >= 1}
+         <h1>Total number of Cousins: {@numberOfCousins}</h1>
+         {foreach current().cousins}
+            {sort name asc|in}
+
+            {var naba 5}
+            {var dobo @numberOfCousins}
+            <h2>Cousin #{position()}: {name}</h2>
+            {if hobbies}
+            <ul>
+               {foreach hobbies}
+                  {sort current() desc|in}
+                  <li>{current()}</li>
+               {/foreach}
+            </ul>
+            {/if}
+         {/foreach}
+      {/when}
+      {otherwise}
+         <h1>You have no cousins</h1>
+      {/otherwise}
+   {/choose}
+{/template}
