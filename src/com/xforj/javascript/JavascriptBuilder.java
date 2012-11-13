@@ -47,37 +47,38 @@ public class JavascriptBuilder {
    private JavascriptBuilder(XforJArguments arguments){ 
       //getResourceFileContents was causing issues.
       //String stringBufferFile = MainUtil.getResourceFileContents("/com/xforj/javascript/StringBuffer.js");
-      String stringBufferFile =  "function(){"+
-                                 "var r=[],"+
-                                 "i=0,"+
-                                 "t='number string boolean',"+
-                                 "f=function(s){"+
-                                 "var y,v;"+
-                                 "try{"+
-                                 "v=s();"+
-                                 "}catch(e){"+
-                                 "v=s;"+
-                                 "}"+
-                                 "y=typeof(v);"+
-                                 "r[i++]=(t.indexOf(y)>-1)?v:''"+
-                                 "};"+
-                                 "f.s=function(){"+
-                                 "return r.join('')"+
-                                 (arguments.getEscapexss()?
-                                    ".replace("+
-                                    "/(on)(mouse(?:over|up|down|out|move)|focus|(?:dbl)?click|key(?:down|press|up)|abort|error|resize|scroll|(?:un)?load|blur|change|focus|reset|select|submit)/gi"+
-                                    ",'$1-$2')"+
-                                    ".replace("+
-                                    "/(<\\s*?\\?\\s*?\\/?\\s*?)(script(?=[\\s>]))/ig"+
-                                    ",'$1no$2')"
-                                 :"")+
-                                 "};"+
-                                 "return f"+
-                                 "}";
+      String stringBufferFile =  
+         "function(){"+
+            "var r=[],"+
+               "i=0,"+
+               "t='number string boolean',"+
+               "f=function(s){"+
+                  "var y,v;"+
+                  "try{"+
+                     "v=s();"+
+                  "}catch(e){"+
+                     "v=s;"+
+                  "}"+
+                  "y=typeof(v);"+
+                  "r[i++]=(t.indexOf(y)>-1)?v:''"+
+               "};"+
+            "f.s=function(){"+
+               "return r.join('')"+
+               (arguments.getEscapexss()?
+                  ".replace("+
+                  "/(on)(mouse(?:over|up|down|out|move)|focus|(?:dbl)?click|key(?:down|press|up)|abort|error|resize|scroll|(?:un)?load|blur|change|focus|reset|select|submit)/gi"+
+                  ",'$1-$2')"+
+                  ".replace("+
+                  "/(<\\s*?\\?\\s*?\\/?\\s*?)(script(?=[\\s>]))/ig"+
+                  ",'$1no$2')"
+               :"")+
+            "};"+
+            "return f"+
+         "}";
       String XforJLibContents="";
-      if(!arguments.getEscapexss()){
-         stringBufferFile = stringBufferFile.replaceFirst("/\\*escapexss\\*/(?:(?!/\\*/escapexss\\*/)[\\s\\S])*+/\\*/escapexss\\*/", "");
-      }
+      //if(!arguments.getEscapexss()){
+         //stringBufferFile = stringBufferFile.replaceFirst("/\\*escapexss\\*/(?:(?!/\\*/escapexss\\*/)[\\s\\S])*+/\\*/escapexss\\*/", "");
+      //}
 
       if(arguments.hasOutputlibrary() || !arguments.getUseexternal()){
          js_stringBuffer_fn=clean(stringBufferFile);
@@ -97,65 +98,65 @@ public class JavascriptBuilder {
          );
          js_sortArray_fn = clean(
             "function(l,s,i){"+
-            "var r=[],a,v,o;"+
-            "try{o=l()}catch(e){o=l}"+
-            "if(!!o&&typeof(o)==='object'){"+
-            "for(a in o){"+
-            "try{"+
-            "v=s(o[a]);"+
-            "r.push({"+
-            "n:a,"+//name"+
-            "c:o[a],"+//context"+
-            "k:typeof(v)==='string'&&i?v.toLowerCase():v"+////key.  Used by the sort algorithm in foreach."+
-            "});"+
-            "} catch(e){"+
-            "r.push({"+
-            "n:a,"+
-            "c:o[a],"+
-            "k:''"+
-            "});"+
-            "}"+
-            "}"+
-            "}"+
-            "return r"+
+               "var r=[],a,v,o;"+
+               "try{o=l()}catch(e){o=l}"+
+               "if(!!o&&typeof(o)==='object'){"+
+                  "for(a in o){"+
+                     "try{"+
+                        "v=s(o[a]);"+
+                        "r.push({"+
+                           "n:a,"+//name"+
+                           "c:o[a],"+//context"+
+                           "k:typeof(v)==='string'&&i?v.toLowerCase():v"+////key.  Used by the sort algorithm in foreach."+
+                        "});"+
+                     "} catch(e){"+
+                        "r.push({"+
+                           "n:a,"+
+                           "c:o[a],"+
+                           "k:''"+
+                        "});"+
+                     "}"+
+                  "}"+
+               "}"+
+               "return r"+
             "}"         
          );
          js_foreach_fn = clean(
             "function(o,c,so,n){"+
-            "var i=0,l,m;"+
-            "if(!!o&&typeof(o)==='object'&&typeof(c)==='function'){"+
-            "l=o.length;"+
-            "if(so!==void(0))o.sort("+
-            "function(c,d){"+
-            "var a=c.k,b=d.k,at=typeof(a),bt=typeof(b);"+
-            "if(a===b)return 0;"+
-            "if(at===bt)return (!!so?a<b:a>b)?-1:1;"+
-            "return (!!n?at<bt:at>bt)?-1:1"+
-            "}"+
-            ");"+
-            "for(;i<l;i++){"+
-            "m=o[i];"+
-            "c(m.c, i+1, o.length, m.n)"+
-            "}"+
-            "}"+
+               "var i=0,l,m;"+
+               "if(!!o&&typeof(o)==='object'&&typeof(c)==='function'){"+
+                  "l=o.length;"+
+                  "if(so!==void(0))o.sort("+
+                     "function(c,d){"+
+                        "var a=c.k,b=d.k,at=typeof(a),bt=typeof(b);"+
+                        "if(a===b)return 0;"+
+                        "if(at===bt)return (!!so?a<b:a>b)?-1:1;"+
+                        "return (!!n?at<bt:at>bt)?-1:1"+
+                     "}"+
+                  ");"+
+                  "for(;i<l;i++){"+
+                     "m=o[i];"+
+                     "c(m.c, i+1, o.length, m.n)"+
+                  "}"+
+               "}"+
             "}"         
          );
          js_count_fn = clean(
             "function(f){"+
-            "var o,"+
-            "c=0,"+
-            "n;"+
-            "try{o=f()}catch(e){o=f}"+
-            "if(!!o && typeof(o)==='object'){"+
-            "if(o.slice&&o.join&&o.pop){"+
-            "return o.length>>>0;"+
-            "}else{"+
-            "for(n in o){"+
-            "c++;"+
-            "}"+
-            "}"+
-            "}"+
-            "return c"+
+               "var o,"+
+                  "c=0,"+
+                  "n;"+
+               "try{o=f()}catch(e){o=f}"+
+               "if(!!o && typeof(o)==='object'){"+
+                  "if(o.slice&&o.join&&o.pop){"+
+                     "return o.length>>>0;"+
+                  "}else{"+
+                     "for(n in o){"+
+                        "c++;"+
+                     "}"+
+                  "}"+
+               "}"+
+               "return c"+
             "}"         
          );
       } else {
