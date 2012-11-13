@@ -175,6 +175,7 @@ public class XforJ extends LOGGER implements Characters {
     * @throws Exception 
     */
    private static void compileNewFile(File input, File outFile, XforJArguments arguments) throws Exception {
+      debug("compileNewFile called.");
       String inputFilePath = input.getCanonicalPath();
       String outputFilePath = outFile.getCanonicalPath();
       
@@ -210,7 +211,9 @@ public class XforJ extends LOGGER implements Characters {
          out("Ignoring:\n   "+compiledKey+"\n   It has already been built.");
       } else {
          compiledNewFiles.add(compiledKey);
+         debug("Initializing JavascriptBuilder.");
          JavascriptBuilder jsBuilder = JavascriptBuilder.getInstance(arguments);
+         debug("Initializing new ProductionContext.");
          ProductionContext context = new ProductionContext(input, arguments, jsBuilder);
 
          String output = compileFile(
@@ -233,6 +236,7 @@ public class XforJ extends LOGGER implements Characters {
     */
    public static Output compileFile(File fileToCompile, ProductionContext context) {
       CharWrapper wrapper=null;
+      debug("compileFile called.");
 
       try{
          char[] chars=MainUtil.getChars(fileToCompile);
