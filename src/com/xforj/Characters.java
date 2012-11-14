@@ -89,7 +89,7 @@ public interface Characters {
    final String js_currentNS="currentNS";
    final String js_data="data";
    final String js__data="_data";
-   final String js_foreach="Foreach";
+   final String js_Foreach="Foreach";
    final String js_GetSortArray="GetSortArray";
    final String js_last="last";
    final String js_name="name";
@@ -97,27 +97,29 @@ public interface Characters {
    final String js__params="_params";
    final String js_position="position";
    final String js_StringBuffer="StringBuffer";
-   final String js_TemplateBasket="TemplateBasket";
+   final String js_templateBasket="TemplateBasket";
    final String js_SafeValue="safeValue";*/
 
    /*MUNGED*/
    final String js_bld="b";
-   final String js_context="X";
+   final String js_context="x";
    final String js_count="T";
-   final String js_CountElements="C";
    final String js_currentNS="N";
    final String js_data="D";
    final String js__data="A";
-   final String js_foreach="F";
-   final String js_GetSortArray="G";
    final String js_last="L";
    final String js_name="n";
    final String js_params="P";
    final String js__params="M";
    final String js_position="O";
+   final String js_templateBasket="B";
+
+   final String js_CountElements="C";
+   final String js_EscapeXSS="X";
+   final String js_Foreach="F";
+   final String js_GetSortArray="G";
+   final String js_SafeValue="V";
    final String js_StringBuffer="S";
-   final String js_TemplateBasket="B";
-   final String js_SafeValue="f";
    /**/
 
 

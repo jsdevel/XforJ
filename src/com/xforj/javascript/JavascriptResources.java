@@ -1,0 +1,24 @@
+package com.xforj.javascript;
+public class JavascriptResources {
+   public static String getXforJLib(){
+      return "/* \n * Copyright 2012 Joseph Spencer.\n *\n * Licensed under the Apache License, Version 2.0 (the \"License\");\n * you may not use this file except in compliance with the License.\n * You may obtain a copy of the License at\n *\n *      http://www.apache.org/licenses/LICENSE-2.0\n *\n * Unless required by applicable law or agreed to in writing, software\n * distributed under the License is distributed on an \"AS IS\" BASIS,\n * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n * See the License for the specific language governing permissions and\n * limitations under the License.\n */\nxforj={\n   S:function(){var r=[],i=0,t='numberstringboolean',f=function(s){var y,v;try{v=s();}catch(e){v=s;}y=typeof(v);r[i++]=(t.indexOf(y)>-1)?v:''};f.s=function(){return r.join('')};return f},\n   f:function(v){try{return v()}catch(e){return typeof(v)==='function'?void(0):v}},\n   G:function(l,s,i){var r=[],a,v,o;try{o=l()}catch(e){o=l}if(!!o&&typeof(o)==='object'){for(a in o){try{v=s(o[a]);r.push({n:a,c:o[a],k:typeof(v)==='string'&&i?v.toLowerCase():v});}catch(e){r.push({n:a,c:o[a],k:''});}}}return r},\n   F:function(o,c,so,n){var i=0,l,m;if(!!o&&typeof(o)==='object'&&typeof(c)==='function'){l=o.length;if(so!==void(0))o.sort(function(c,d){var a=c.k,b=d.k,at=typeof(a),bt=typeof(b);if(a===b)return 0;if(at===bt)return (!!so?a<b:a>b)?-1:1;return (!!n?at<bt:at>bt)?-1:1});for(;i<l;i++){m=o[i];c(m.c,i+1,o.length,m.n)}}},\n   C:function(f){var o,c=0,n;try{o=f()}catch(e){o=f}if(!!o&&typeof(o)==='object'){if(o.slice&&o.join&&o.pop){return o.length>>>0;}else{for(n in o){c++;}}}return c}\n};\n\n";
+   }
+   public static String getStringBuffer(){
+      return "function(){var r=[],i=0,t='numberstringboolean',f=function(s){var y,v;try{v=s();}catch(e){v=s;}y=typeof(v);r[i++]=(t.indexOf(y)>-1)?v:''};f.s=function(){return r.join('')};return f}";
+   }
+   public static String getSafeValue(){
+      return "function(v){try{return v()}catch(e){return typeof(v)==='function'?void(0):v}}";
+   }
+   public static String getGetSortArray(){
+      return "function(l,s,i){var r=[],a,v,o;try{o=l()}catch(e){o=l}if(!!o&&typeof(o)==='object'){for(a in o){try{v=s(o[a]);r.push({n:a,c:o[a],k:typeof(v)==='string'&&i?v.toLowerCase():v});}catch(e){r.push({n:a,c:o[a],k:''});}}}return r}";
+   }
+   public static String getForeach(){
+      return "function(o,c,so,n){var i=0,l,m;if(!!o&&typeof(o)==='object'&&typeof(c)==='function'){l=o.length;if(so!==void(0))o.sort(function(c,d){var a=c.k,b=d.k,at=typeof(a),bt=typeof(b);if(a===b)return 0;if(at===bt)return (!!so?a<b:a>b)?-1:1;return (!!n?at<bt:at>bt)?-1:1});for(;i<l;i++){m=o[i];c(m.c,i+1,o.length,m.n)}}}";
+   }
+   public static String getCountElements(){
+      return "function(f){var o,c=0,n;try{o=f()}catch(e){o=f}if(!!o&&typeof(o)==='object'){if(o.slice&&o.join&&o.pop){return o.length>>>0;}else{for(n in o){c++;}}}return c}";
+   }
+   public static String getEscapeXSS(){
+      return "function(s){return s.replace(/(on)(mouse(?:over|up|down|out|move)|focus|(?:dbl)?click|key(?:down|press|up)|abort|error|resize|scroll|(?:un)?load|blur|change|focus|reset|select|submit)/gi,'$1-$2').replace(/(<\\s*?\\\\?\\s*?\\/?\\s*?)(script(?=[\\s>]))/ig,'$1some-$2')}";
+   }
+}

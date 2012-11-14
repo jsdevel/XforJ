@@ -30,7 +30,7 @@ public class ForeachStatement extends AbstractConditionBlock {
    public ForeachStatement(Output output, ProductionContext context) {
       super(output);
       output.
-         add(js_foreach+"(").
+         add(js_Foreach+"(").
                add(js_GetSortArray+"(").
                   add(expressionOutput).
                   add(sortContextOutput).
@@ -50,7 +50,7 @@ public class ForeachStatement extends AbstractConditionBlock {
                add(sortParamOutput).
             add(");");
       context.getParams().
-      put(js_foreach, //Foreach
+      put(js_Foreach, //Foreach
          context.jsCode.getJSForeach()
       ).
       put(js_GetSortArray,

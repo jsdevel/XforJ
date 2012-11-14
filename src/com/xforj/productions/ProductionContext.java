@@ -72,6 +72,10 @@ public class ProductionContext {
       paramsWrapper=new JSParametersWrapper(params);
       argsWrapper=new JSArgumentsWrapper(params);
 
+      if(escapexss){
+         params.put(Characters.js_EscapeXSS, jsCode.getJSEscapeXSS());
+      }
+
       currentProduction= new Program(output, currentVariableOutput, this, false);
       productionStack.add(currentProduction);
       this.currentFile = currentFile;

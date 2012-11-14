@@ -44,7 +44,7 @@ public class CallExpression extends Production {
             hasNamespace=true;
             String ns=match.group(1);
             characters.shift(ns.length());
-            namespaceOutput.add(js_TemplateBasket+"."+ns);
+            namespaceOutput.add(js_templateBasket+"."+ns);
             context.callManager.addCalledTemplate(ns);
          } else {
             match = characters.match(NAME);

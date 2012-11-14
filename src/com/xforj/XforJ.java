@@ -48,8 +48,7 @@ public class XforJ extends LOGGER implements Characters {
          if(arguments.hasOutputlibrary()){
             JavascriptBuilder jsBuilder = JavascriptBuilder.getInstance(arguments);
             File output = arguments.getOutputlibrary();
-            String jsBuilderContents = jsBuilder.getLibrary();
-            MainUtil.putString(output, jsBuilderContents);
+            MainUtil.putString(output, jsBuilder.getXforJLib());
 
          } else {
             if((!arguments.hasInputfile() || !arguments.hasOutputfile())){

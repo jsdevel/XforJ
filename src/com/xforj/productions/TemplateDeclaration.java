@@ -18,6 +18,7 @@ package com.xforj.productions;
 
 import com.xforj.Output;
 import com.xforj.CharWrapper;
+import com.xforj.javascript.*;
 import java.util.regex.Matcher;
 
 /**
@@ -66,7 +67,19 @@ public class TemplateDeclaration extends Production {
                      ).
                      add(context.getCurrentVariableOutput()).
                      add(templateBodyOutput).
-                     add("return "+js_bld+".s()};");
+
+                     add("return ");
+                     if(context.escapexss){
+                        output.add(js_EscapeXSS+"(");
+                     }
+
+                     output.add(js_bld+".s()");
+
+                     if(context.escapexss){
+                        output.add(")");
+                     }
+
+                     output.add("}");
 
                   if(characters.charAt(0) == '}'){
                      characters.shift(1);

@@ -54,7 +54,7 @@ public class ProgramNamespace extends Production {
                String nextNS="";
                String currentNS=null;
 
-               output.add("var "+js_currentNS+"="+js_TemplateBasket+";");
+               output.add("var "+js_currentNS+"="+js_templateBasket+";");
 
                int len = split.length;
                for(int i=0;i<len;i++){

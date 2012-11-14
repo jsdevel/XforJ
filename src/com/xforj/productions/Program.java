@@ -60,7 +60,7 @@ public class Program extends Production {
          output.add("})(").add(globalParamNames).add(");");
       } else {
          if(!context.assignTemplatesGlobally){
-            output.add("return "+js_TemplateBasket);
+            output.add("return "+js_templateBasket);
          }
 
          output.
@@ -70,7 +70,7 @@ public class Program extends Production {
          globalParams.put(js_StringBuffer, 
             context.jsCode.getJSStringBuffer()
          ).put(
-            js_TemplateBasket, 
+            js_templateBasket, 
             (
                context.assignTemplatesGlobally?
                   "(function(){return this})()":
