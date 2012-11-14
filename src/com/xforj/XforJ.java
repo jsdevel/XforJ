@@ -240,6 +240,9 @@ public class XforJ extends LOGGER implements Characters {
       try{
          char[] chars=MainUtil.getChars(fileToCompile);
 
+         if(!(chars.length > 0)){
+            throw new Exception("   .xforj files may not be empty.");
+         }
          CharWrapper characters = new CharWrapper(chars);
          wrapper=characters;
          while(characters.length() > 0){
