@@ -47,9 +47,10 @@ public class InputTokens extends Production {
 
          newTokens = context.escapeOutput(newTokens);
          output.add(js_bld+"('"+newTokens+"');");
-         return;
+         context.removeProduction();
+      } else {
+         throw new Exception("Invlid Character found while evaluating InputTokens.");
       }
-      context.removeProduction();
    }
 
 }

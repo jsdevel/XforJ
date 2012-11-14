@@ -43,7 +43,7 @@ public class ImportStatement extends Production {
             String importedPath = path.group(1);
             characters.shift(importedPath.length());
 
-            importedPath = importedPath.trim();//Remove leading / trailing whitespace.
+            importedPath = importedPath.trim().replaceAll("\\\\\\}", "\\}");//Remove leading / trailing whitespace.
 
             LOGGER.debug("Using given import path: '"+importedPath+"'.");
 

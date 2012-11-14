@@ -52,7 +52,7 @@ ImportStatements:
    ImportStatements + ImportStatement
 
 ImportStatement:
-   '{import ' + /(?:\\\|[^}])+/@"NonProtocolFilePath" + '}'
+   '{import ' + /(?:[^\\}\\\\]|\\\\[\\}\\\\])+/@"NonProtocolFilePath" + '}'
 
 GlobalVariableDeclarations:
    GlobalVariableDeclaration
@@ -181,7 +181,7 @@ TemplateBodyStatements:
    TemplateBody
 
 InputTokens:
-   /[^{]*/
+   /(?:[^\\{]|\\(?:\\|\{))++/
 
 LogStatement:
    '{log ' + VariableExpression + '}'
