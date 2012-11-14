@@ -28,11 +28,11 @@ public class IfStatement extends AbstractConditionBlock {
    public IfStatement(Output output) {
       super(output);
       output.
-         prepend("if(").
-         prepend(expressionOutput).
-         prepend("){").
-         prepend(bodyOutput).
-         prepend("}");
+         add("if(").
+         add(expressionOutput).
+         add("){").
+         add(bodyOutput).
+         add("}");
    }
 
    @Override

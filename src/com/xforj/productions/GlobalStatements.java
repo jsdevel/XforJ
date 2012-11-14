@@ -36,7 +36,7 @@ public class GlobalStatements extends Production {
       if(characters.charAt(0) == '{'){
          hasStatements=true;
          Output templateDeclarationOutput = new Output();
-         output.prepend(templateDeclarationOutput);
+         output.add(templateDeclarationOutput);
          context.addProduction(new TemplateDeclaration(templateDeclarationOutput)); 
       } else if(!characters.removeSpace()){
          throw new Exception("Invalid character found while evaluating GlobalStatements.");

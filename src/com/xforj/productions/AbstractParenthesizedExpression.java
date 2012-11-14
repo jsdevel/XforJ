@@ -26,10 +26,7 @@ public abstract class AbstractParenthesizedExpression extends Production {
    Output expressionOutput = new Output();
    public AbstractParenthesizedExpression(Output output) {
       super(output);
-      output.
-         prepend("(").
-         prepend(expressionOutput).
-         prepend(")");
+      output.add("(").add(expressionOutput).add(")");
    }
 
    private boolean hasExpression;

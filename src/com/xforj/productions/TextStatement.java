@@ -37,7 +37,7 @@ public class TextStatement extends Production {
       if(match.find()){
          String input = match.group(1);
          characters.shift(input.length());
-         output.prepend(js_bld+"('"+context.escapeOutput(input)+"');");
+         output.add(js_bld+"('"+context.escapeOutput(input)+"');");
       }
 
       //Make sure there's a closing tag and exit.

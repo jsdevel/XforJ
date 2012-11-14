@@ -30,9 +30,10 @@ public class ContextSelector extends Production {
       super(output);
       if(!nested){
          contextSelectorOutput=new Output();
-         output.prepend(js_SafeValue+"(function(){return "). 
-         prepend(contextSelectorOutput).
-         prepend("})");
+         output.
+            add(js_SafeValue+"(function(){return ").
+               add(contextSelectorOutput).
+            add("})");
       } else {
          contextSelectorOutput=output;
       }
@@ -59,7 +60,7 @@ public class ContextSelector extends Production {
          break;
       case '[':
          if(!hasContextSelector){
-            contextSelectorOutput.prepend(js_context);
+            contextSelectorOutput.add(js_context);
          }
          hasContextSelector=true;
          context.addProduction(new ContextDynamicRefinement(contextSelectorOutput));
@@ -73,7 +74,7 @@ public class ContextSelector extends Production {
             hasContextSelector=true;
             contextHasBeenPrependedToOutput=true;
             characters.shift(match.group(1).length());
-            contextSelectorOutput.prepend(js_context);
+            contextSelectorOutput.add(js_context);
             return;
          }
          //c could be a name start so we let it flow through.
@@ -108,10 +109,10 @@ public class ContextSelector extends Production {
             //we need to add the context variable to the beginning the first time
             if(!contextHasBeenPrependedToOutput){
                contextHasBeenPrependedToOutput=true;
-               contextSelectorOutput.prepend(js_context);
+               contextSelectorOutput.add(js_context);
             }
-            contextSelectorOutput.prepend(".");
-            contextSelectorOutput.prepend(namesp.replaceAll("\\s*+", ""));
+            contextSelectorOutput.add(".");
+            contextSelectorOutput.add(namesp.replaceAll("\\s*+", ""));
             return true;
          }
       }

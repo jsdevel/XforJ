@@ -40,7 +40,7 @@ public class Operator extends Production {
                characters.shift(1);
                value = value + "=";
             }
-            output.prepend(value);
+            output.add(value);
             context.removeProduction();
             return;
          }
@@ -53,7 +53,7 @@ public class Operator extends Production {
                characters.shift(1);
                value = value + "=";
             }
-            output.prepend(value);
+            output.add(value);
             context.removeProduction();
             return;
          }
@@ -61,7 +61,7 @@ public class Operator extends Production {
       case '|':
          if(characters.charAt(1) == '|'){
             characters.shift(2);
-            output.prepend("||");
+            output.add("||");
             context.removeProduction();
             return;
          }
@@ -69,7 +69,7 @@ public class Operator extends Production {
       case '&':
          if(characters.charAt(1) == '&'){
             characters.shift(2);
-            output.prepend("&&");
+            output.add("&&");
             context.removeProduction();
             return;
          }
@@ -77,7 +77,7 @@ public class Operator extends Production {
       case '<':
       case '>':
          if(characters.charAt(1) == '='){
-            output.prepend(characters.charAt(0)).prepend(characters.charAt(1));
+            output.add(characters.charAt(0)).add(characters.charAt(1));
             characters.shift(2);
             context.removeProduction();
             return;
@@ -87,7 +87,7 @@ public class Operator extends Production {
       case '%':
       case '*':
       case '/':
-         output.prepend(characters.charAt(0));
+         output.add(characters.charAt(0));
          characters.shift(1);
          context.removeProduction();
          return;

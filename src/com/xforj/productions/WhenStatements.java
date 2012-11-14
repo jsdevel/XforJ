@@ -42,7 +42,7 @@ public class WhenStatements extends Production {
             characters.shift(match.group(1).length());
             Output whenStatementOutput=new Output();
             context.addProduction(new WhenStatement(whenStatementOutput, hasWhen));
-            output.prepend(whenStatementOutput);
+            output.add(whenStatementOutput);
             hasWhen=true;
             return;
          } else {

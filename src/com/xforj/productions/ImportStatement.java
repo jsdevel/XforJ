@@ -75,7 +75,7 @@ public class ImportStatement extends Production {
             if(characters.charAt(0) == '}'){
                characters.shift(1);
                Output importFile = context.importFile(pathToUseForImport);
-               output.prepend(importFile);
+               output.add(importFile);
                context.removeProduction();
                return;
             }

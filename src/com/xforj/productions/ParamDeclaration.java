@@ -44,7 +44,7 @@ public class ParamDeclaration extends AbstractVariableDeclaration {
 
    @Override
    protected void doAssignment(String name, Output output) {
-      output.prepend(js_params+"."+name+"||");
+      output.add(js_params+"."+name+"||");
    }
 
    @Override

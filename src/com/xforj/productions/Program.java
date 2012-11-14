@@ -48,25 +48,25 @@ public class Program extends Production {
       JSParametersWrapper globalParamNames = context.getJSParametersWrapper();
 
       output.
-         prepend( "(function(").prepend(globalParamNames).prepend("){").
-            prepend(programNamespaceOutput).
-            prepend(importOutput).
-         prepend("(function(").prepend(globalParamNames).prepend("){").
-               prepend(variableOutput).
-               prepend(globalStatementsOutput).
-            prepend("})(").prepend(globalParamNames).prepend(");");
+         add( "(function(").add(globalParamNames).add("){").
+            add(programNamespaceOutput).
+            add(importOutput).
+         add("(function(").add(globalParamNames).add("){").
+               add(variableOutput).
+               add(globalStatementsOutput).
+            add("})(").add(globalParamNames).add(");");
 
       if(isNested){
-         output.prepend("})(").prepend(globalParamNames).prepend(");");
+         output.add("})(").add(globalParamNames).add(");");
       } else {
          if(!context.assignTemplatesGlobally){
-            output.prepend("return "+js_TemplateBasket);
+            output.add("return "+js_TemplateBasket);
          }
 
          output.
-         prepend("})(").
-            prepend(context.getArgumentsWrapper()).
-         prepend(");");
+         add("})(").
+            add(context.getArgumentsWrapper()).
+         add(");");
          globalParams.put(js_StringBuffer, 
             context.jsCode.getJSStringBuffer()
          ).put(
@@ -99,8 +99,7 @@ public class Program extends Production {
             if(characters.charAt(1) == 'i'){
                if(!hasGlobalVariableDeclarations){
                   Output importStatementsOutput = new Output();
-                  importOutput.
-                     prepend(importStatementsOutput);
+                  importOutput.add(importStatementsOutput);
                   context.addProduction(new ImportStatements(importStatementsOutput));
                   return;
                } else {

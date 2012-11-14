@@ -25,7 +25,7 @@ import java.util.List;
 public class Output {
    private List<Object> nodes = new ArrayList<Object>();
    
-   public Output prepend(Object obj){
+   public Output add(Object obj){
       nodes.add(obj);
       return this;
    }

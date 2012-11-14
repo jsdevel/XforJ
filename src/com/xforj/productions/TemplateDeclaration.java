@@ -55,7 +55,7 @@ public class TemplateDeclaration extends Production {
 
                   context.callManager.addDeclaredTemplate(context.getNS()+"."+nm);
                   output.
-                     prepend(
+                     add(
                         js_currentNS+"."+nm+"=function("+js__data+", "+js__params+"){"+
                            "var "+js_context+"="+js__data+"||{},"+
                               js_params+"="+js__params+"||{},"+
@@ -64,9 +64,9 @@ public class TemplateDeclaration extends Production {
                               js_name+"='',"+
                               js_position+"="+js_last+";"
                      ).
-                     prepend(context.getCurrentVariableOutput()).
-                     prepend(templateBodyOutput).
-                     prepend("return "+js_bld+".s()};");
+                     add(context.getCurrentVariableOutput()).
+                     add(templateBodyOutput).
+                     add("return "+js_bld+".s()};");
 
                   if(characters.charAt(0) == '}'){
                      characters.shift(1);

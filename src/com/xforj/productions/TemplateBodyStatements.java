@@ -65,7 +65,7 @@ public class TemplateBodyStatements extends Production {
                characters.shift(match.group(1).length());
                statementOutput=new Output();
                context.addProduction(new IfStatement(statementOutput));
-               output.prepend(statementOutput);
+               output.add(statementOutput);
                return;
             }
             break;
@@ -75,7 +75,7 @@ public class TemplateBodyStatements extends Production {
                characters.shift(match.group(1).length());
                statementOutput=new Output();
                context.addProduction(new LogStatement(statementOutput, context));
-               output.prepend(statementOutput);
+               output.add(statementOutput);
                return;
             }
             break;
@@ -85,7 +85,7 @@ public class TemplateBodyStatements extends Production {
                characters.shift(match.group(1).length());
                statementOutput= new Output();
                context.addProduction(new ChooseStatement(statementOutput));
-               output.prepend(statementOutput);
+               output.add(statementOutput);
                return;
             }
             match = characters.match(CALL);
@@ -93,7 +93,7 @@ public class TemplateBodyStatements extends Production {
                characters.shift(match.group(1).length());
                statementOutput= new Output();
                context.addProduction(new CallStatement(statementOutput));
-               output.prepend(statementOutput);
+               output.add(statementOutput);
                return;
             }
 
@@ -104,7 +104,7 @@ public class TemplateBodyStatements extends Production {
                characters.shift(match.group(1).length());
                statementOutput= new Output();
                context.addProduction(new ForeachStatement(statementOutput, context));
-               output.prepend(statementOutput);
+               output.add(statementOutput);
                return;
             }
             break;
@@ -114,7 +114,7 @@ public class TemplateBodyStatements extends Production {
                characters.shift(match.group(1).length());
                statementOutput= new Output();
                context.addProduction(new TextStatement(statementOutput));
-               output.prepend(statementOutput);
+               output.add(statementOutput);
                return;
             }
             break;
@@ -122,12 +122,12 @@ public class TemplateBodyStatements extends Production {
 
          //PrintStatement
          statementOutput=new Output();
-         output.prepend(statementOutput);
+         output.add(statementOutput);
          context.addProduction(new PrintStatement(statementOutput));
       } else {
          //InputTokens
          statementOutput=new Output();
-         output.prepend(statementOutput);
+         output.add(statementOutput);
          context.addProduction(new InputTokens(statementOutput));
       }
    }

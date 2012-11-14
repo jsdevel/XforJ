@@ -44,7 +44,7 @@ public class ChooseStatement extends Production {
                hasWhen=true;
                statementOutput=new Output();
                context.addProduction(new WhenStatements(statementOutput));
-               output.prepend(statementOutput);
+               output.add(statementOutput);
                return;
             }
             break;
@@ -52,7 +52,7 @@ public class ChooseStatement extends Production {
             hasOtherwise=true;
             statementOutput=new Output();
             context.addProduction(new OtherwiseStatement(statementOutput, hasWhen));
-            output.prepend(statementOutput);
+            output.add(statementOutput);
             return;
          case '/':
             if(hasOtherwise){

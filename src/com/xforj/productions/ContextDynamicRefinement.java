@@ -42,9 +42,7 @@ public class ContextDynamicRefinement extends Production {
             hasOpenBracket=true;
             characters.shift(1);
             contextExpressionOutput = new Output();
-            output.
-               prepend("[").
-               prepend(contextExpressionOutput);
+            output.add("[").add(contextExpressionOutput);
             context.addProduction(new ContextExpression(contextExpressionOutput, true));
             return;
          }
@@ -53,8 +51,7 @@ public class ContextDynamicRefinement extends Production {
          if(hasOpenBracket){
             hasOpenBracket=false;
             characters.shift(1);
-            output.
-               prepend("]");
+            output.add("]");
             context.removeProduction();
             return;
          }

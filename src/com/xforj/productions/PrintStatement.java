@@ -40,9 +40,9 @@ public class PrintStatement extends Production {
             variableAssignmentOutput=new Output();
             characters.shift(1);
             output.
-               prepend(js_bld+"(").
-               prepend(variableAssignmentOutput).
-               prepend(");");
+               add(js_bld+"(").
+               add(variableAssignmentOutput).
+               add(");");
             context.addProduction(new VariableExpression(variableAssignmentOutput));
             return;
          }

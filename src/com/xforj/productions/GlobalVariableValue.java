@@ -47,7 +47,7 @@ public class GlobalVariableValue extends Production {
          if(integer.find()){
             String intStr = integer.group(1);
             characters.shift(intStr.length());
-            output.prepend(intStr);
+            output.add(intStr);
             context.removeProduction();
             return;
          } else {
@@ -55,7 +55,7 @@ public class GlobalVariableValue extends Production {
             if(decimal.find()){
                String decStr = decimal.group(1);
                characters.shift(decStr.length());
-               output.prepend(decStr);
+               output.add(decStr);
                context.removeProduction();
                return;
             }
@@ -71,7 +71,7 @@ public class GlobalVariableValue extends Production {
                throw new Exception("Error while evaluating GlobalVariableValue.  Variable \""+value+"\" hasn't been declared yet.");
             }
             characters.shift(value.length());
-            output.prepend("__"+value);
+            output.add("__"+value);
             context.removeProduction();
             return;
          }
@@ -82,7 +82,7 @@ public class GlobalVariableValue extends Production {
          if(string.find()){
             String value = string.group(1);
             characters.shift(value.length());
-            output.prepend(value);
+            output.add(value);
             context.removeProduction();
             return;
          }
@@ -92,7 +92,7 @@ public class GlobalVariableValue extends Production {
          if(nullMatch.find()){
             String value = nullMatch.group(1);
             characters.shift(value.length());
-            output.prepend(value);
+            output.add(value);
             context.removeProduction();
             return;
          }
@@ -103,7 +103,7 @@ public class GlobalVariableValue extends Production {
          if(booleanMatch.find()){
             String value = booleanMatch.group(1);
             characters.shift(value.length());
-            output.prepend(value);
+            output.add(value);
             context.removeProduction();
             return;
          }

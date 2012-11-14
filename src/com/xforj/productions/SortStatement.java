@@ -57,16 +57,16 @@ public class SortStatement extends Production {
          hasContextSelector=true;
          Output contextSelectorOutput = new Output();
          sortContextOutput.
-            prepend(",function("+js_context+"){return ").
-               prepend(contextSelectorOutput).
-            prepend("}");
+            add(",function("+js_context+"){return ").
+               add(contextSelectorOutput).
+            add("}");
          context.addProduction(new ContextSelector(contextSelectorOutput, true));
          return;
       } else {
          if(characters.charAt(0) == '}'){
             if(!hasSortFunction && !hasSortDirection){
                sortParamOutput.
-                  prepend(",1,0");
+                  add(",1,0");
             }
             characters.shift(1);
             context.removeProduction();
@@ -91,11 +91,11 @@ public class SortStatement extends Production {
                   characters.shift(modifiers.length());//pipe
 
                   if(modifiers.contains("i")){
-                     sortCaseSensitivityOutput.prepend(",1");//added to the params for GetSortArray
+                     sortCaseSensitivityOutput.add(",1");//added to the params for GetSortArray
                   }
                   promoteNum=modifiers.contains("n");
                }
-               sortParamOutput.prepend(","+(asc?1:0)+","+(promoteNum?1:0));
+               sortParamOutput.add(","+(asc?1:0)+","+(promoteNum?1:0));
                return;
             }
          }

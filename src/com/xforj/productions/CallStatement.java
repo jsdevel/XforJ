@@ -32,15 +32,7 @@ public class CallStatement extends AbstractConditionBlock {
       namespaceOutput=new Output();
       contextOutput=new Output();
       paramOutput=new Output();
-      output.
-         prepend(js_bld).
-         prepend("(").
-            prepend(namespaceOutput).
-            prepend("(").
-               prepend(contextOutput).
-               prepend(paramOutput).
-            prepend(")").
-         prepend(");");
+      output.add(js_bld).add("(").add(namespaceOutput).add("(").add(contextOutput).add(paramOutput).add(")").add(");");
    }
 
    @Override

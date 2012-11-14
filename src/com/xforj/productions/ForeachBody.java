@@ -68,7 +68,7 @@ public class ForeachBody extends Production {
                hasVar=true;
                match = characters.match(VAR);
                if(match.find()){
-                  output.prepend(context.getCurrentVariableOutput());
+                  output.add(context.getCurrentVariableOutput());
                   context.addProduction(new VariableDeclarations(context.getCurrentVariableOutput()));
                   return;
                }

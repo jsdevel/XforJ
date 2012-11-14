@@ -27,9 +27,9 @@ public class LogStatement extends Production {
    public LogStatement(Output output, ProductionContext context) {
       super(output);
       if(!context.removeLogs){
-         output.prepend("console.log(").
-            prepend(expressionOutput).
-         prepend(");");
+         output.add("console.log(").
+            add(expressionOutput).
+         add(");");
       } else {
          context.removeProduction();
       }

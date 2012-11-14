@@ -35,7 +35,7 @@ public class CallParams extends AbstractParamDeclarations {
    protected Production getParam() {
       if(expectingParam){
          expectingParam=false;
-         output.prepend(paramOutput);
+         output.add(paramOutput);
       }
       return new CallParamDeclaration(paramOutput);
    }

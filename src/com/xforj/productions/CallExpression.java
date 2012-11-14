@@ -44,7 +44,7 @@ public class CallExpression extends Production {
             hasNamespace=true;
             String ns=match.group(1);
             characters.shift(ns.length());
-            namespaceOutput.prepend(js_TemplateBasket+"."+ns);
+            namespaceOutput.add(js_TemplateBasket+"."+ns);
             context.callManager.addCalledTemplate(ns);
          } else {
             match = characters.match(NAME);
@@ -52,7 +52,7 @@ public class CallExpression extends Production {
                hasNamespace=true;
                String name=match.group(1);
                characters.shift(name.length());
-               namespaceOutput.prepend(js_currentNS+"."+name);
+               namespaceOutput.add(js_currentNS+"."+name);
                context.callManager.addCalledTemplate(context.getNS()+"."+name);
             }
          }
@@ -63,7 +63,7 @@ public class CallExpression extends Production {
             char firstChar = characters.charAt(0);
             if( firstChar != '/' && firstChar != '}'){
                Output selectorOutput = new Output();
-               contextOutput.prepend(js_SafeValue+"(").prepend(selectorOutput).prepend(")");
+               contextOutput.add(js_SafeValue+"(").add(selectorOutput).add(")");
                context.addProduction(new ContextSelector(selectorOutput, false));   
             }
             return;

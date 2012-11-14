@@ -27,14 +27,14 @@ public class WhenStatement extends AbstractConditionBlock {
    public WhenStatement(Output output, boolean hasWhen) {
       super(output);
       if(hasWhen){
-         output.prepend("else ");
+         output.add("else ");
       }
       output.
-         prepend("if(").
-         prepend(expressionOutput).
-         prepend("){").
-         prepend(bodyOutput).
-         prepend("}");
+         add("if(").
+         add(expressionOutput).
+         add("){").
+         add(bodyOutput).
+         add("}");
    }
 
    @Override

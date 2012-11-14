@@ -40,7 +40,7 @@ public class VariableValue extends GlobalVariableValue {
       case ')':
          if(hasOpenParen){
             characters.shift(1);
-            output.prepend(")");
+            output.add(")");
             context.removeProduction();
             return;
          } else {
@@ -65,7 +65,7 @@ public class VariableValue extends GlobalVariableValue {
          match=characters.match(POSITION_FN);
          if(match.find()){
             characters.shift(match.group(1).length());
-            output.prepend(js_position);
+            output.add(js_position);
             context.removeProduction();
             return;
          }
@@ -77,9 +77,9 @@ public class VariableValue extends GlobalVariableValue {
             Output contextSelectorOutput = new Output();
             characters.shift(match.group(1).length());
             output.
-               prepend(js_CountElements).
-               prepend("(").
-               prepend(contextSelectorOutput);
+               add(js_CountElements).
+               add("(").
+               add(contextSelectorOutput);
             context.addProduction(new ContextSelector(contextSelectorOutput, isNestedInContextSelector));
             addCountFunctionToGlobalParams(context);
             return;//we need to come back for the close paren.
@@ -89,7 +89,7 @@ public class VariableValue extends GlobalVariableValue {
          match=characters.match(LAST_FN);
          if(match.find()){
             characters.shift(match.group(1).length());
-            output.prepend(js_last);
+            output.add(js_last);
             context.removeProduction();
             return;
          }
@@ -103,7 +103,7 @@ public class VariableValue extends GlobalVariableValue {
          match = characters.match(NAME_FN);
          if(match.find()){
             characters.shift(match.group(1).length());
-            output.prepend(js_name);
+            output.add(js_name);
             context.removeProduction();
             return;
          }

@@ -30,9 +30,9 @@ public class OtherwiseStatement extends Production {
       if(followsWhen){
          templateBodyOutput=new Output();
          output.
-            prepend("else{").
-            prepend(templateBodyOutput).
-            prepend("}");
+            add("else{").
+            add(templateBodyOutput).
+            add("}");
       } else {
          templateBodyOutput=output;
       }

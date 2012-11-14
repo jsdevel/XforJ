@@ -99,19 +99,19 @@ public class AbstractVariableOutput extends Output {
       if(keys.size() > 0){
          String first = keys.remove(0);
          String firstValue = variables.get(first).toString();
-         prepend(variableStatementPrefix+first);
+         add(variableStatementPrefix+first);
 
          if(!"".equals(firstValue)){
-            prepend(variableAssignmentOperator+firstValue);
+            add(variableAssignmentOperator+firstValue);
          }
          for(String key : keys){
-            prepend(","+key);
+            add(","+key);
             String value = variables.get(key).toString();
             if(!"".equals(value)){
-               prepend(variableAssignmentOperator+value);
+               add(variableAssignmentOperator+value);
             }
          }
-         prepend(variableStatementPostfix);
+         add(variableStatementPostfix);
          keys.clear();
          variables.clear();
       }

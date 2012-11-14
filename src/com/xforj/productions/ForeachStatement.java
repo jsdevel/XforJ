@@ -30,14 +30,14 @@ public class ForeachStatement extends AbstractConditionBlock {
    public ForeachStatement(Output output, ProductionContext context) {
       super(output);
       output.
-         prepend(js_foreach+"(").
-               prepend(js_GetSortArray+"(").
-                  prepend(expressionOutput).
-                  prepend(sortContextOutput).
-                  prepend(sortCaseSensitivityOutput).
-                  prepend(")").
-            prepend(",").
-               prepend(//callback
+         add(js_foreach+"(").
+               add(js_GetSortArray+"(").
+                  add(expressionOutput).
+                  add(sortContextOutput).
+                  add(sortCaseSensitivityOutput).
+                  add(")").
+            add(",").
+               add(//callback
                   "function("+
                      js_context+","+
                      js_position+","+
@@ -45,10 +45,10 @@ public class ForeachStatement extends AbstractConditionBlock {
                      js_name+
                   "){"
                ).
-               prepend(bodyOutput).
-            prepend("}").//sortFunction if any
-               prepend(sortParamOutput).
-            prepend(");");
+               add(bodyOutput).
+            add("}").//sortFunction if any
+               add(sortParamOutput).
+            add(");");
       context.getParams().
       put(js_foreach, //Foreach
          context.jsCode.getJSForeach()

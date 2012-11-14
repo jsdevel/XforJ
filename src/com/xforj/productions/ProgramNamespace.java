@@ -54,7 +54,7 @@ public class ProgramNamespace extends Production {
                String nextNS="";
                String currentNS=null;
 
-               output.prepend("var "+js_currentNS+"="+js_TemplateBasket+";");
+               output.add("var "+js_currentNS+"="+js_TemplateBasket+";");
 
                int len = split.length;
                for(int i=0;i<len;i++){
@@ -67,7 +67,7 @@ public class ProgramNamespace extends Production {
                   }
                   context.setNS(currentNS);
 
-                  output.prepend(
+                  output.add(
                      js_currentNS+"="+js_currentNS+"."+nextNS+"||("+
                      js_currentNS+"."+nextNS+"={});");
 

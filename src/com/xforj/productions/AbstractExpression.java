@@ -55,13 +55,13 @@ public abstract class AbstractExpression extends Production {
                negation = match.group(1);
                characters.shift(negation.length());
                characters.removeSpace();
-               output.prepend(negation);
+               output.add(negation);
             }
 
             if(characters.charAt(0) == '('){
                characters.shift(1);
                Output parenthesizedExpressionOutput = new Output();
-               output.prepend(parenthesizedExpressionOutput);
+               output.add(parenthesizedExpressionOutput);
                context.addProduction(getParenthesizedExpression(parenthesizedExpressionOutput));
             } else {
                context.addProduction(getValue());
