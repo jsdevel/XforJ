@@ -14,10 +14,11 @@
  * limitations under the License.
  */
 xforj={
-   '##stringBufferName##':'##stringBufferFn##',
+   '##count##':'##countFN##',
+   '##escapexss##':'##escapexssFN##',
+   '##foreach##':'##foreachFN##',
    '##safeValueName##':'##safeValueFn##',
    '##sortFunctionName##':'##sorFunctionFn##',
-   '##foreach##':'##foreachFN##',
-   '##count##':'##countFN##'
+   '##stringBufferName##':'##stringBufferFn##'
 };
 

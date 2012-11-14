@@ -39,11 +39,11 @@ public class JavascriptResourcesClassBuilder {
       String resourcePath = javascriptPath + "resources/";
 
       String js_CountElements = clean(MainUtil.getString(new File(resourcePath+"CountElements.js")));
-      String js_Foreach = clean(MainUtil.getString(new File(resourcePath+"Foreach.js")));
-      String js_GetSortArray = clean(MainUtil.getString(new File(resourcePath+"GetSortArray.js")));
-      String js_SafeValue = clean(MainUtil.getString(new File(resourcePath+"SafeValue.js")));
-      String js_StringBuffer = clean(MainUtil.getString(new File(resourcePath+"StringBuffer.js")));
       String js_EscapeXSS = clean(MainUtil.getString(new File(resourcePath+"EscapeXSS.js")));
+      String js_Foreach = clean(MainUtil.getString(new File(resourcePath+"Foreach.js")));
+      String js_SafeValue = clean(MainUtil.getString(new File(resourcePath+"SafeValue.js")));
+      String js_GetSortArray = clean(MainUtil.getString(new File(resourcePath+"GetSortArray.js")));
+      String js_StringBuffer = clean(MainUtil.getString(new File(resourcePath+"StringBuffer.js")));
 
       String js_XforJLib = MainUtil.getString(new File(resourcePath+"XforJ.lib.js"));
 
@@ -55,18 +55,20 @@ public class JavascriptResourcesClassBuilder {
          replace("\n","\\n").
          //these replace the characters in XforJ.lib.js
          //key
-         replace("'##stringBufferName##'", Characters.js_StringBuffer).
+         replace("'##count##'", Characters.js_CountElements).
+         replace("'##escapexss##'", Characters.js_EscapeXSS).
+         replace("'##foreach##'", Characters.js_Foreach).
          replace("'##safeValueName##'", Characters.js_SafeValue).
          replace("'##sortFunctionName##'", Characters.js_GetSortArray).
-         replace("'##foreach##'", Characters.js_Foreach).
-         replace("'##count##'", Characters.js_CountElements).
+         replace("'##stringBufferName##'", Characters.js_StringBuffer).
 
          //value
-         replace("'##stringBufferFn##'", js_StringBuffer).
+         replace("'##countFN##'", js_CountElements).
+         replace("'##escapexssFN##'", js_EscapeXSS).
+         replace("'##foreachFN##'", js_Foreach).
          replace("'##safeValueFn##'", js_SafeValue).
          replace("'##sorFunctionFn##'", js_GetSortArray).
-         replace("'##foreachFN##'", js_Foreach).
-         replace("'##countFN##'", js_CountElements);
+         replace("'##stringBufferFn##'", js_StringBuffer);
 
       File JavascriptResources = new File(javascriptPath + "JavascriptResources.java");
 
