@@ -41,7 +41,7 @@ public class ProductionContext {
    final public boolean removeLogs;
    final public boolean escapexss;
 
-   final public Output output = new Output();
+   final public Output output;
    final private Map<String, Boolean> declaredNamespaces;
    final public File currentFile;
    final private Map<String, Boolean> importedFiles;
@@ -54,7 +54,8 @@ public class ProductionContext {
    public ProductionContext(
       File currentFile, 
       XforJArguments arguments,
-      JavascriptBuilder javascriptBuilder
+      JavascriptBuilder javascriptBuilder,
+      Output mainOutput
    ){
       stripNewLines=arguments.getNormalizespace();
       minifyHTML=arguments.getMinifyhtml();
@@ -62,6 +63,7 @@ public class ProductionContext {
       removeLogs=arguments.getRemovelogs();
       escapexss=arguments.getEscapexss();
       jsCode=javascriptBuilder;
+      output=mainOutput;
 
       declaredNamespaces = new HashMap<String, Boolean>();
       importedFiles = new HashMap<String, Boolean>();
@@ -91,6 +93,7 @@ public class ProductionContext {
       removeLogs=previousContext.removeLogs;
       escapexss=previousContext.escapexss;
       jsCode=previousContext.jsCode;
+      output = previousContext.output;
 
       declaredNamespaces=previousContext.declaredNamespaces;
       importedFiles=previousContext.importedFiles;

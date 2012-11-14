@@ -29,7 +29,10 @@ public class CharWrapper implements Characters {
    private int line=1;
    private int column=1;
 
-   public CharWrapper(char[] characters) {
+   public CharWrapper(char[] characters) throws IllegalArgumentException {
+      if(characters == null || !(characters.length > 0)){
+         throw new IllegalArgumentException("   .xforj files may not be empty.");
+      }
       this.characters=characters;
    }
    
