@@ -40,6 +40,9 @@ public class MainUtil {
       return argumentStringBuilder.toString();
    }
 
+   public static String getString(File file) throws IOException {
+      return new String(getChars(file));
+   }
    public static char[] getChars(File file)
       throws IOException
    {
@@ -147,22 +150,16 @@ public class MainUtil {
       return files;
    }
 
-   /**
-    * Useful for handling user supplied paths to resources, which can be both
-    * relative and absolute.
-    * 
-    * @param path
-    * @return An absolute path.  The resulting path is not normalized, so ../ 
-    * ./ is maintained.
-    */
-   public static String getPathToUse(String path){
-      String pathToUse;
-      if(path.startsWith("/")){
-         pathToUse = path;
+   public static String addFileSeperatorToEndOfPath(String path){
+      if(path != null){
+         if(!path.endsWith(File.separator)){
+            return path+=File.separator;
+         } else {
+            return path;
+         }
       } else {
-         pathToUse = System.getProperty("user.dir")+"/"+path;
+         return "";
       }
-      return pathToUse;
    }
 
 }
