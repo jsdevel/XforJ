@@ -13,9 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package com.xforj;
 
+import org.junit.*;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -25,25 +25,48 @@ import org.junit.Test;
  */
 public class CharWrapperTest extends Assert {
 
-    public CharWrapperTest() {
-    }
+   private static CharWrapper emptyChars;
 
-    // TODO add test methods here.
-    // The methods must be annotated with annotation @Test. For example:
-    //
-    @Test 
-    public void nullThrowsException(){
-       try{
-            new CharWrapper(null);
-            fail("Expected failure on null in CharWrapperConstructor, but was success");
-       } catch(Throwable e){}
-    }
-    @Test
-    public void emptyCharsThrowsException(){
-       try{
-            new CharWrapper(new char[]{});
-            fail("Expected failure on empty char array in CharWrapperConstructor, but was success");
-       } catch(Throwable e){}
-    }
+   @BeforeClass
+   public static void instantiateEmptyChars() throws Exception{
+      emptyChars = new CharWrapper(new char[]{10,10});
+      emptyChars.shift(2);
+   }
 
+   public CharWrapperTest() {}
+
+   // TODO add test methods here.
+   // The methods must be annotated with annotation @Test. For example:
+   //
+   @Test
+   public void nullThrowsException() {
+      try {
+         new CharWrapper(null);
+         fail("Expected failure on null in CharWrapperConstructor, but was success");
+      } catch(Throwable e){}
+   }
+
+   @Test
+   public void emptyCharsThrowsException() {
+      try {
+         new CharWrapper(new char[]{});
+         fail("Expected failure on empty char array in CharWrapperConstructor, but was success");
+      } catch(Throwable e){}
+   }
+
+   @Test
+   public void nothingLeftToGet() {
+      try {
+         emptyChars.charAt(3);
+         fail("Expected an error while trying to get a character when there were none left to parse.");
+      } catch(Throwable e){}
+   }
+
+   @Test
+   public void nothingLeftToShift(){
+      try {
+         emptyChars.shift(3);
+         fail("Expected an error while trying to shift characters there were none left to parse.");
+      } catch(Throwable e){}
+   }
 }

@@ -41,6 +41,9 @@ public class CharWrapper implements Characters {
    }
 
    public char charAt(int index) {
+      if(index >= characters.length){
+         throw new ArrayIndexOutOfBoundsException("   There are no more characters to parse.");
+      }
       return characters[index];
    }
 

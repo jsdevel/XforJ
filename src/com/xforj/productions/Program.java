@@ -83,6 +83,7 @@ public class Program extends Production {
    }
 
    private boolean hasProgramNamespace;
+   private boolean hasImportStatements;
    private boolean hasGlobalVariableDeclarations;
 
    @Override
@@ -98,6 +99,7 @@ public class Program extends Production {
          if(characters.charAt(0) == '{'){
             if(characters.charAt(1) == 'i'){
                if(!hasGlobalVariableDeclarations){
+                  hasImportStatements=true;
                   Output importStatementsOutput = new Output();
                   importOutput.add(importStatementsOutput);
                   context.addProduction(new ImportStatements(importStatementsOutput));
