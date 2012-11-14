@@ -32,6 +32,7 @@ public class ImportStatement extends Production {
    @Override
    public void execute(CharWrapper characters, ProductionContext context) throws Exception {
       Matcher _import = characters.match(IMPORT);       
+      String extraMsg="";
       if(_import.find()){
          String matchedImportTag = _import.group(1);
          characters.shift(matchedImportTag.length());
@@ -79,8 +80,10 @@ public class ImportStatement extends Production {
                context.removeProduction();
                return;
             }
+         } else {
+            extraMsg = "\n   Does the import path end with .xforj?";
          }
       }
-      throw new Exception("Invalid Statement found while parsing ImportStatement.");
+      throw new Exception("Invalid ImportStatement." + extraMsg);
    }
 }
