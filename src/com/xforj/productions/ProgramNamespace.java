@@ -46,6 +46,8 @@ public class ProgramNamespace extends Production {
                chunk = declaredNS.group(1);
                characters.shift(chunk.length());
 
+               context.validateNamespacesAgainstReservedWords(chunk);
+
                context.setNS(chunk);
 
                //only build the namespace if it hasn't been declared 
@@ -82,6 +84,8 @@ public class ProgramNamespace extends Production {
                   extraExcMsg="  Invalid character found after namespace value.";
                }
             }
+         } else {
+            extraExcMsg="   NameSpace wasn't valid.";
          }
       }
       throw new Exception("Invalid Namespace declaration."+extraExcMsg);

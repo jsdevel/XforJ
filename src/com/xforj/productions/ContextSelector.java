@@ -54,7 +54,7 @@ public class ContextSelector extends Production {
          }
          hasContextSelector=false;
          characters.shift(1);
-         if(parseNamespace(characters)){
+         if(parseNamespace(characters, context)){
             return;
          }
          break;
@@ -79,7 +79,7 @@ public class ContextSelector extends Production {
          }
          //c could be a name start so we let it flow through.
       default:
-         if(parseNamespace(characters)){
+         if(parseNamespace(characters, context)){
             return;
          }
       }
@@ -90,21 +90,23 @@ public class ContextSelector extends Production {
       }
    }
 
-   private boolean parseNamespace(CharWrapper characters) throws Exception {
+   private boolean parseNamespace(CharWrapper characters, ProductionContext context) throws Exception {
       if(!hasContextSelector){
          Matcher match = characters.match(CONTEXT_STATIC_REFINEMENT_NAMESPACE);
          if(match.find()){
             hasContextSelector=true;
             String namesp = match.group(1);
+            characters.shift(namesp.length());
+
+            namesp = namesp.replaceAll("^\\s+|\\s+$", "");
+
+            context.validateNamespacesAgainstReservedWords(namesp);
 
             //Make sure it doesn't start with a reserved word.
             Matcher potentialReservedWord = RESERVED_WORDS.matcher(namesp);
             if(potentialReservedWord.find()){
                throw new Exception("Unexpected Reserved Word: "+potentialReservedWord.group(1));
             }
-
-            //now shift the selector from the input
-            characters.shift(namesp.length());
 
             //we need to add the context variable to the beginning the first time
             if(!contextHasBeenPrependedToOutput){

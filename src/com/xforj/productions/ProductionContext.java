@@ -196,6 +196,65 @@ public class ProductionContext {
       throw new Exception("Illegal attempt to remove VariableOutput.");
    }
 
+   //RESERVED WORDS
+   private static Map<String, Boolean> reservedWords = new HashMap<String, Boolean>();
+   static {
+      reservedWords.put("break", true);
+      reservedWords.put("case", true);
+      reservedWords.put("catch", true);
+      reservedWords.put("continue", true);
+      reservedWords.put("debugger", true);//?
+      reservedWords.put("default", true);
+      reservedWords.put("delete", true);
+      reservedWords.put("do", true);
+      reservedWords.put("else", true);
+      reservedWords.put("finally", true);
+      reservedWords.put("for", true);
+      reservedWords.put("function", true);
+      reservedWords.put("if", true);
+      reservedWords.put("in", true);
+      reservedWords.put("instanceof", true);
+      reservedWords.put("new", true);
+      reservedWords.put("return", true);
+      reservedWords.put("switch", true);
+      reservedWords.put("this", true);
+      reservedWords.put("throw", true);
+      reservedWords.put("try", true);
+      reservedWords.put("typeof", true);
+      reservedWords.put("var", true);
+      reservedWords.put("void", true);
+      reservedWords.put("while", true);
+      reservedWords.put("with", true);
+
+      reservedWords.put("class", true);
+      reservedWords.put("const", true);
+      reservedWords.put("enum", true);//?
+      reservedWords.put("export", true);//?
+      reservedWords.put("extends", true);//?
+      reservedWords.put("import", true);//?
+      reservedWords.put("super", true);//?
+
+      //future reserved words
+      reservedWords.put("implements", true);//?
+      reservedWords.put("interface", true);//?
+      reservedWords.put("let", true);//?
+      reservedWords.put("package", true);//?
+      reservedWords.put("private", true);//?
+      reservedWords.put("protected", true);//?
+      reservedWords.put("public", true);//?
+      reservedWords.put("static", true);//?
+      reservedWords.put("yield", true);//?
+   }
+   public static void validateNamespacesAgainstReservedWords(String namespace) throws Exception {
+      String[] names = namespace.split("\\.");
+
+      for(String name:names){
+         if(reservedWords.containsKey(name)){
+            throw new Exception("   Usage of the following ECMAScript reserved word is not allowed: "+name);
+         }
+      }      
+   }
+
    //CLOSING
    public void close() throws Exception {
       callManager.validateCalls();
