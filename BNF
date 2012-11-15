@@ -241,4 +241,4 @@ CallParams:
    CallParam + CallParams
 
 CallParam:
-   '{param ' + Name + Value + '}'
+   '{param ' + Name + VariableExpression + '}'
