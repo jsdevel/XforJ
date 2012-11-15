@@ -1,0 +1,5 @@
+{namespace testing}
+
+{template test}
+   {text} test {/text}
+{/template}

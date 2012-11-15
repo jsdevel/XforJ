@@ -28,7 +28,7 @@ import org.junit.Assert;
  *
  * @author Joseph Spencer
  */
-public class XSSEscaping {
+public class XSSEscapingTest {
    private static Map<String, String> toEscape = new HashMap<String, String>();
 
    public static final String inlineEventRegex = "(on)"+
@@ -53,7 +53,7 @@ public class XSSEscaping {
    public static final String scriptEscapeRegex = "(<\\s*?\\\\?\\s*?/?\\s*?)(script(?=[\\s>]))";
 
    private String testString;
-   public XSSEscaping() {
+   public XSSEscapingTest() {
       StringBuilder bld = new StringBuilder();
       for(String key:toEscape.keySet()){
          bld.append(key).append(toEscape.get(key));

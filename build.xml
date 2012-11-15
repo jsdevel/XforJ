@@ -10,12 +10,27 @@
 <project name="XforJ" default="default" basedir=".">
     <description>Builds, tests, and runs the project XforJ.</description>
 
-   
     <target description="Set the version number in the outputted jar file." name="-pre-init">
        <loadproperties>
           <file file="src/version.properties"/>
        </loadproperties>
       <property name="dist.jar" value="dist/${apps}.${apps.version}.jar" />
+    </target>
+
+      <!-- you must place the XforJ.jar in your classpath. -->
+      <taskdef 
+         name="XforJ" 
+         classname="com.xforj.arguments.XforJTask"
+         />
+
+    <target name="compileTestFiles">
+      <XforJ
+         destdir="${basedir}/test/com/xforj/output/compiled"
+         srcdir="${basedir}/test/com/xforj/output/precompiled"
+         overwrite="true"
+      >
+         <fileset dir="${basedir}/test/com/xforj/output/precompiled" includes="**/*.xforj"/>
+      </XforJ>
     </target>
 
     <import file="nbproject/build-impl.xml"/>
