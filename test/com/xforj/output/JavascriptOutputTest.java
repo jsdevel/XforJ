@@ -47,8 +47,9 @@ public class JavascriptOutputTest extends Assert {
          String line;
          StringBuilder reason = new StringBuilder();
          while((line = buf.readLine())!=null){
-            reason.append("===").append(line).append("\n");
+            reason.append(line).append("\n");
          }
+         System.out.println(reason.toString());
          fail("Failed for the following reason:\n"+reason.toString()+"\n   While evaluating: "+path);
       }
    }
