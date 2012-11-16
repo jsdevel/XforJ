@@ -29,14 +29,14 @@ import org.junit.Test;
  */
 public class JavascriptOutputTest extends Assert {
    //Change this based on your path.
-   private static String pathToNode = "/usr/local/bin/node ";
    private static String pathToProject = MainUtil.addFileSeperatorToEndOfPath(System.getProperty("user.dir"));
    private static String pathToOutput = pathToProject+"test/com/xforj/output/";
+   private static String pathToTests = pathToOutput+"tests/";
    private static String pathToCompiled = pathToOutput+"compiled/";
    private static String pathToXforJLib = "/tmp/XforJ.lib.js";
 
    private void runNodeScript(String path, String argument) throws IOException, InterruptedException{
-      String command = pathToNode+MainUtil.addFileSeperatorToEndOfPath(pathToProject)+"test/com/xforj/output/"+path + " "+argument;
+      String command = "node "+pathToTests+path + " "+argument;
 
       Runtime run = Runtime.getRuntime();
       Process pr = run.exec(command);
@@ -85,4 +85,12 @@ public class JavascriptOutputTest extends Assert {
       );
    }
 
+   @Test
+   public void test_multiple_template_declarations() throws IOException, InterruptedException {
+      String test = "test_multiple_template_declarations.js";
+      runNodeScript(
+         test,
+         pathToCompiled+test
+      );
+   }
 }

@@ -16,11 +16,16 @@
  * This file provides common methods used by the node.js unit tests.
  */
 var fs = require('fs');
+var assert = require('assert');
 
 module.exports = { 
    include:function(path){
       with(global) {
-         eval(fs.readFileSync(path) + '');
+         try{
+            eval(fs.readFileSync(path) + '');
+         } catch(e){
+            assert.fail("There was an error parsing "+path);
+         }
       }
    }
 };
