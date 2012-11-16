@@ -79,7 +79,7 @@ public class TemplateDeclaration extends Production {
                         output.add(")");
                      }
 
-                     output.add("}");
+                     output.add("};");
 
                   if(characters.charAt(0) == '}'){
                      characters.shift(1);
