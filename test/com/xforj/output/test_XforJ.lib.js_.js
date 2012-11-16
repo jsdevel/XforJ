@@ -47,7 +47,7 @@ var newEscapeXSS = xforj[EscapeXSS];
 assert.equal(typeof newEscapeXSS, 'function', "EscapeXSS isn't initialized.");
 
 var notEquals = [
-   "<script ",
+   "<script",
    "<script>",
    "</script>",
    "onmouseover"

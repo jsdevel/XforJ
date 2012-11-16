@@ -53,10 +53,7 @@ public class JavascriptOutputTest extends Assert {
       }
    }
 
-   public JavascriptOutputTest(){}
-
-   //This should be called by ant
-   public static void createCurrentJSFiles() throws IOException{
+   @Before public void createCurrentJSFiles() throws IOException{
       //make sure the js is up to date.
       JavascriptResourcesClassBuilder.main(null);
       String XforJLibFile = JavascriptResources.getXforJLib();
