@@ -18,7 +18,9 @@ package com.xforj;
 import java.util.regex.Pattern;
 
 /**
- *
+ * This interface provides a central location for reusable regex and global names
+ * that need to be accessible from any class.
+ * 
  * @author Joseph Spencer
  */
 public interface Characters {
@@ -72,35 +74,12 @@ public interface Characters {
    Pattern NAME_FN = Pattern.compile("^(name\\(\\)).*+");
    Pattern POSITION_FN = Pattern.compile("^(position\\(\\)).*+");
 
-
-
    //PRIMITIVES
    Pattern BOOLEAN = Pattern.compile("^(false|true)(?![a-z0-9A-Z$_]).*+");
    Pattern DECIMAL = Pattern.compile("^(0x[0-9A-Fa-f]++(?:[eE][+-][0-9]++)?|(?:0(?=\\.)|[1-9][0-9]*+)(?:\\.?[0-9]*+[eE][+-][0-9]++|\\.[0-9]++(?:[eE][+-][0-9]++)?)).*+");
    Pattern INTEGER = Pattern.compile("^((?:[0-9]++)(?!\\.)).*+");
    Pattern NULL = Pattern.compile("^(null)(?![a-zA-Z0-9$_@'\"]).*+");
    Pattern STRING = Pattern.compile("^((['\"])((?:(?!\\2)(?!\\r?\\n)(?:\\\\\\\\|\\\\\\r?\\n|\\\\\\2|[^\\r\\n]))*+)\\2).*+");
-
-
-   //JAVASCRIPT
-   /*DEVELOPMENT
-   final String js_bld="bld";
-   final String js_context="context";
-   final String js_count="count";
-   final String js_CountElements="CountElements";
-   final String js_currentNS="currentNS";
-   final String js_data="data";
-   final String js__data="_data";
-   final String js_Foreach="Foreach";
-   final String js_GetSortArray="GetSortArray";
-   final String js_last="last";
-   final String js_name="name";
-   final String js_params="params";
-   final String js__params="_params";
-   final String js_position="position";
-   final String js_StringBuffer="StringBuffer";
-   final String js_templateBasket="TemplateBasket";
-   final String js_SafeValue="safeValue";*/
 
    /*MUNGED*/
    final String js_bld="b";
@@ -122,8 +101,6 @@ public interface Characters {
    final String js_GetSortArray="G";
    final String js_SafeValue="V";
    final String js_StringBuffer="S";
-   /**/
-
 
    /*FILE EXTENSIONS*/
    final String extension_js = ".js";
