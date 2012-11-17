@@ -47,6 +47,11 @@ public class VariableValue extends GlobalVariableValue {
             throw new Exception("Invalid VariableValue:  Unexpected close paren.");
          }
       case '@':
+         match = characters.match(VARIABLE_AS_CONTEXT_SELECTOR);
+         if(match.find()){
+            context.validateVariableReference(match.group(1));
+            break;//go to context selector
+         }
       case '\'':
       case '"':
       case '0':

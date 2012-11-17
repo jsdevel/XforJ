@@ -91,7 +91,12 @@ public class ContextSelector extends Production {
    }
 
    private boolean parseNamespace(CharWrapper characters, ProductionContext context) throws Exception {
+      boolean contextIsNotVariableReference = true;
       if(!hasContextSelector){
+         if(characters.charAt(0) == '@'){
+            characters.shift(1);
+            contextIsNotVariableReference = false;
+         }
          Matcher match = characters.match(CONTEXT_STATIC_REFINEMENT_NAMESPACE);
          if(match.find()){
             hasContextSelector=true;
@@ -109,11 +114,15 @@ public class ContextSelector extends Production {
             }
 
             //we need to add the context variable to the beginning the first time
-            if(!contextHasBeenPrependedToOutput){
+            if(!contextHasBeenPrependedToOutput && contextIsNotVariableReference){
                contextHasBeenPrependedToOutput=true;
                contextSelectorOutput.add(js_context);
             }
-            contextSelectorOutput.add(".");
+            if(contextIsNotVariableReference){
+               contextSelectorOutput.add(".");
+            } else {
+               contextSelectorOutput.add(context.getCurrentVariableOutput().variablePrefix);
+            }
             contextSelectorOutput.add(namesp.replaceAll("\\s*+", ""));
             return true;
          }

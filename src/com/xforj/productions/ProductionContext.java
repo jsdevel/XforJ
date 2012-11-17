@@ -195,6 +195,12 @@ public class ProductionContext {
       }
       throw new Exception("Illegal attempt to remove VariableOutput.");
    }
+   public void validateVariableReference(String name) throws Exception {
+      boolean hasVar = currentVariableOutput.hasVariableBeenDeclared(name);
+      if(!hasVar){
+         throw new Exception("Error while evaluating GlobalVariableValue.  Variable \""+name+"\" hasn't been declared yet.");
+      }
+   }
 
    //RESERVED WORDS
    private static Map<String, Boolean> reservedWords = new HashMap<String, Boolean>();

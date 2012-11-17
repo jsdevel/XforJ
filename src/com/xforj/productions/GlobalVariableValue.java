@@ -66,10 +66,7 @@ public class GlobalVariableValue extends Production {
          Matcher name = characters.match(NAME);
          if(name.find()){
             String value = name.group(1);
-            boolean hasVar = context.getCurrentVariableOutput().hasVariableBeenDeclared(value);
-            if(!hasVar){
-               throw new Exception("Error while evaluating GlobalVariableValue.  Variable \""+value+"\" hasn't been declared yet.");
-            }
+            context.validateVariableReference(value);
             characters.shift(value.length());
             output.add("__"+value);
             context.removeProduction();

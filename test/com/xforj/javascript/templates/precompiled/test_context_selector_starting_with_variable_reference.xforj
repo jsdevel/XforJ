@@ -1,0 +1,8 @@
+{namespace testing}
+
+{template test}
+   {var person people.john.cousins.tom}
+   {var normal @person}
+
+   {@person.name}
+{/template}

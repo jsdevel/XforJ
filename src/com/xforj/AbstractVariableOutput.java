@@ -25,7 +25,7 @@ import java.util.*;
 public class AbstractVariableOutput extends Output {
    private final AbstractVariableOutput parentScope;
 
-   private final String variablePrefix;
+   public final String variablePrefix;
    private final String variableAssignmentOperator;
    private final String variableStatementPrefix;
    private final String variableStatementPostfix;
