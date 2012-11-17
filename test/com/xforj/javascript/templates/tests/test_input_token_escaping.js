@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  * 
- * This file is run from the JavascriptOutputTest.
+ * This file is run from the JavascriptTemplatesTest.
  */
 var assert = require('assert');
 var common = require('../common.js');
