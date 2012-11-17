@@ -153,7 +153,9 @@ public class ProductionContext {
 
    //OUTPUT
    public String escapeOutput(String input){
-      return input.replaceAll("\"", "\\\\\"").replaceAll("'", "\\\\'").replaceAll("\\n|\\r", "\\\\\n");
+      return input.
+         replace("\\{", "{").
+         replaceAll("\\n|\\r", "\\\\\n");
    }
 
    //PRODUCTIONS

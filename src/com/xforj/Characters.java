@@ -30,7 +30,7 @@ public interface Characters {
    Pattern VARIABLE_AS_CONTEXT_SELECTOR = Pattern.compile("^@("+name+")\\s*+[\\.\\[].*+");
    Pattern CONTEXT_STATIC_REFINEMENT_NAMESPACE = Pattern.compile("^((?:"+name+"\\s*+\\.)*+\\s*+"+name+"\\s*).*+");
    Pattern IMPORT_PATH = Pattern.compile("^((?:[^\\}\\\\]|\\\\[\\}\\\\])++(?<=\\.xforj)).*+");
-   Pattern INPUT_TOKENS = Pattern.compile("^((?:[^\\{\\\\]|\\\\(?:\\\\|\\{))++).*+");
+   Pattern INPUT_TOKENS = Pattern.compile("^((?:[^'\\{\\\\]|\\\\(?:'|\\\\|\\{))++).*+");
    Pattern NAME = Pattern.compile("^("+name+").*+");
    Pattern NS = Pattern.compile("^("+name+"(?:\\."+name+")*+).*+");
    Pattern NS_FORCED = Pattern.compile("^("+name+"(?:\\."+name+")++).*+");

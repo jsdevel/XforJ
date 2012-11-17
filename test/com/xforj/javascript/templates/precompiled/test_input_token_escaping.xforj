@@ -1,0 +1,6 @@
+{namespace testing}
+
+{template test}\\\\{/template}
+{template test1}\'{/template}
+{template test2}\{{/template}
+{template test3}\\\'\{""""""""""\'\{{/template}
