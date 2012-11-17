@@ -13,10 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.xforj.output;
+package com.xforj.javascript.templates;
 
 import com.xforj.*;
 import com.xforj.javascript.*;
+import com.xforj.javascript.JavascriptResources;
+import com.xforj.javascript.JavascriptResourcesClassBuilder;
 import java.io.*;
 import org.junit.Assert;
 import org.junit.Before;
@@ -24,19 +26,22 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 /**
- *
+ * This class is intended to be run from netbeans at the moment using shift + F6.
+ * This is far from ideal.  At some point, a more formalized approach to running
+ * the tests will be in order.
+ * 
  * @author Joseph Spencer
  */
-public class JavascriptOutputTest extends Assert {
+public class JavascriptTemplatesTest extends Assert {
    //Change this based on your path.
    private static String pathToProject = MainUtil.addFileSeperatorToEndOfPath(System.getProperty("user.dir"));
-   private static String pathToOutput = pathToProject+"test/com/xforj/output/";
-   private static String pathToTests = pathToOutput+"tests/";
-   private static String pathToCompiled = pathToOutput+"compiled/";
+   private static String pathToTemplates = pathToProject+"test/com/xforj/javascript/templates/";
+   private static String pathToTests = pathToTemplates+"tests/";
+   private static String pathToCompiled = pathToTemplates+"compiled/";
    private static String pathToXforJLib = "/tmp/XforJ.lib.js";
 
    private void runNodeScript(String path, String argument) throws IOException, InterruptedException{
-      String command = "node "+pathToTests+path + " "+argument;
+      String command = "node "+path + " "+argument;
 
       Runtime run = Runtime.getRuntime();
       Process pr = run.exec(command);
@@ -67,7 +72,7 @@ public class JavascriptOutputTest extends Assert {
    @Test
    public void test_XforJ_lib_js_methods() throws IOException, InterruptedException {
       runNodeScript(
-         "test_XforJ.lib.js_.js", //path
+         pathToTemplates+"test_XforJ.lib.js_.js", //path
 
          pathToXforJLib+//arg1
          " "+
@@ -77,21 +82,15 @@ public class JavascriptOutputTest extends Assert {
       );
    }
 
-   @Test
-   public void test_text_element() throws IOException, InterruptedException {
-      String test = "test_text_element.js";
-      runNodeScript(
-         test,
-         pathToCompiled+test
-      );
+   @Test public void run_node_js_tests() throws IOException, InterruptedException{
+      File[] tests = new File(pathToTests).listFiles();
+
+      for(File test: tests){
+         runNodeScript(
+            test.getAbsolutePath(),
+            pathToCompiled + test.getName()
+         );
+      }
    }
 
-   @Test
-   public void test_multiple_template_declarations() throws IOException, InterruptedException {
-      String test = "test_multiple_template_declarations.js";
-      runNodeScript(
-         test,
-         pathToCompiled+test
-      );
-   }
 }

@@ -16,7 +16,7 @@
  * This file is run from the JavascriptOutputTest.
  */
 var assert = require('assert');
-var common = require('./common.js');
+var common = require('../common.js');
 var args = process.argv.splice(2);
 var includescript = args[0];
 

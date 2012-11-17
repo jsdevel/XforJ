@@ -32,11 +32,11 @@ output of the compiler.
 
     <target name="compileTestFiles">
       <XforJ
-         destdir="${basedir}/com/xforj/output/compiled"
-         srcdir="${basedir}/com/xforj/output/precompiled"
+         destdir="${basedir}/com/xforj/javascript/templates/compiled"
+         srcdir="${basedir}/com/xforj/javascript/templates/precompiled"
          overwrite="true"
       >
-         <fileset dir="${basedir}/com/xforj/output/precompiled" includes="**/*.xforj"/>
+         <fileset dir="${basedir}/com/xforj/javascript/templates/precompiled" includes="**/*.xforj"/>
       </XforJ>
     </target>
 
