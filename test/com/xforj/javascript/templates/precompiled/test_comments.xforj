@@ -1,0 +1,8 @@
+{namespace testing}
+
+#Here is a comment to test
+#I really like the simplified syntax
+
+{template test}
+   #Here is a comment inside a template declaration.
+\#This should be allowed{/template}

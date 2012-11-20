@@ -17,6 +17,12 @@
 #
 # This is a non standard BNF that describes the XforJ grammar.  
 #
+# White space is generally ignored at the file level, except
+# before a namespace, where no whitespace may precede it.
+#
+# The Comment production is considered to be white-space, at the file 
+# level, and is ignored as a decendant of TemplateDeclarations.
+#
 # Character sequences not wrapped in ' are Non-Terminals.
 #
 # Non-Terminals may contain Terminals, Productions, and Non-Terminals.  
@@ -100,6 +106,9 @@ Operator:
 GlobalStatements:
    TemplateDeclaration 
    GlobalStatements + TemplateDeclaration
+
+Comment:
+   '#' + /[^\r\n]*+\r?\n/
 
 TemplateDeclaration:
    '{template ' + Name + '}' + ParamDeclarations@"Optional" + VariableDeclarations@"Optional" + TemplateBody + '{/template}'
