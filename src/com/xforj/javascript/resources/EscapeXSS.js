@@ -17,8 +17,8 @@
    r.exec('a');
    c.exec('a');
    return function(s){
-      return s.replace(r,'$1-$2')
-      .replace(c,'$1some-$2')
+      return s.replace(r,'$1-$2').
+      replace(c,'$1some-$2')
    }
 })(/(on)(mouse(?:over|up|down|out|move)|focus|(?:dbl)?click|key(?:down|press|up)|abort|error|resize|scroll|(?:un)?load|blur|change|focus|reset|select|submit)(?![a-zA-Z0-9$_])/gi,/(<\s*?\\?\s*?\/?\s*?)(script(?![a-zA-Z0-9$_]))/ig)
 
