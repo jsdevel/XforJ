@@ -3,3 +3,8 @@
 {template test}
    {text} test {/text}
 {/template}
+
+{template test1}
+   {text}\\{/text}
+   {text}\'{/text}
+{/template}

@@ -39,6 +39,7 @@ public interface Characters {
    Pattern SORT_MODIFIERS = Pattern.compile("^\\|([in]{1,2})(?![a-zA-Z0-9$_]).*+");
    Pattern SPACE = Pattern.compile("^((?:\\s|"+comment+")++).*+");
    Pattern SPACE_PRECEDING_CURLY = Pattern.compile("^((?:\\s++(?=\\{)|"+comment+")++).*+");
+   Pattern TEXT_INPUT = Pattern.compile("^((?:(?!\\{/text\\})(?:[^'\\\\]|\\\\['\\\\]))*+)\\{/text\\}.*+");
 
    //RESERVED WORDS
    Pattern RESERVED_WORDS = Pattern.compile("^(call|choose|foreach|if|import|log|namespace|otherwise|param|sort|template|text|var|when)"+notName+".*+");
@@ -63,7 +64,6 @@ public interface Characters {
    Pattern TEMPLATE_CLOSING = Pattern.compile("^(\\{/template\\})(?=\\s|\\}).*+");
    Pattern TEXT = Pattern.compile("^(\\{text\\}).*+");
    Pattern TEXT_CLOSING = Pattern.compile("^(\\{/text\\}).*+");
-   Pattern TEXT_INPUT = Pattern.compile("^((?:(?!\\{/text\\})[\\s\\S])*+[\\s\\S]?)\\{/text\\}.*+");
    Pattern VAR = Pattern.compile("^(\\{var"+notName+").*+");
    Pattern WHEN = Pattern.compile("^(\\{when"+notName+").*+");
    Pattern WHEN_CLOSING = Pattern.compile("^(\\{/when\\}).*+");

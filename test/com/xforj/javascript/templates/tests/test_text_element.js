@@ -22,7 +22,13 @@ var includescript = args[0];
 
 common.include(includescript);
 
-assert(testing && testing.test, "The test file hasn't been setup properly.");
+assert(
+   testing && 
+   testing.test &&
+   testing.test1
+   , "The test file hasn't been setup properly.");
 
 
 assert.equal(testing.test(), " test ", "Text element failed.");
+
+assert.equal(testing.test1(), "\\'", "Escaping string values not working properly in text elements.");
