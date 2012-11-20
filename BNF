@@ -80,11 +80,14 @@ GlobalExpressionParenthesized:
 
 GlobalVariableValue:
    /[0-9]*/
-   '@' + Name
    /^((['"])((?:(?!\2)(?!\r?\n)(?:\\|\\\r?\n|\\\2|[^\r\n]))*+)\2).*+/@"String"
    'null'
    'true'
    'false'
+   VariableReference
+
+VariableReference:
+   '@' + Name
 
 Operator:
    '<='
@@ -147,8 +150,9 @@ VariableValue:
    GlobalVariableValue
 
 ContextSelector:
-   Namespace
    'current()'
+   Namespace
+   VariableReference
    ContextDynamicRefinement
    ContextSelector + ContextRefinements
 
