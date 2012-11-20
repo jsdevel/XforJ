@@ -92,71 +92,72 @@ public class XforJ extends LOGGER implements Characters {
 
          debug("startCompiling called.");
 
-         if(//make sure there is input to process before proceeding.
+         //make sure there is input to process before proceeding.
+         if(!(
             arguments.hasInputfile()
             || arguments.hasInputfiles()
-         ){
-            if(arguments.hasInputfile()){
-               File input = arguments.getInputfile();
-               if(arguments.hasOutputfile()){
-                  compileNewFile(input, arguments.getOutputfile(), arguments);
-               } else if(arguments.hasDestdir()){
-                  String outputDir = arguments.getDestdir().getCanonicalPath();
-                  if(!outputDir.endsWith(File.separator)){
-                     outputDir+=File.separator;
-                  }
-                  String outputFilePath = outputDir+input.getName();
-                  File outputFile = new File(outputFilePath);
-
-                  compileNewFile(input, outputFile, arguments);
-               } else {
-                  throw new IllegalArgumentException("No target given for input file.");
-               }
-
-            }
-
-            if(arguments.hasInputfiles()){
-               if(arguments.hasDestdir() && arguments.hasSrcdir()){
-                  String inputDirectoryPath = arguments.getSrcdir().getCanonicalPath();
-                  String outputDirectoryPath = arguments.getDestdir().getCanonicalPath();
-
-                  if(!inputDirectoryPath.endsWith(File.separator)){
-                     inputDirectoryPath+=File.separator;
-                  }
-                  if(!outputDirectoryPath.endsWith(File.separator)){
-                     outputDirectoryPath+=File.separator;
-                  }
-
-                  debug("InputDirectoryPath:\n   "+inputDirectoryPath);
-                  debug("OutputDirectoryPath:\n   "+outputDirectoryPath);
-
-                  Iterator<File> files = arguments.getInputfiles().iterator(); 
-                  while(files.hasNext()){
-                     File next = files.next();
-                     String pathOfFileToCompile = next.getCanonicalPath();
-                     String pathOfTargetFile = pathOfFileToCompile.replace(
-                           inputDirectoryPath, 
-                           outputDirectoryPath
-                     ).replaceFirst("\\.xforj$", extension_js);
-
-                     debug("File to compile:\n   "+pathOfFileToCompile);
-                     debug("Target File:\n   "+pathOfTargetFile);
-
-                     if(!pathOfFileToCompile.startsWith(inputDirectoryPath)){
-                        throw new IOException(
-                           "The following file does not belong to the input path specified:\n"
-                           +pathOfFileToCompile
-                        );
-                     }
-
-                     compileNewFile(next, new File(pathOfTargetFile), arguments);
-                  }
-               } else {
-                  throw new IllegalArgumentException("Both destdir and srcdir must be given as attributes when using filesets.");
-               }
-            }
-         } else {
+         )){
             out("No input file[s] were given.  Exiting early.");
+         }
+
+         if(arguments.hasInputfile()){
+            File input = arguments.getInputfile();
+            if(arguments.hasOutputfile()){
+               compileNewFile(input, arguments.getOutputfile(), arguments);
+            } else if(arguments.hasDestdir()){
+               String outputDir = arguments.getDestdir().getCanonicalPath();
+               if(!outputDir.endsWith(File.separator)){
+                  outputDir+=File.separator;
+               }
+               String outputFilePath = outputDir+input.getName();
+               File outputFile = new File(outputFilePath);
+
+               compileNewFile(input, outputFile, arguments);
+            } else {
+               throw new IllegalArgumentException("No target given for input file.");
+            }
+
+         }
+
+         if(arguments.hasInputfiles()){
+            if(!(arguments.hasDestdir() && arguments.hasSrcdir())){
+               throw new IllegalArgumentException("Both destdir and srcdir must be given as attributes when using filesets.");
+            }
+
+            String inputDirectoryPath = arguments.getSrcdir().getCanonicalPath();
+            String outputDirectoryPath = arguments.getDestdir().getCanonicalPath();
+
+            if(!inputDirectoryPath.endsWith(File.separator)){
+               inputDirectoryPath+=File.separator;
+            }
+            if(!outputDirectoryPath.endsWith(File.separator)){
+               outputDirectoryPath+=File.separator;
+            }
+
+            debug("InputDirectoryPath:\n   "+inputDirectoryPath);
+            debug("OutputDirectoryPath:\n   "+outputDirectoryPath);
+
+            Iterator<File> files = arguments.getInputfiles().iterator(); 
+            while(files.hasNext()){
+               File next = files.next();
+               String pathOfFileToCompile = next.getCanonicalPath();
+               String pathOfTargetFile = pathOfFileToCompile.replace(
+                     inputDirectoryPath, 
+                     outputDirectoryPath
+               ).replaceFirst("\\.xforj$", extension_js);
+
+               debug("File to compile:\n   "+pathOfFileToCompile);
+               debug("Target File:\n   "+pathOfTargetFile);
+
+               if(!pathOfFileToCompile.startsWith(inputDirectoryPath)){
+                  throw new IOException(
+                     "The following file does not belong to the input path specified:\n"
+                     +pathOfFileToCompile
+                  );
+               }
+
+               compileNewFile(next, new File(pathOfTargetFile), arguments);
+            }
          }
       } catch(Exception exc) {
          handleGeneralError(exc);
