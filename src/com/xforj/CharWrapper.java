@@ -25,7 +25,6 @@ import java.util.regex.Pattern;
  */
 public class CharWrapper implements Characters {
    private char[] characters;
-   private Pattern space = Pattern.compile("^(\\s++).*+");
    private int line=1;
    private int column=1;
 
@@ -80,7 +79,7 @@ public class CharWrapper implements Characters {
    }
 
    public boolean removeSpace() throws Exception {
-      Matcher spaceToRemove = match(space);
+      Matcher spaceToRemove = match(SPACE);
       if(spaceToRemove.find()){
          shift(spaceToRemove.group(1).length());
          return true;
