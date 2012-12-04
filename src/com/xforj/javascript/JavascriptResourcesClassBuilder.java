@@ -134,7 +134,7 @@ public class JavascriptResourcesClassBuilder {
          replaceAll("typeof\\s","typeof@@##@@").
          replaceAll("\\s(in|instanceof)\\s","@@##@@$1@@##@@").
          replaceAll("\\s++", "").
-         replaceAll("\"", "\\\"").
+         replace("\"", "\\\"").
          replaceAll("@@##@@", " ");
    }
 }
