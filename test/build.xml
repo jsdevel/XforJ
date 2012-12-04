@@ -24,7 +24,7 @@ output of the compiler.
 
 <project name="XforJ build file to setup test env." default="default" basedir=".">
    <!-- you must place the XforJ.jar in your classpath. -->
-   <taskdef name="XforJ" classname="com.xforj.arguments.XforJTask" classpath="${basedir}/../"/>
+   <taskdef name="XforJ" classname="com.xforj.arguments.XforJTask"/>
 
 
 

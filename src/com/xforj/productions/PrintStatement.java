@@ -40,9 +40,15 @@ public class PrintStatement extends Production {
             variableAssignmentOutput=new Output();
             characters.shift(1);
             output.
-               add(js_bld+"(").
-               add(variableAssignmentOutput).
-               add(");");
+               add(js_bld+"(");
+                  if(context.escapexss){
+                     output.add(js_EscapeXSS+"(").
+                        add(variableAssignmentOutput).
+                        add(")");
+                  } else {
+                     output.add(variableAssignmentOutput);
+                  }
+            output.add(");");
             context.addProduction(new VariableExpression(variableAssignmentOutput));
             return;
          }

@@ -47,10 +47,15 @@ var newEscapeXSS = xforj[EscapeXSS];
 assert.equal(typeof newEscapeXSS, 'function', "EscapeXSS isn't initialized.");
 
 var notEquals = [
-   "<script",
+   "<",
+   ">",
+   "&",
+   "`",
+   "'",
+   "\"",
    "<script>",
    "</script>",
-   "onmouseover"
+   "<img/>"
 ];
 notEquals.forEach(function(val, index, array){
    assert.notEqual(newEscapeXSS(val), val, "Testing "+val+" failed.");

@@ -13,12 +13,32 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-(function(r,c){
-   r.exec('a');
-   c.exec('a');
+(function(q, p, l, g, a, t){
+   q.exec('a');
+   p.exec('a');
+   l.exec('a');
+   g.exec('a');
+   a.exec('a');
+   t.exec('a');
+
    return function(s){
-      return s.replace(r,'$1-$2').
-      replace(c,'$1some-$2')
+      if(typeof(s)==='string'){
+         return s.
+            replace(a,'&amp;').
+            replace(q, '&#34;').
+            replace(p, '&#39;').
+            replace(t, '&#96;').
+            replace(l, '&lt;').
+            replace(g, '&gt;');
+      }
+      return s;
    }
-})(/(on)(mouse(?:over|up|down|out|move)|focus|(?:dbl)?click|key(?:down|press|up)|abort|error|resize|scroll|(?:un)?load|blur|change|focus|reset|select|submit)(?![a-zA-Z0-9$_])/gi,/(<\s*?\\?\s*?\/?\s*?)(script(?![a-zA-Z0-9$_]))/ig)
+})(
+   /"/g,
+   /'/g,
+   /</g,
+   />/g,
+   /&/g,
+   /`/g
+)
 

@@ -68,16 +68,7 @@ public class TemplateDeclaration extends Production {
                      add(context.getCurrentVariableOutput()).
                      add(templateBodyOutput).
 
-                     add("return ");
-                     if(context.escapexss){
-                        output.add(js_EscapeXSS+"(");
-                     }
-
-                     output.add(js_bld+".s()");
-
-                     if(context.escapexss){
-                        output.add(")");
-                     }
+                     add("return "+js_bld+".s()");
 
                      output.add("};");
 
