@@ -46,15 +46,23 @@ public class JavascriptTemplatesTest extends Assert {
       Runtime run = Runtime.getRuntime();
       Process pr = run.exec(command);
       int success = pr.waitFor();
+      InputStream output;
+
+      if(success == 0){
+         output = pr.getInputStream();
+      } else {
+         output = pr.getErrorStream();
+      }
+
+      BufferedReader buf = new BufferedReader(new InputStreamReader(output));
+      String line;
+      StringBuilder reason = new StringBuilder();
+      while((line = buf.readLine())!=null){
+         reason.append(line).append("\n");
+      }
+      System.out.println(reason.toString());
 
       if(success != 0){
-         BufferedReader buf = new BufferedReader(new InputStreamReader(pr.getErrorStream()));
-         String line;
-         StringBuilder reason = new StringBuilder();
-         while((line = buf.readLine())!=null){
-            reason.append(line).append("\n");
-         }
-         System.out.println(reason.toString());
          fail("Failed for the following reason:\n"+reason.toString()+"\n   While evaluating: "+path);
       }
    }
@@ -86,6 +94,7 @@ public class JavascriptTemplatesTest extends Assert {
       File[] tests = new File(pathToTests).listFiles();
 
       for(File test: tests){
+         System.out.println("Test: " + test.getName());
          runNodeScript(
             test.getAbsolutePath(),
             pathToCompiled + test.getName()

@@ -33,7 +33,8 @@ public abstract class AbstractExpression extends Production {
    private boolean hasOperator=false;
    private boolean hasValue=false;
    private String excMsg="  Empty Expression.";
-   private static Pattern logicalNot = Pattern.compile("^([!~]*+).*+");
+   private static final Pattern logicalNot = Pattern.compile("^([!~]*+).*+");
+   private static final Pattern typeof = Pattern.compile("^(typeof)(?=[\\(\\s]).*+");
    
    @Override
    public final void execute(CharWrapper characters, ProductionContext context) throws Exception {
@@ -56,6 +57,17 @@ public abstract class AbstractExpression extends Production {
                characters.shift(negation.length());
                characters.removeSpace();
                output.add(negation);
+               break;
+            case 't':
+               match = characters.match(typeof);
+               if(match.find()){
+                  characters.shift(match.group(1).length());
+                  output.add("typeof");
+                  characters.removeSpace();
+                  if(characters.charAt(0) != '('){
+                     output.add(" ");
+                  }
+               }
             }
 
             if(characters.charAt(0) == '('){

@@ -1,0 +1,51 @@
+{namespace testing}
+
+{template typeofNumber}
+   {typeof 5}
+{/template}
+
+{template typeofString}
+   {typeof 'boo'}
+{/template}
+
+{template typeofBoolean}
+   {typeof true}
+{/template}
+
+{template logicalNot}
+   {!false}
+{/template}
+
+{template bitwiseNot}
+   {~~2.5}
+{/template}
+
+{template addition}
+   {1+1}
+{/template}
+
+{template subtraction}
+   {3-1}
+{/template}
+
+{template division}
+   {4/2}
+{/template}
+
+{template multiplication}
+   {2*1}
+{/template}
+
+{template modulous}
+   {1%5}
+{/template}
+
+{template equality}
+   {1 === 1}
+{/template}
+
+
+#Make this equal 'true'
+{template allTogetherNow}
+   {1+1 && 1%5 && 'boo' === 'boo' && (((true)))}
+{/template}
