@@ -19,6 +19,7 @@ package com.xforj.productions;
 import com.xforj.Output;
 import com.xforj.CharWrapper;
 import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  *
@@ -39,13 +40,38 @@ public class ContextSelector extends Production {
       }
    }
 
+   private static final Pattern dotWithFurtherRefinement = Pattern.compile("^\\.[a-zA-Z$_].*+");
    private boolean hasContextSelector;
    private boolean contextHasBeenPrependedToOutput;
+
    @Override
    void execute(CharWrapper characters, ProductionContext context) throws Exception {
       Matcher match;
 
       characters.removeSpace();
+
+      if(!contextHasBeenPrependedToOutput && characters.charAt(0) == '.'){
+         addContextToOutput();
+
+         //because . is also used in refinement, we need to do a little extra
+         //work the first time to see if we should allow the rest of this method
+         //to add to the output.
+
+         if(characters.charAt(1) == '['){
+            characters.shift(1);            
+            return;
+         } else {
+            Matcher furtherRefinement = characters.match(dotWithFurtherRefinement);
+            if(furtherRefinement.find()){
+               hasContextSelector=true;
+               return;
+            } else {
+               characters.shift(1);
+               context.removeProduction();
+               return;
+            }
+         }
+      }
 
       switch(characters.charAt(0)){
       case '.':
@@ -59,8 +85,8 @@ public class ContextSelector extends Production {
          }
          break;
       case '[':
-         if(!hasContextSelector){
-            contextSelectorOutput.add(js_context);
+         if(!hasContextSelector && !contextHasBeenPrependedToOutput){
+            addContextToOutput();
          }
          hasContextSelector=true;
          context.addProduction(new ContextDynamicRefinement(contextSelectorOutput));
@@ -72,9 +98,8 @@ public class ContextSelector extends Production {
          match = characters.match(CURRENT_FN);
          if(match.find()){
             hasContextSelector=true;
-            contextHasBeenPrependedToOutput=true;
             characters.shift(match.group(1).length());
-            contextSelectorOutput.add(js_context);
+            addContextToOutput();
             return;
          }
          //c could be a name start so we let it flow through.
@@ -90,10 +115,21 @@ public class ContextSelector extends Production {
       }
    }
 
+   private void addContextToOutput() throws Exception {
+      if(contextHasBeenPrependedToOutput){
+         throw new Exception("Invlid ContextSelector.  Attempted to add the current context more than once.");
+      }
+      contextHasBeenPrependedToOutput=true;
+      contextSelectorOutput.add(js_context);
+   }
+
    private boolean parseNamespace(CharWrapper characters, ProductionContext context) throws Exception {
       boolean contextIsNotVariableReference = true;
       if(!hasContextSelector){
          if(characters.charAt(0) == '@'){
+            if(contextHasBeenPrependedToOutput){
+               throw new Exception("Invalid ContextSelector.  Unexpected VariableReference.");
+            }
             characters.shift(1);
             contextIsNotVariableReference = false;
          }
@@ -115,8 +151,7 @@ public class ContextSelector extends Production {
 
             //we need to add the context variable to the beginning the first time
             if(!contextHasBeenPrependedToOutput && contextIsNotVariableReference){
-               contextHasBeenPrependedToOutput=true;
-               contextSelectorOutput.add(js_context);
+               addContextToOutput();
             }
             if(contextIsNotVariableReference){
                contextSelectorOutput.add(".");

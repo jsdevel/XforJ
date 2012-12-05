@@ -1,0 +1,22 @@
+{namespace testing}
+
+{template startingWithVariableReference}
+   {var person people.john.cousins.tom}
+   {@person.name}
+{/template}
+
+{template startingWithDot}
+   {.people.john.cousins.tom.name}
+{/template}
+
+{template startingWithCurrent}
+   {current().people.john.cousins.tom.name}
+{/template}
+
+{template notStartingWithCurrentOrDot}
+   {people.john.cousins.tom.name}
+{/template}
+
+{template dynamicRefinement}
+   {people.john.cousins.tom['name']}
+{/template}

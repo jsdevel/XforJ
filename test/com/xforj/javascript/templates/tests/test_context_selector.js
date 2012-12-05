@@ -22,8 +22,6 @@ var includescript = args[0];
 
 common.include(includescript);
 
-assert(testing && testing.test, "The test file hasn't been setup properly.");
-
 var context = {
    people:{
       john:{
@@ -35,4 +33,17 @@ var context = {
       }
    }
 };
-assert.equal(testing.test(context), "tom");
+
+var tests = [
+   ['startingWithVariableReference', 'tom'],
+   ['startingWithDot', 'tom'],
+   ['startingWithCurrent', 'tom'],
+   ['notStartingWithCurrentOrDot', 'tom'],
+   ['dynamicRefinement', 'tom']
+];
+
+tests.forEach(function(value, index, array){
+   assert.equal(testing[value[0]](context), value[1], value[0]);
+});
+
+
