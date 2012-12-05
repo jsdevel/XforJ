@@ -29,8 +29,6 @@ import java.io.*;
  * @author Joseph Spencer
  */
 public class JavascriptBuilder {
-   private static JavascriptBuilder instance;
-
    private final String js_count;
    private final String js_escapexss;
    private final String js_foreach;
@@ -62,10 +60,7 @@ public class JavascriptBuilder {
       }
    }
    public static JavascriptBuilder getInstance(XforJArguments arguments) throws IOException{
-      if(instance == null){
-         instance = new JavascriptBuilder(arguments);
-      }
-      return instance;
+      return new JavascriptBuilder(arguments);
    }
 
    public String getXforJLib(){
