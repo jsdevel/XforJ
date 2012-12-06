@@ -1,0 +1,72 @@
+{namespace testing}
+
+#The following context object should be passed in to each template:
+#{
+#   array:[0,1,2,3,4],
+#   object:{},
+#   bool:true
+#}
+#
+#Expected: 12345
+{template testPositionInsideOfLoop}
+   {foreach array}
+      {position()}
+   {/foreach}
+{/template}
+
+#Expected: NaN
+{template testPositionOutsideOfLoop}
+   {position()}
+{/template}
+
+#Expected: 5
+{template testCountArray}
+   {count(array)}
+{/template}
+
+#Expected: 3
+{template testCountObject}
+   {count(.)}
+{/template}
+
+#Expected: 0
+{template testCountNumber}
+   {var num 5}
+   {count(@num)}
+{/template}
+
+#Expected: 0
+{template testCountString}
+   {var str 'asdf'}
+   {count(@str)}
+{/template}
+
+#Expected: 0
+{template testCountBoolean}
+   {var boo true}
+   {count(@boo)}
+{/template}
+
+#Expected: 'array|object|bool|'
+{template testNameInsideLoop}
+   {foreach .}
+      {name()}{text}|{/text}
+   {/foreach}
+{/template}
+
+#Expected: ''
+{template testNameOutsideLoop}
+   {name()}
+{/template}
+
+#Expected: '333'
+{template testLastInsideLoop}
+   {foreach .}
+      {last()}
+   {/foreach}
+{/template}
+
+#Expected: 'NaN'
+{template testLastOutsideLoop}
+   {last()}
+{/template}
