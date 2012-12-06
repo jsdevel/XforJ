@@ -98,6 +98,7 @@ public class XforJ extends LOGGER implements Characters {
             || arguments.hasInputfiles()
          )){
             out("No input file[s] were given.  Exiting early.");
+            return;
          }
 
          if(arguments.hasInputfile()){
