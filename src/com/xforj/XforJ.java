@@ -110,7 +110,7 @@ public class XforJ extends LOGGER implements Characters {
                if(!outputDir.endsWith(File.separator)){
                   outputDir+=File.separator;
                }
-               String outputFilePath = outputDir+input.getName();
+               String outputFilePath = outputDir+input.getName().replaceFirst("\\.xforj$", ".js");
                File outputFile = new File(outputFilePath);
 
                compileNewFile(input, outputFile, arguments);
