@@ -1,0 +1,13 @@
+{namespace testing}
+
+#Expected: 'a\nb\nc\n'
+{template testNewLinesPreserved}
+a
+b
+c
+{/template}
+
+#Expected: 'a sd    sdf\n'
+{template testSpacePreserved}
+a sd    sdf
+{/template}

@@ -37,7 +37,7 @@ public class InputTokens extends Production {
 
          String newTokens = oldTokens;
 
-         if(context.stripNewLines){
+         if(context.normalizespace){
             newTokens = newTokens.replaceAll("\\s++", " ");
          }
 

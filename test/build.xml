@@ -23,21 +23,48 @@ output of the compiler.
 
 
 <project name="XforJ build file to setup test env." default="default" basedir=".">
+   <property name="dir.precompiled" value="${basedir}/com/xforj/javascript/templates/precompiled"/>
+   <property name="dir.compiled" value="${basedir}/com/xforj/javascript/templates/compiled"/>
+   <property name="files.arguments" value="**/test_arguments_*"/>
+
    <!-- you must place the XforJ.jar in your classpath. -->
    <taskdef name="XforJ" classname="com.xforj.arguments.XforJTask"/>
 
-
-
    <target depends="compileTestFiles" name="default"/>
 
-    <target name="compileTestFiles">
+   <target name="compileTestFiles" 
+      depends="
+         compileGeneralTests, 
+         compileArgumentFiles
+      "/>
+
+   <target name="compileGeneralTests">
       <XforJ
-         destdir="${basedir}/com/xforj/javascript/templates/compiled"
-         srcdir="${basedir}/com/xforj/javascript/templates/precompiled"
+         destdir="${dir.compiled}"
+         srcdir="${dir.precompiled}"
          overwrite="true"
       >
-         <fileset dir="${basedir}/com/xforj/javascript/templates/precompiled" includes="**/*.xforj"/>
+         <fileset 
+            dir="${dir.precompiled}" 
+            excludes="${files.arguments}"
+            includes="**/*.xforj"
+         />
       </XforJ>
-    </target>
+   </target>
+
+   <target name="compileArgumentFiles">
+      <XforJ
+         destdir="${dir.compiled}"
+         inputfile="${dir.precompiled}/test_arguments_normalizespace_false.xforj"
+         overwrite="true"
+         normalizespace="false"
+         />
+      <XforJ
+         destdir="${dir.compiled}"
+         inputfile="${dir.precompiled}/test_arguments_normalizespace_true.xforj"
+         overwrite="true"
+         normalizespace="true"
+         />
+   </target>
 
 </project>

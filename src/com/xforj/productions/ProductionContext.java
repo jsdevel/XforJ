@@ -35,7 +35,7 @@ public class ProductionContext {
    private String programNamespace="";
 
    //configuration
-   final public boolean stripNewLines;
+   final public boolean normalizespace;
    final public boolean minifyHTML;
    final public boolean assignTemplatesGlobally;
    final public boolean removeLogs;
@@ -57,7 +57,7 @@ public class ProductionContext {
       JavascriptBuilder javascriptBuilder,
       Output mainOutput
    ){
-      stripNewLines=arguments.getNormalizespace();
+      normalizespace=arguments.getNormalizespace();
       minifyHTML=arguments.getMinifyhtml();
       assignTemplatesGlobally=arguments.getGlobal();
       removeLogs=arguments.getRemovelogs();
@@ -87,7 +87,7 @@ public class ProductionContext {
       File currentFile, 
       ProductionContext previousContext
    ){
-      stripNewLines=previousContext.stripNewLines;
+      normalizespace=previousContext.normalizespace;
       minifyHTML=previousContext.minifyHTML;
       assignTemplatesGlobally=previousContext.assignTemplatesGlobally;
       removeLogs=previousContext.removeLogs;
@@ -155,7 +155,8 @@ public class ProductionContext {
    public String escapeOutput(String input){
       return input.
          replace("\\{", "{").
-         replaceAll("\\n|\\r", "\\\\\n");
+         replace("\\#", "#").
+         replaceAll("\\n|\\r", "\\\\n");
    }
 
    //PRODUCTIONS

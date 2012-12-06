@@ -1,0 +1,20 @@
+{namespace testing}
+
+#Expected: 'a b c '
+{template testNewLinesCollapsed}
+a
+b
+c
+{/template}
+
+#Expected: 'a sd sdf '
+{template testSpaceCollapsed}
+a sd    sdf
+{/template}
+
+#Expected: '\na\n'
+{template testTextStatementPreserveNewLine}
+{text}
+a
+{/text}
+{/template}
