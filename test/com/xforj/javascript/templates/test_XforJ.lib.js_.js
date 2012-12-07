@@ -53,10 +53,21 @@ var notEquals = [
    "`",
    "'",
    "\"",
+   "&#asd;",
    "<script>",
    "</script>",
    "<img/>"
 ];
 notEquals.forEach(function(val, index, array){
    assert.notEqual(newEscapeXSS(val), val, "Testing "+val+" failed.");
+});
+var equals = [
+   ["&amp;", "&amp;"],
+   ["&lt;", "&lt;"],
+   ["&#132;", "&#132;"],
+   ["&asdf", "&amp;asdf"],
+   ["&#345", "&amp;#345"]
+];
+equals.forEach(function(val, index, array){
+   assert.equal(array[index], newEscapeXSS(val));
 });

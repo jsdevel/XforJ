@@ -157,7 +157,7 @@ When this is enabled, XforJ will not perform any compiling.
       default="true"
       description="
 When enabled, the following characters are escaped when using print statements:\n
-*)&amp;\n
+*)&amp; (not followed by: '[a-zA-Z]+;|#[0-9]+;')\n
 *)'\n
 *)&quot;\n
 *)`\n
